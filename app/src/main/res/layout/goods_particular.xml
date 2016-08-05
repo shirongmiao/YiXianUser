@@ -215,8 +215,16 @@
 
     <ImageView
         android:id="@+id/return_but"
-        style="@style/Left"
-        android:layout_marginTop="20dp" />
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/round_car"
+        android:paddingBottom="10dp"
+        android:paddingLeft="13dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:src="@mipmap/all_left" />
 
 
     <ImageView

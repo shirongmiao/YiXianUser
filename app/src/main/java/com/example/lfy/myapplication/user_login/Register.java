@@ -489,7 +489,6 @@ public class Register extends AppCompatActivity {
 
                 Variables.my = communication;
                 Login.instance.finish();
-                LoginBg.instance.finish();
                 finish();
             }
 

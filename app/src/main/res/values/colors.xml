@@ -16,6 +16,7 @@
     <color name="huiseziti">#8e8e93</color>
     <!--字体灰-->
     <color name="line_grey">#efeff4</color>
+    <color name="login_but_bg">#99efeff4</color>
     <!--<color name="kong">#224a4a4a</color>-->
     <color name="kong">#00000000</color>
     <color name="logincolor">#44000000</color>

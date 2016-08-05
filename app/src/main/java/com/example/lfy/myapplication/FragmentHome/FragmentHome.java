@@ -443,9 +443,9 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                 @Override
                 public void onSliderClick(BaseSliderView slider) {
                     if (images.get(finalI).getJumpType().equals("2")) {
-                        String url = images.get(finalI).getUrl();
-                        Intent intent = new Intent(getActivity(), Help.class);
-                        intent.putExtra("url", url);
+                        Intent intent = new Intent(getActivity(), WEB.class);
+                        intent.putExtra("title", images.get(finalI).getName());
+                        intent.putExtra("url", images.get(finalI).getUrl());
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(getActivity(), Search.class);

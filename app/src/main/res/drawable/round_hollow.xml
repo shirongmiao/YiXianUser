@@ -3,8 +3,8 @@
 
     <corners android:radius="3dp" />
 
-    <solid android:color="@color/line_grey"></solid>
+    <solid android:color="@color/login_but_bg"></solid>
     <stroke
-        android:width="0.3dp"
-        android:color="@color/huiseziti"></stroke>
+        android:width="0.2dp"
+        android:color="@color/line_grey"></stroke>
 </shape>

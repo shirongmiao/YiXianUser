@@ -30,6 +30,7 @@ public class WEB extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.web_title);
         ImageView imageView = (ImageView) findViewById(R.id.web_left);
 
+
         Intent intent = getIntent();
         String url = intent.getStringExtra("url");
         String title = intent.getStringExtra("title");

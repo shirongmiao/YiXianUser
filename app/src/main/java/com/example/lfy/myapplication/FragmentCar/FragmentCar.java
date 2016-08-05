@@ -1,5 +1,7 @@
 package com.example.lfy.myapplication.FragmentCar;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +22,7 @@ import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.SubmitOrder.SubmitOrder;
 import com.example.lfy.myapplication.Variables;
+import com.example.lfy.myapplication.user_login.LoginBg;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -135,7 +138,17 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.car_delete:
-                DeleteCar_xUtils();
+                Dialog dialog = new android.support.v7.app.AlertDialog.Builder(getActivity())
+                        .setMessage("确认清空购物车？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                DeleteCar_xUtils();
+                            }
+                        })
+                        .setNegativeButton("取消", null).create();
+                dialog.show();
                 break;
             case R.id.car_shopping:
                 MainActivity.classify.performClick();

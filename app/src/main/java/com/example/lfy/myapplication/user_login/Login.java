@@ -257,17 +257,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.login_return:
                 finish();
-                LoginBg.instance.finish();
                 break;
         }
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        LoginBg.instance.finish();
-    }
-
     private void Select_xUtils(String mobile) {
         //查询用户是否存在
         RequestParams params = new RequestParams(Variables.http_phone);
@@ -409,7 +401,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
             Variables.count = num;
             finish();
-            LoginBg.instance.finish();
         } catch (JSONException e) {
             e.printStackTrace();
         }

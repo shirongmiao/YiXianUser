@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="10dp"
-            android:text="佰分鲜" />
+            android:text="一鲜" />
 
         <TextView
             android:id="@+id/banben"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:gravity="center_vertical"
-                android:text="微信公众号：佰分鲜" />
+                android:text="微信公众号：一鲜农业" />
         </LinearLayout>
     </RelativeLayout>
 

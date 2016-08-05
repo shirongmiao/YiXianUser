@@ -202,19 +202,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        Dialog dialog = new android.support.v7.app.AlertDialog.Builder(MainActivity.this)
-                .setMessage("确定要退出吗？")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        android.os.Process.killProcess(android.os.Process
-                                .myPid());
-                    }
-                })
-                .setNegativeButton("取消", null).create();
-        dialog.show();
+        ExitApp();
     }
+
+    private long exitTime = 0;
+
+    public void ExitApp()
+    {
+        if ((System.currentTimeMillis() - exitTime) > 2000)
+        {
+            Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else
+        {
+            android.os.Process.killProcess(android.os.Process
+                    .myPid());
+        }
+
+    }
+
 
     // 需要setContentView之前调用
     public void setTranslucentStatus() {

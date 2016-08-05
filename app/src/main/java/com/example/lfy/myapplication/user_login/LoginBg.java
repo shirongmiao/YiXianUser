@@ -11,16 +11,30 @@ import com.example.lfy.myapplication.Variables;
  * Created by lfy on 2016/8/2.
  */
 public class LoginBg extends AppCompatActivity {
-    public static LoginBg instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Variables.setTranslucentStatus(this);
         setContentView(R.layout.login_bg);
-        instance = this;
+        flag = false;
         Intent intent = new Intent(LoginBg.this, Login.class);
         startActivity(intent);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (flag)
+            finish();
+    }
+
+    boolean flag = false;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        flag = true;
     }
 }

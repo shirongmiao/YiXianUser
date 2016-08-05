@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/address_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="隔壁老王"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/address_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:gravity="end"
+                    android:text="12345678910"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="42dp">
+
+                <TextView
+                    android:id="@+id/address_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="浙江省杭州市江干区万亚金沙湖1号2撞1203室"
+                    android:textColor="@color/huiseziti"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="bottom"
+                android:background="@color/line_grey"></View>
+
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="9dp"
+            android:layout_marginTop="7dp">
+
+            <CheckBox
+                android:id="@+id/default_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:text="默认地址"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"></View>
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/address_setting"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:paddingRight="10dp">-->
+            <!--<ImageView-->
+            <!--android:layout_width="30dp"-->
+            <!--android:padding="6.5dp"-->
+            <!--android:layout_height="30dp" />-->
+            <Button
+                android:id="@+id/address_setting"
+                android:layout_width="50dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/round_green"
+                android:text="编辑"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/address_delete"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:paddingRight="10dp">-->
+            <!--<ImageView-->
+            <!--android:layout_width="30dp"-->
+            <!--android:padding="7dp"-->
+            <!--android:src="@mipmap/new_delete"-->
+            <!--android:layout_height="30dp" />-->
+            <Button
+                android:id="@+id/address_delete"
+                android:layout_width="50dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/round_green"
+                android:text="删除"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+            <!--</LinearLayout>-->
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="9dp"></View>
+</LinearLayout>

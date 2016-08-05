@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_bg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    android:layout_marginTop="1dp"
+    app:cardCornerRadius="2dp"
+    app:elevation="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/second_image"
+            android:layout_width="match_parent"
+            android:layout_height="180dp" />
+
+        <TextView
+            android:id="@+id/second_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:text="我是商品名称商品和萨芬哈舒服哈舒服发疯好饿额话费卡话费和卡尔话费"
+            android:textSize="15sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="产地:" />
+
+                <TextView
+                    android:id="@+id/second_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="我是商品描述" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:text="规格:" />
+
+                <TextView
+                    android:id="@+id/second_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:singleLine="true"
+                    android:text="我是商品规格是商品规格"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/second_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="价格/"
+                    android:textColor="@color/actionsheet_red"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/second_vip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="会员价"
+                    android:textColor="@color/actionsheet_red"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/second_PromotionName"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/actionsheet_red"
+        android:gravity="center"
+        android:text="买一\n送一"
+        android:textColor="@color/white" />
+    <Button
+        android:id="@+id/second_into"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="5dp"
+        android:background="@drawable/all_add_car_select"
+        android:text="加入购物车"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+</android.support.v7.widget.CardView>

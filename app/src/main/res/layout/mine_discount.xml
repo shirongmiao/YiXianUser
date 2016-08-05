@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/line_grey"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/title_help"
+        style="@style/FragmentTop">
+
+        <ImageView
+            android:id="@+id/all_return"
+            style="@style/Left" />
+
+        <TextView
+            android:id="@+id/fragment_address"
+            style="@style/Center"
+            android:text="我的优惠券" />
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/discount"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="none"></ListView>
+
+</LinearLayout>

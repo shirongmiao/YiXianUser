@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <FrameLayout style="@style/FragmentTop">
+
+        <ImageView
+            android:id="@+id/return_all"
+            style="@style/Left" />
+
+        <TextView
+            android:id="@+id/fragment_address"
+            style="@style/Center"
+            android:text="系统设置" />
+
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/about_our"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/click_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="12dp"
+                    android:text="关于一鲜"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:src="@mipmap/all_right" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/linegray" />
+
+            <TextView
+                android:id="@+id/set_up_clean"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/click_bg"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="清除缓存" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/linegray" />
+
+            <TextView
+                android:id="@+id/dis_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/click_bg"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="注销" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/line_grey" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

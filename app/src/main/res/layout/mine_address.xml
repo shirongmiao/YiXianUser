@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout style="@style/FragmentTop">
+
+        <TextView
+            style="@style/Center"
+            android:text="地址管理" />
+
+        <ImageView
+            android:id="@+id/new_break"
+            style="@style/Left" />
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/set_address"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/add_address"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_width"
+        android:background="@color/green"
+        android:text="新增收货地址"
+        android:textSize="15sp" />
+
+</LinearLayout>

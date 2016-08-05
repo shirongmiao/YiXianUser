@@ -1,0 +1,84 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <FrameLayout
+        android:id="@+id/forget_top"
+        style="@style/FragmentTop"
+        android:background="@null">
+
+        <ImageView
+            android:id="@+id/return_but"
+            style="@style/Left" />
+
+        <TextView
+            style="@style/Center"
+            android:text="忘记密码"
+            android:textColor="@color/white" />
+
+    </FrameLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:id="@+id/loginPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="95dp"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp">
+
+
+            <EditText
+                android:id="@+id/user_password"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@null"
+                android:drawableBottom="@drawable/white_line"
+                android:ems="10"
+                android:hint="输入您的新密码"
+                android:paddingLeft="10dp"
+                android:password="true"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="13sp">
+
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/user_password_two"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@null"
+                android:drawableBottom="@drawable/white_line"
+                android:ems="10"
+                android:hint="再次输入密码"
+                android:paddingLeft="10dp"
+                android:password="true"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/ok_but"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="20dp"
+                android:alpha="0.7"
+                android:background="@drawable/round_hollow"
+                android:text="确定" />
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

@@ -1,0 +1,152 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/register_all"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        style="@style/FragmentTop"
+        android:layout_height="@dimen/top_width"
+        android:paddingTop="0dp"
+        android:background="@null">
+
+        <ImageView
+            android:id="@+id/register_return"
+            style="@style/Left" />
+
+        <TextView
+            style="@style/Center"
+            android:text="注册"
+            android:textColor="@color/white" />
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp">
+
+
+            <EditText
+                android:id="@+id/register_phone"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="7dp"
+                android:background="@null"
+                android:drawableBottom="@drawable/white_line"
+                android:ems="7"
+                android:inputType="phone"
+                android:hint="请输入手机号"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="13dp">
+
+                <requestFocus />
+            </EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:drawableBottom="@drawable/white_line"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/register_test"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:inputType="number"
+                    android:drawableBottom="@drawable/white_line"
+                    android:hint="请输入短信验证码"
+                    android:maxLength="6"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="13dp" />
+
+                <Button
+                    android:id="@+id/register_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:alpha="0.7"
+                    android:background="@drawable/round_hollow"
+                    android:text="获取验证码"
+                    android:textColor="@color/green" />
+            </LinearLayout>
+
+
+            1
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:drawableBottom="@drawable/white_line"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/register_password"
+                    style="@style/EditText"
+                    android:drawableBottom="@drawable/white_line"
+                    android:ems="10"
+                    android:hint="6-32位字母或数字"
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:textColor="@color/ziti"
+                    android:textSize="13dp">
+
+                </EditText>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkbos_sure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="我已阅读并同意"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/yixian_web"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="《一鲜用户使用协议》"
+                    android:textColor="@color/green" />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/register_but"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:alpha="0.7"
+                android:background="@drawable/round_hollow"
+                android:padding="10dp"
+                android:src="@mipmap/all_right"
+                android:text="确定" />
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

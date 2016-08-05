@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/home_swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <FrameLayout
+        android:id="@+id/activity_title"
+        style="@style/FragmentTop"
+        android:alpha="0"></FrameLayout>
+
+    <FrameLayout
+        style="@style/FragmentTop"
+        android:background="@null">
+
+        <LinearLayout
+            android:id="@+id/into_point"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/top_width"
+            android:layout_gravity="center_horizontal|bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/top_title"
+                style="@style/Center"
+                android:text="@string/bottom_home"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/top_title_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/home_down" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/scan"
+            style="@style/Left"
+            android:src="@mipmap/all_scan_black" />
+
+        <ImageView
+            android:id="@+id/search"
+            style="@style/Right"
+            android:src="@mipmap/all_search_black" />
+
+    </FrameLayout>
+
+</FrameLayout>

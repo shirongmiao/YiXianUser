@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/discount_bg"
+        android:layout_width="match_parent"
+        android:layout_height="127dp"
+        android:layout_margin="3dp"
+        android:src="@mipmap/mine_coupon_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="127dp"
+        android:layout_margin="3dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="￥"
+                        android:textColor="@color/green"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/fragment_discount_couponPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="5.0"
+                        android:textColor="@color/green"
+                        android:textSize="26sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/fragment_discount_couponInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="订单满10元可用"
+                    android:textColor="@color/green"
+                    android:textSize="11dp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fragment_discount_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="1元代金券"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/fragment_discount_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.8"
+                    android:gravity="center_horizontal"
+                    android:text="2015-11-27至2016-12-11有效"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/fragment_discount_couponState"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="8dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

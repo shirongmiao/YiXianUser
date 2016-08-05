@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/title_par"
+        style="@style/FragmentTop">
+
+        <ImageView
+            android:id="@+id/all_return"
+            style="@style/Left" />
+
+        <TextView
+            android:id="@+id/fragment_address"
+            style="@style/Center"
+            android:text="申请开店" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/fragment_top"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/linegray" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="请填写您的信息" />
+
+                <EditText
+                    android:id="@+id/apply_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/round_edit"
+                    android:hint="手机号"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/apply_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/round_edit"
+                    android:hint="姓名"
+                    android:padding="5dp"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/apply_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/round_edit"
+                    android:hint="QQ/微信/邮箱"
+                    android:padding="5dp"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/apply_school"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/round_edit"
+                    android:hint="社区/学校/写字楼"
+                    android:padding="5dp"
+                    android:textSize="13sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
+                    android:background="@color/linegray" />
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/apply_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_width"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="20dp"
+        android:background="@color/green"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="@color/ziti" />
+</FrameLayout>

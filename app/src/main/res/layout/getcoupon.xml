@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/all_coupon_bg">
+
+    <ImageView
+        android:id="@+id/button_back"
+        android:layout_marginTop="20dp"
+        style="@style/Left" />
+
+
+    <ImageView
+        android:id="@+id/liquan_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="80dp"
+        android:padding="20dp"
+        android:src="@mipmap/coupon_bottom_down" />
+
+
+    <TextView
+        android:id="@+id/bottom_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        android:text="您已领取礼券"
+        android:textColor="@color/yellow"
+        android:textSize="20sp" />
+
+    <FrameLayout
+        android:id="@+id/coupon_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/coupon_top" />
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginRight="105dp"
+            android:layout_marginTop="125dp"
+            android:text="￥20"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/coupon_content"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="85dp"
+            android:lineSpacingExtra="3dp"
+            android:lineSpacingMultiplier="1.1"
+            android:maxLines="2"
+            android:text="20元现金已经存入到您的账户中，可在我的优惠券中查看"
+            android:textColor="@color/orange"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/coupon_sure"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="30dp"></View>
+    </FrameLayout>
+
+
+</FrameLayout>

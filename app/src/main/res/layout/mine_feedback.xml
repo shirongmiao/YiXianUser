@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/line_grey">
+
+    <FrameLayout style="@style/FragmentTop">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            style="@style/Left" />
+
+        <TextView
+            style="@style/Center"
+            android:text="意见反馈" />
+
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/fragment_top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="选择反馈类型"
+                android:textColor="@color/ziti" />
+
+
+            <RadioGroup
+                android:id="@+id/all_RadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/goods_suggest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/mine_feedback_bg"
+                    android:text=" 商品建议"
+                    android:textColor="@color/ziti" />
+
+                <RadioButton
+                    android:id="@+id/system_suggest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/mine_feedback_bg"
+                    android:text=" 系统建议"
+                    android:textColor="@color/ziti" />
+
+                <RadioButton
+                    android:id="@+id/other_suggest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/mine_feedback_bg"
+                    android:text=" 其他"
+                    android:textColor="@color/ziti" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="您的批评和建议能帮助我们更好的完善产品！" />
+
+            <EditText
+                android:id="@+id/my_suggest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/round_hollow"
+                android:gravity="top"
+                android:hint="请留下您宝贵的意见！"
+                android:lines="5"
+                android:padding="9dp"
+                android:textColor="@color/ziti"
+                android:textColorHint="@color/huiseziti"
+                android:textCursorDrawable="@null" />
+
+            <EditText
+                android:id="@+id/my_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/round_hollow"
+                android:hint="请输入联系方式（微信号）"
+                android:padding="5dp"
+                android:textColorHint="@color/huiseziti"
+                android:textCursorDrawable="@null" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/linegray" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/feedback_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_width"
+        android:layout_gravity="bottom"
+        android:background="@color/green"
+        android:gravity="center"
+        android:text="提交" />
+</FrameLayout>

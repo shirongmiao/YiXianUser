@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+
+    <!--<declare-styleable name="ViewPagerIndicator">-->
+    <!--<attr name="item_count" />-->
+    <!--</declare-styleable>-->
+
+    <attr name="item_count" format="integer"></attr>
+
+    <declare-styleable name="ViewPagerIndicator">
+        <attr name="item_count" />
+    </declare-styleable>
+
+
+    <!-- 选择付款方式-->
+    <declare-styleable name="PayRidioButton">
+        <attr name="title_submit" format="reference|string" />
+        <attr name="logo_submit" format="reference|color" />
+        <attr name="desc" format="reference|string" />
+        <attr name="checked" format="boolean" />
+        <attr name="radio" format="reference" />
+    </declare-styleable>
+
+    <!-- Standard orientation constant. -->
+    <attr name="orientation">
+        <!-- Defines an horizontal widget. -->
+        <enum name="horizontal" value="0" />
+        <!-- Defines a vertical widget. -->
+        <enum name="vertical" value="1" />
+    </attr>
+
+    <declare-styleable name="PayRidioGroup">
+        <!-- The id of the child radio button that should be checked by default
+             within this radio group. -->
+        <attr name="checkedButton" format="integer" />
+        <!-- Should the radio group be a column or a row?  Use "horizontal"
+             for a row, "vertical" for a column.  The default is
+             vertical. -->
+        <attr name="orientation" />
+    </declare-styleable>
+
+
+    <!-- 密码输入框-->
+    <declare-styleable name="PasswordInputView">
+        <attr name="pivBorderColor" format="color" />
+        <attr name="pivBorderWidth" format="dimension" />
+        <attr name="pivBorderRadius" format="dimension" />
+        <attr name="pivPasswordColor" format="color" />
+        <attr name="pivPasswordWidth" format="dimension" />
+        <attr name="pivPasswordRadius" format="dimension" />
+        <attr name="pivPasswordLength" format="integer" />
+    </declare-styleable>
+
+    <!-- 分类顶部-->
+    <!-- Copyright (C) 2012 Jake Wharton
+     Copyright (C) 2011 Patrik Åkerfeldt
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+
+    <declare-styleable name="TabPageIndicator">
+        <attr name="vpiTabPageIndicatorStyle" format="reference" />
+    </declare-styleable>
+
+
+</resources>

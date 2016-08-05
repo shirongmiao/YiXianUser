@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#41963f</color>
+    <color name="colorPrimaryDark">#188657</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="white">#ffffff</color>
+    <!-- 白色 -->
+    <color name="black">#000000</color>
+    <!-- 一鲜黄 -->
+    <color name="yellow">#fadb07</color>
+    <color name="linegray">#f2f2f2</color>
+    <!-- 线条灰 -->
+    <color name="ziti">#4a4a4a</color>
+    <color name="huiseziti">#8e8e93</color>
+    <!--字体灰-->
+    <color name="line_grey">#efeff4</color>
+    <!--<color name="kong">#224a4a4a</color>-->
+    <color name="kong">#00000000</color>
+    <color name="logincolor">#44000000</color>
+    <!-- 透明 -->
+    <color name="car_grey">#aa8e8e93</color>
+    <!-- 苹果橙 -->
+    <!-- 扫码-->
+    <color name="scan">#888e8e93</color>
+    <!-- 绿-->
+    <color name="green">#11cd6e</color>
+    <!-- new绿-->
+    <color name="Green">#11cd6e</color>
+    <!-- 橙-->
+    <color name="orange">#dd4c03</color>
+
+    <!-- 番茄红-->
+    <color name="tomato">#FD4A2E</color>
+
+    <color name="top_bg_colors">#12000000</color>
+
+    <color name="trans">#00000000</color>
+    <color name="blaack">#000000</color>
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+
+    <!-- 颜色
+　　常态（#646464）
+　　选中状态（#      按界面风格定）
+　　不可点击状态（灰色  #a5a5a5）
+  字体颜色（各类型）（+按钮下字体颜色# ）
+  线的颜色（#c1c1c1）
+  图标颜色（#666666）-->
+
+    <color name="normal">#646464</color>
+    <color name="unClick">#a5a5a5</color>
+    <color name="liner">#c1c1c1</color>
+    <color name="photo">#666666</color>
+
+
+</resources>

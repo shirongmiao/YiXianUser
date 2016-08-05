@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout style="@style/FragmentTop">
+
+        <TextView
+            android:id="@+id/top_title"
+            style="@style/Center"
+            android:text="@string/title_car" />
+
+        <ImageView
+            android:id="@+id/car_left"
+            style="@style/Left"
+            android:src="@mipmap/all_left"
+            android:visibility="gone"></ImageView>
+
+        <ImageView
+            android:id="@+id/car_delete"
+            style="@style/Right"
+            android:src="@mipmap/all_car_delete"></ImageView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_view"
+            android:layout_gravity="bottom"
+            android:background="@color/line_grey"></View>
+    </FrameLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/car_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/bottom_width"
+        android:layout_marginTop="60dp"></android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/car_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/car_none" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:text="购物车是空的" />
+
+        <TextView
+            android:id="@+id/car_shopping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/round_car_shop"
+            android:padding="10dp"
+            android:text="再去逛逛"
+            android:textColor="@color/green" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/car_bottom_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_width"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/green"
+            android:orientation="vertical"
+            android:paddingLeft="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:gravity="bottom">
+
+                <TextView
+                    android:id="@+id/car_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:text="合计:￥- -"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/vip_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="bottom"
+                    android:text="会员:￥- -"
+                    android:textColor="@color/actionsheet_red"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/car_sendPrice"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2.3"
+                android:text="另需配送费:￥--元"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/car_submit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.62"
+            android:background="@color/actionsheet_red"
+            android:gravity="center"
+            android:text="结算"
+            android:textColor="@color/white"
+            android:textSize="19sp" />
+
+    </LinearLayout>
+</FrameLayout>

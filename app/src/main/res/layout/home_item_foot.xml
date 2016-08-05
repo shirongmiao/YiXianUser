@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/sales_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/sales_grad"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/gradview_height"></android.support.v7.widget.RecyclerView>
+
+
+    <TextView
+        android:id="@+id/sales_more"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="查看更多"
+        android:visibility="gone" />
+
+
+</LinearLayout>

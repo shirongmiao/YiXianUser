@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/titlebar"
+        style="@style/FragmentTop">
+
+        <ImageView
+            android:id="@+id/return_black"
+            style="@style/Left" />
+
+        <TextView
+            style="@style/Center"
+            android:text="选择服务站" />
+
+        <TextView
+            android:id="@+id/hand"
+            style="@style/Right"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="手动"
+            android:textSize="12dp" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true">
+
+        </com.baidu.mapapi.map.MapView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/location_center" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/round_big"
+            android:textSize="10dp" />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mylocation_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/location_open"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_width"
+        android:background="@color/green"
+        android:visibility="gone"
+        android:text="申请开店"
+        android:textColor="@color/white" />
+
+</LinearLayout>

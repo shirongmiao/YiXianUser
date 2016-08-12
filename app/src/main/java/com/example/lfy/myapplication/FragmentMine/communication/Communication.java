@@ -40,10 +40,10 @@ import java.io.IOException;
  */
 public class Communication extends AppCompatActivity implements View.OnClickListener {
 
-    RelativeLayout head, name, mobile, email, sex, birthday, address, address_SQ, address_Z;
+    RelativeLayout head, name, mobile, email, sex, birthday;
 
     TextView mine_name, mine_mobile, mine_email, mine_sex,
-            mine_birthday, mine_address, mine_address_SQ, mine_address_Z;
+            mine_birthday;
 
     CircleImageView mine_head;
     Button saver_mine;
@@ -59,6 +59,7 @@ public class Communication extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Variables.setTranslucentStatus(this);
         setContentView(R.layout.fragment_communication);
         my = Variables.my;
         //字段生日不能为空，否则报错,需要设置默认值
@@ -86,9 +87,6 @@ public class Communication extends AppCompatActivity implements View.OnClickList
         email = (RelativeLayout) findViewById(R.id.email);
         sex = (RelativeLayout) findViewById(R.id.sex);
         birthday = (RelativeLayout) findViewById(R.id.birthday);
-        address = (RelativeLayout) findViewById(R.id.address);
-        address_SQ = (RelativeLayout) findViewById(R.id.address_SQ);
-        address_Z = (RelativeLayout) findViewById(R.id.address_Z);
         mine_head = (CircleImageView) findViewById(R.id.mine_head);
 
         mine_name = (TextView) findViewById(R.id.mine_name);
@@ -96,9 +94,6 @@ public class Communication extends AppCompatActivity implements View.OnClickList
         mine_email = (TextView) findViewById(R.id.mine_email);
         mine_sex = (TextView) findViewById(R.id.mine_sex);
         mine_birthday = (TextView) findViewById(R.id.mine_birthday);
-        mine_address = (TextView) findViewById(R.id.mine_address);
-        mine_address_SQ = (TextView) findViewById(R.id.mine_address_SQ);
-        mine_address_Z = (TextView) findViewById(R.id.mine_address_Z);
         saver_mine = (Button) findViewById(R.id.saver_mine);
 
         mine_name.setText(my.getCustomerName());
@@ -121,66 +116,32 @@ public class Communication extends AppCompatActivity implements View.OnClickList
             mine_birthday.setText(my.getBirthday());
         }
 
-        if (my.getAddressP().equals("null")) {
-            mine_address.setText("请设置");
-        } else {
-            mine_address.setText(my.getAddressP() + "-" + my.getAddressC() + "-" + my.getAddressD());
-        }
-
-        if (my.getAddressSQ().equals("null")) {
-            mine_address_SQ.setText("请设置");
-        } else {
-            mine_address_SQ.setText(my.getAddressSQ());
-        }
-        if (my.getAddressZ().equals("null")) {
-            mine_address_Z.setText("请设置");
-        } else {
-            mine_address_Z.setText(my.getAddressZ());
-        }
-        address.setOnClickListener(this);
         head.setOnClickListener(this);
         name.setOnClickListener(this);
         birthday.setOnClickListener(this);
         mobile.setOnClickListener(this);
         email.setOnClickListener(this);
         sex.setOnClickListener(this);
-        address_SQ.setOnClickListener(this);
-        address_Z.setOnClickListener(this);
         saver_mine.setOnClickListener(this);
 
-            if (Variables.my.getImage().equals("none")) {
+        if (Variables.my.getImage().equals("none")) {
+            mine_head.setImageResource(R.mipmap.mine_default_photo);
+        } else {
+            try {
+                String str = Variables.my.getImage();
+                str = str.substring(str.indexOf(",") + 1);
+                Bitmap bitmap = Variables.base64ToBitmap(str);
+                mine_head.setImageBitmap(bitmap);
+            } catch (Exception e) {
                 mine_head.setImageResource(R.mipmap.mine_default_photo);
-            } else {
-                try {
-                    String str = Variables.my.getImage();
-                    str = str.substring(str.indexOf(",") + 1);
-                    Bitmap bitmap = Variables.base64ToBitmap(str);
-                    mine_head.setImageBitmap(bitmap);
-                } catch (Exception e) {
-                    mine_head.setImageResource(R.mipmap.mine_default_photo);
-                }
             }
+        }
     }
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.address:
-                ChangeAddressDialog mChangeAddressDialog = new ChangeAddressDialog(Communication.this);
-                mChangeAddressDialog.setAddress(my.getAddressP(), my.getAddressC(), my.getAddressD());
-                mChangeAddressDialog.show();
-                mChangeAddressDialog.setAddresskListener(new ChangeAddressDialog.OnAddressCListener() {
-                    @Override
-                    public void onClick(String province, String city, String dis) {
-                        Toast.makeText(getApplication(), province + "-" + city + "-" + dis, Toast.LENGTH_LONG).show();
-                        my.setAddressP(province);
-                        my.setAddressC(city);
-                        my.setAddressD(dis);
-                        mine_address.setText(province + "-" + city + "-" + dis);
-                    }
-                });
-                break;
             case R.id.birthday:
                 ChangeBirthDialog mChangeBirthDialog = new ChangeBirthDialog(Communication.this);
                 int a = Integer.parseInt(my.getBirthday().substring(0, 4));//2015-03-03
@@ -290,39 +251,6 @@ public class Communication extends AppCompatActivity implements View.OnClickList
                             }
                         }).setNegativeButton("取消", null).show();
 
-                break;
-            case R.id.address_SQ:
-                final EditText editText_address_SQ = new EditText(this);
-                editText_address_SQ.setBackgroundResource(R.drawable.round_edit);
-                editText_address_SQ.setPadding(30, 20, 0, 30);
-                new android.support.v7.app.AlertDialog.Builder(this)
-                        .setMessage("请输入您的社区")
-                        .setView(editText_address_SQ)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                my.setAddressSQ(editText_address_SQ.getText().toString());
-                                mine_address_SQ.setText(my.getAddressSQ());
-                            }
-                        })
-                        .setNegativeButton("取消", null).show();
-                break;
-            case R.id.address_Z:
-                final EditText editText_address_Z = new EditText(this);
-                editText_address_Z.setBackgroundResource(R.drawable.round_edit);
-                editText_address_Z.setPadding(30, 20, 0, 30);
-
-                new android.support.v7.app.AlertDialog.Builder(Communication.this)
-                        .setMessage("输入您的详细地址").setView(editText_address_Z)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                my.setAddressZ(editText_address_Z.getText().toString());
-                                mine_address_Z.setText(my.getAddressZ());
-                            }
-                        })
-                        .setNegativeButton("取消", null).create().show();
                 break;
             case R.id.saver_mine:
                 saver();
@@ -502,17 +430,16 @@ public class Communication extends AppCompatActivity implements View.OnClickList
     private void saver() {
 
         RequestParams params = new RequestParams(Variables.update_mine);
-
         params.addBodyParameter("userid", my.getCustomerID());
         params.addBodyParameter("CustomerName", my.getCustomerName());
         params.addBodyParameter("Sex", my.getSex());
         params.addBodyParameter("Birthday", my.getBirthday());
         params.addBodyParameter("EmailAddress", my.getEmailAddress());
-        params.addBodyParameter("AddressP", my.getAddressP());
-        params.addBodyParameter("AddressC", my.getAddressC());
-        params.addBodyParameter("AddressD", my.getAddressD());
-        params.addBodyParameter("AddressSQ", my.getAddressSQ());
-        params.addBodyParameter("AddressZ", my.getAddressZ());
+        params.addBodyParameter("AddressP", "");
+        params.addBodyParameter("AddressC", "");
+        params.addBodyParameter("AddressD", "");
+        params.addBodyParameter("AddressSQ", "");
+        params.addBodyParameter("AddressZ", "");
         x.http().post(params, new Callback.CacheCallback<String>() {
             private boolean hasError = false;
             private String result = null;

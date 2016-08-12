@@ -23,11 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-//import com.ywl5320.pickaddress.wheel.widget.adapters.AbstractWheelTextAdapter;
-//import com.ywl5320.pickaddress.wheel.widget.views.OnWheelChangedListener;
-//import com.ywl5320.pickaddress.wheel.widget.views.OnWheelScrollListener;
-//import com.ywl5320.pickaddress.wheel.widget.views.WheelView;
-
 /**
  * 更改封面对话框
  *

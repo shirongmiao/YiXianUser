@@ -223,11 +223,11 @@ public class ExpandListViewAdapter extends BaseExpandableListAdapter {
             itemHolder.food.setVisibility(View.GONE);
         }
 
-        if (child_list.get(groupPosition).get(childPosition).getTitle().contains("新用户") && !group_list.get(groupPosition).getOrderType().equals("0")) {
-            itemHolder.pay.setVisibility(View.GONE);
-        } else {
-            itemHolder.pay.setVisibility(View.VISIBLE);
-        }
+//        if (child_list.get(groupPosition).get(childPosition).getTitle().contains("新用户") && !group_list.get(groupPosition).getOrderType().equals("0")) {
+//            itemHolder.pay.setVisibility(View.GONE);
+//        } else {
+//            itemHolder.pay.setVisibility(View.VISIBLE);
+//        }
         itemHolder.item_name.setText(child_list.get(groupPosition).get(childPosition).getTitle());
         itemHolder.item_Standard.setText(child_list.get(groupPosition).get(childPosition).getStandard());
         itemHolder.item_Promotion.setText(child_list.get(groupPosition).get(childPosition).getPromotionName() + "");

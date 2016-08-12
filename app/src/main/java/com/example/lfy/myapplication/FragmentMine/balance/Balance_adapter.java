@@ -25,7 +25,7 @@ public class Balance_adapter extends RecyclerView.Adapter<Balance_adapter.ViewHo
         notifyDataSetChanged();
     }
 
-    int first = 0;
+    int first = -1;
 
     private OnItemClick itemClick;
 
@@ -92,5 +92,4 @@ public class Balance_adapter extends RecyclerView.Adapter<Balance_adapter.ViewHo
     interface OnItemClick {
         void onItemClick(BalanceBean balance_bean);
     }
-
 }

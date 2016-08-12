@@ -277,6 +277,8 @@ public class All extends Fragment implements SwipeRefreshLayout.OnRefreshListene
                     order.setIsNextDay(point.getString("isNextDay"));
                     order.setPoint(point.getString("point"));
                     order.setDelivery(point.getString("Delivery"));
+                    order.setAddress(point.getString("Address"));
+                    order.setDeliveryTime(point.getString("DeliveryTime"));
 
                     date.add(order);//全部订单
                     ProductStr.add(json(order.getProductStr()));

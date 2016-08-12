@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.lfy.myapplication.Group.GroupDetail">
+
+    <FrameLayout
+        android:id="@+id/grouporder_top_bar"
+        style="@style/FragmentTop">
+
+        <ImageView style="@style/Left" />
+
+        <TextView
+            android:id="@+id/grouporder_txt_topbar"
+            style="@style/Center"
+            android:text="团购详情" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="@dimen/left_left_margin"
+            android:padding="@dimen/left_padding"
+            android:text="分享"
+            android:textColor="@color/white" />
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/group_order_image"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_alignParentStart="true"
+            android:layout_margin="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/testa" />
+
+        <TextView
+            android:id="@+id/group_order_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/group_order_image"
+            android:text="【直降3元】泰国椰皇4个42.9元【感受泰国舌尖上的风情】"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/group_order_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/group_order_title"
+            android:layout_toRightOf="@id/group_order_image"
+            android:text="【直降3元】泰国椰皇4个42.9元【感受泰国舌尖上的风情】"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/group_order_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/group_order_content"
+            android:layout_margin="5dp"
+            android:text="42.00"
+            android:textColor="@color/actionsheet_red"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/grouporder_rmb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/group_order_price"
+            android:layout_toLeftOf="@id/group_order_price"
+            android:text="￥"
+            android:textColor="@color/actionsheet_red" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/group_order_price"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="-40dp"
+            android:src="@mipmap/grouping" />
+
+        <View
+            android:id="@+id/group_order_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/group_order_image"
+            android:background="#e4e4e4"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/group_order_view"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="3人团"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:orientation="horizontal"></LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/group_order_image"
+                android:background="#e4e4e4"></View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="团长信息"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/group_order_image"
+                android:background="#e4e4e4"></View>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

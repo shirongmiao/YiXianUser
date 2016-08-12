@@ -26,6 +26,43 @@ public class OrderBean implements Serializable {
     String isNextDay;
     String point;
     String Delivery;
+    String DeliveryTime;
+    String Address;
+    String Settlement;
+    String VipDiscount;
+
+
+    public String getDeliveryTime() {
+        return DeliveryTime;
+    }
+
+    public void setDeliveryTime(String deliveryTime) {
+        DeliveryTime = deliveryTime;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
+    }
+
+    public String getSettlement() {
+        return Settlement;
+    }
+
+    public void setSettlement(String settlement) {
+        Settlement = settlement;
+    }
+
+    public String getVipDiscount() {
+        return VipDiscount;
+    }
+
+    public void setVipDiscount(String vipDiscount) {
+        VipDiscount = vipDiscount;
+    }
 
     public String getDelivery() {
         return Delivery;

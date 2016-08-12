@@ -71,6 +71,10 @@ public class ForgetLoginPwd extends AppCompatActivity {
     private void initView() {
         imageView1 = (ImageView) findViewById(R.id.imageView1);
         text_ma = (Button) findViewById(R.id.text_ma);
+
+        text_ma.setBackgroundResource(R.drawable.round_hollow);
+        text_ma.setTextColor(0xff000000);
+
         validation = (EditText) findViewById(R.id.validation);
         validation.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         user_phone = (EditText) findViewById(R.id.user_phone);
@@ -95,6 +99,8 @@ public class ForgetLoginPwd extends AppCompatActivity {
 
                     text_ma.setClickable(false);
                     text_ma.setBackgroundResource(R.drawable.round_greay);
+                    text_ma.setTextColor(0xff8e8e93);
+
                     duanxin(mobile);
 
                     validation.setFocusable(true);
@@ -155,6 +161,7 @@ public class ForgetLoginPwd extends AppCompatActivity {
                 Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
                 text_ma.setClickable(true);
                 text_ma.setBackgroundResource(R.drawable.round_hollow);
+                text_ma.setTextColor(0xff000000);
                 if (ex instanceof HttpException) { // 网络错误
                     HttpException httpEx = (HttpException) ex;
                     int responseCode = httpEx.getCode();
@@ -198,13 +205,15 @@ public class ForgetLoginPwd extends AppCompatActivity {
         public void onFinish() {//计时完毕时触发
             text_ma.setText("重新验证");
             text_ma.setClickable(true);
-            text_ma.setBackgroundResource(R.drawable.round_green);
+            text_ma.setBackgroundResource(R.drawable.round_hollow);
+            text_ma.setTextColor(0xff8e8e93);
         }
 
         @Override
         public void onTick(long millisUntilFinished) {//计时过程显示
             text_ma.setClickable(false);
             text_ma.setBackgroundResource(R.drawable.round_greay);
+            text_ma.setTextColor(0xff000000);
             text_ma.setText(millisUntilFinished / 1000 + "秒");
         }
     }

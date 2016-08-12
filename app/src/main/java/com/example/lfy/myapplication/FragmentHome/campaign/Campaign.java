@@ -285,7 +285,7 @@ public class Campaign extends AppCompatActivity {
             public void onFinished() {
                 if (!hasError && result != null) {
                     // 成功获取数据
-                    Toast.makeText(x.app(), "success", Toast.LENGTH_LONG).show();
+                    Toast.makeText(x.app(), "加入成功", Toast.LENGTH_LONG).show();
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         int Ret = jsonObject.getInt("Ret");

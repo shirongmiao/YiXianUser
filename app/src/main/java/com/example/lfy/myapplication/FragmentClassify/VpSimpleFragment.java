@@ -41,6 +41,7 @@ public class VpSimpleFragment extends Fragment {
 
     SecondViewpager secondMenu;
 
+    String ShowType = null;
 
     @Nullable
     @Override
@@ -50,7 +51,7 @@ public class VpSimpleFragment extends Fragment {
 
 
         Bundle arguments = getArguments();
-        String ShowType = null;
+
         if (arguments != null) {
             mTitle = arguments.getString(BUNDLE_TITLE);
             ShowType = arguments.getString("ShowType");
@@ -154,7 +155,12 @@ public class VpSimpleFragment extends Fragment {
                 for (int a = 0; a < data.length(); a++) {
                     JSONObject gradOne = data.getJSONObject(a);
                     GridPhoto ever = new GridPhoto();
-                    String imag = gradOne.getString("Image1");
+                    String imag;
+                    if (ShowType.equals("1")) {
+                        imag = gradOne.getString("Image");
+                    } else {
+                        imag = gradOne.getString("Image1");
+                    }
                     Log.d("我是图片地址", imag);
                     ever.setImage("http://www.baifenxian.com/" + java.net.URLEncoder.encode(imag, "UTF-8"));
                     ever.setOrderCount(gradOne.getInt("OrderCount"));
@@ -270,7 +276,7 @@ public class VpSimpleFragment extends Fragment {
                     // 成功获取数据
                     Variables.count = Variables.count + 1;
                     SecondViewpager.bv.setBadgeCount(Variables.count);
-                    Toast.makeText(x.app(), "success", Toast.LENGTH_LONG).show();
+                    Toast.makeText(x.app(), "加入成功", Toast.LENGTH_LONG).show();
                 }
             }
         });

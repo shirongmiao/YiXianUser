@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +23,7 @@ import com.example.lfy.myapplication.FragmentMine.address.ManageAddress;
 import com.example.lfy.myapplication.FragmentMine.balance.Balance;
 import com.example.lfy.myapplication.FragmentMine.balance.SetPassWord;
 import com.example.lfy.myapplication.FragmentMine.discount.Coupon;
+import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.Send;
 import com.example.lfy.myapplication.Util.pay_dialog.DialogWidget;
@@ -62,9 +66,15 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
     LinearLayout submit_my_money;
     LinearLayout submit_alipay;
     LinearLayout submit_wx;
+    TextView submit_balance;
     //手动选择配送时间
     LinearLayout submit_time;
+    TextView submit_time_text;
+    EditText submit_say;
 
+    String time1 = null;
+    String time2 = null;
+    String time_all = null;
 
     AddressBean Delivery = null;
     //防止多次点击
@@ -88,14 +98,17 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
     //判断来源
     String from;
 
+    boolean submit_goods = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Variables.setTranslucentStatus(this);
+//        Variables.setTranslucentStatus(this);
         setContentView(R.layout.submit_order);
         initView();
         getCar_xUtils();
-        address_xUtil();
+        address_xUtil();//请求地址
+        select_money();
         PingppLog.DEBUG = true;
     }
 
@@ -113,12 +126,15 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
 
         submit_price = (TextView) findViewById(R.id.submit_price);
         submit_PromotionPrice = (TextView) findViewById(R.id.submit_PromotionPrice);
+        submit_balance = (TextView) findViewById(R.id.submit_balance);
+
         submit_my_money = (LinearLayout) findViewById(R.id.submit_my_money);
         submit_alipay = (LinearLayout) findViewById(R.id.submit_alipay);
         submit_wx = (LinearLayout) findViewById(R.id.submit_wx);
 
         submit_time = (LinearLayout) findViewById(R.id.submit_time);
-
+        submit_time_text = (TextView) findViewById(R.id.submit_time_text);
+        submit_say = (EditText) findViewById(R.id.submit_say);
         //返回
         submit_return.setOnClickListener(this);
         //选择地址
@@ -131,6 +147,12 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
         submit_wx.setOnClickListener(this);
 
         submit_time.setOnClickListener(this);
+        String str = Variables.point.getTime();
+        int a = Integer.parseInt(str.substring(0, str.indexOf(":"))) + 2;
+        int b = Integer.parseInt(str.substring(str.indexOf("-") + 1, str.lastIndexOf(":")));
+        time_all = a + ":00";
+        Log.d("我是截取的时间", a + "时-" + b + "时");
+        submit_time_text.setText("期望明天" + time_all + "送达");
     }
 
     @Override
@@ -155,20 +177,23 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
                     startActivityForResult(intent, COUPON);
                     break;
                 case R.id.submit_my_money:
-                    if (Delivery != null) {
-                        money_xUtils(VipPrice - CouponPrice);
-                        flag = false;
-                    } else {
-                        Toast.makeText(SubmitOrder.this, "请选择地址", Toast.LENGTH_SHORT).show();
+                    if (submit_goods) {
+                        if (Delivery != null) {
+                            money_xUtils(VipPrice - CouponPrice);
+                            flag = false;
+                        } else {
+                            Toast.makeText(SubmitOrder.this, "请选择地址", Toast.LENGTH_SHORT).show();
+                        }
                     }
-
                     break;
                 case R.id.submit_alipay:
-                    if (Delivery != null) {
-                        sure(OrderPrice - CouponPrice, "alipay");
-                        flag = false;
-                    } else {
-                        Toast.makeText(SubmitOrder.this, "请选择地址", Toast.LENGTH_SHORT).show();
+                    if (submit_goods) {
+                        if (Delivery != null) {
+                            sure(OrderPrice - CouponPrice, "alipay");
+                            flag = false;
+                        } else {
+                            Toast.makeText(SubmitOrder.this, "请选择地址", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     break;
                 case R.id.submit_wx:
@@ -180,6 +205,58 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
                     }
                     break;
                 case R.id.submit_time:
+
+                    View outerView = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);
+                    PickerView minute_pv = (PickerView) outerView.findViewById(R.id.minute_pv);
+                    PickerView second_pv = (PickerView) outerView.findViewById(R.id.second_pv);
+                    List<String> data = new ArrayList<String>();
+                    List<String> seconds = new ArrayList<String>();
+
+                    String str = Variables.point.getTime();
+                    int a = Integer.parseInt(str.substring(0, str.indexOf(":"))) + 2;
+                    int b = Integer.parseInt(str.substring(str.indexOf("-") + 1, str.lastIndexOf(":")));
+
+                    time1 = a + "";
+                    time2 = "00";
+
+                    for (int i = a; i < b; i++) {
+                        data.add(i < 10 ? "0" + i : "" + i);
+                    }
+                    for (int i = 0; i < 60; i++) {
+                        seconds.add(i < 10 ? "0" + i : "" + i);
+                    }
+                    minute_pv.setData(data);
+                    minute_pv.setOnSelectListener(new PickerView.onSelectListener() {
+
+                        @Override
+                        public void onSelect(String text) {
+                            Toast.makeText(SubmitOrder.this, "选择了 " + text + "时",
+                                    Toast.LENGTH_SHORT).show();
+                            time1 = text;
+                        }
+                    });
+                    second_pv.setData(seconds);
+                    second_pv.setOnSelectListener(new PickerView.onSelectListener() {
+
+                        @Override
+                        public void onSelect(String text) {
+                            Toast.makeText(SubmitOrder.this, "选择了 " + text + " 分",
+                                    Toast.LENGTH_SHORT).show();
+                            time2 = text;
+                        }
+                    });
+
+                    new AlertDialog.Builder(this)
+                            .setTitle("选择配送时间")
+                            .setView(outerView)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    time_all = time1 + ":" + time2;
+                                    submit_time_text.setText("期望明天" + time_all + "送达");
+                                }
+                            })
+                            .show();
                     break;
             }
         }
@@ -277,6 +354,8 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
                         productIdStr.append("," + everyone.getString("ProductID"));
                     }
                 }
+
+                submit_goods = true;
                 Money(list);
             } else {
 
@@ -300,11 +379,10 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
 
         AllCost = Cost;
         GoodPrice = price;
-
         double free = Variables.point.getFreePrice() - price;
         if (free > 0) {
-            price = price + Variables.point.sendPrice;
-            PromotionPrice = PromotionPrice + Variables.point.sendPrice;
+            price = price + Variables.point.getDeliveryPrice();
+            PromotionPrice = PromotionPrice + Variables.point.getDeliveryPrice();
         }
         OrderPrice = price;//普通用户总价
         VipPrice = PromotionPrice;//会员总价
@@ -315,7 +393,7 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
     private void setMoney(double price, double PromotionPrice) {
 
         submit_price.setText("￥" + keep(price) + "元");
-        submit_PromotionPrice.setText(keep(PromotionPrice));
+        submit_PromotionPrice.setText("只需：￥" + keep(PromotionPrice) + "元");
     }
 
     private void setAddress(AddressBean address) {
@@ -389,22 +467,23 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
                 JSONArray jsonArray = jsonObject.getJSONArray("Data");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
-                    AddressBean address = new AddressBean();
-                    address.setId(object.getString("id"));
-                    address.setCustomerID(object.getString("customerID"));
-                    address.setName(object.getString("name"));
-                    address.setPointname(object.getString("pointname"));
-                    address.setCity(object.getString("city"));
-                    address.setPhone(object.getString("phone"));
-                    address.setDistrict(object.getString("district"));
-                    address.setAddress(object.getString("address"));
-                    address.setSex(object.getString("sex"));
-                    address.setIsdefault(object.getString("Isdefault"));
                     if (object.getString("Isdefault").equals("1")) {
+                        AddressBean address = new AddressBean();
+                        address.setId(object.getString("id"));
+                        address.setCustomerID(object.getString("customerID"));
+                        address.setName(object.getString("name"));
+                        address.setPointname(object.getString("pointname"));
+                        address.setCity(object.getString("city"));
+                        address.setPhone(object.getString("phone"));
+                        address.setDistrict(object.getString("district"));
+                        address.setAddress(object.getString("address"));
+                        address.setSex(object.getString("sex"));
+                        address.setIsdefault(object.getString("Isdefault"));
                         Delivery = address;
+                        setAddress(Delivery);
+                        return;
                     }
                 }
-                setAddress(Delivery);
 
             }
         } catch (JSONException e) {
@@ -416,23 +495,42 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
 
     private void sure(final double price, final String pay) {
 
-        String addressId = Delivery != null ? "0" : Delivery.getId();
+        String addressId = Delivery == null ? "0" : Delivery.getId();
         orderno = getOrderNO();
 
+        JSONObject js_request = new JSONObject();
+        try {
+            js_request.put("OrderNo", orderno);
+            js_request.put("OrderPrice", keep(OrderPrice));
+            js_request.put("Discount", keep(CouponPrice));//优惠金额
+            js_request.put("PayedPrice", keep(price));
+            js_request.put("Distribution", Variables.point.getID());
+            js_request.put("ProductID", productIdStr.toString());
+            js_request.put("CustomerID", Variables.my.getCustomerID());
+            js_request.put("CustomerSay", submit_say.getText().toString() + " ");
+            js_request.put("CouponID", CouponID);//优惠券ID
+            js_request.put("Cost", keep(AllCost));
+            js_request.put("productStr", productStr);
+            js_request.put("Delivery", Variables.point.getDeliveryPrice() + "");
+            js_request.put("Address", addressId);
+
+            if (pay.equals("money")) {
+                js_request.put("isNextDay", "1");
+                js_request.put("VipDiscount", keep(OrderPrice - VipPrice));
+            } else {
+                js_request.put("isNextDay", "0");
+                js_request.put("VipDiscount", "0");
+            }
+            js_request.put("DeliveryTime", time_all);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         RequestParams params = new RequestParams(Variables.submit_order);
-        params.addBodyParameter("OrderNo", orderno);
-        params.addBodyParameter("OrderPrice", keep(OrderPrice));
-        params.addBodyParameter("Discount", keep(CouponPrice));//优惠金额
-        params.addBodyParameter("PayedPrice", keep(price));
-        params.addBodyParameter("Distribution", Variables.point.getID());
-        params.addBodyParameter("ProductID", productIdStr.toString());
-        params.addBodyParameter("CustomerID", Variables.my.getCustomerID());
-        params.addBodyParameter("CustomerSay", "我是测试");
-        params.addBodyParameter("CouponID", CouponID);//优惠券ID
-        params.addBodyParameter("isNextDay", "0");
-        params.addBodyParameter("Cost", keep(AllCost));
-        params.addBodyParameter("productStr", productStr);
-        params.addBodyParameter("Delivery", addressId);
+        params.setAsJsonContent(true);
+        params.setBodyContent(js_request.toString());
+
+        Log.d("我是借口", params.toString());
 
         x.http().post(params, new Callback.CacheCallback<String>() {
             private boolean hasError = false;
@@ -506,7 +604,7 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
                                 });
                             }
 
-                            DeleteCar_xUtils();
+//                            DeleteCar_xUtils();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -740,7 +838,7 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
                                 pwd_xUtils();
                             } else {
                                 flag = true;
-                                new android.support.v7.app.AlertDialog.Builder(SubmitOrder.this)
+                                new AlertDialog.Builder(SubmitOrder.this)
                                         .setMessage("余额不足，是否去充值？")
                                         .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                                             @Override
@@ -813,7 +911,7 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
                             sure(VipPrice - CouponPrice, "money");
 
                         } else {
-                            new android.support.v7.app.AlertDialog.Builder(SubmitOrder.this)
+                            new AlertDialog.Builder(SubmitOrder.this)
                                     .setMessage("未设置密码，是否去设置？")
                                     .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                                         @Override
@@ -849,11 +947,13 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
 
             @Override
             public void onCancelPay() {
-                // TODO Auto-generated method stub
                 mDialogWidget.dismiss();
                 mDialogWidget = null;
 
                 Toast.makeText(SubmitOrder.this, "交易取消", Toast.LENGTH_SHORT).show();
+                MainActivity.jump(1);
+                Intent intent = new Intent(SubmitOrder.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         }).getView();
@@ -1020,7 +1120,7 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
                             String money = jsonArray.getJSONObject(0).getString("TopUpPrice");
                             double price = Double.parseDouble(money);
                             price = (Math.round(price * 10000) / 10000.00);
-//                            my_money.setText("一鲜余额：￥" + price);
+                            submit_balance.setText("我的余额：￥" + price);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

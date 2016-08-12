@@ -184,7 +184,12 @@ public class Variables {
     // point=e1a1c063-4352-4f51-a7cd-8c690ba11523&
     // type=1
     public static String http_InsertCar = www + "product/InsertCart?" + com;
-
+    //获取团购商品信息
+    public static String http_GetTuanProduct = www + "product/GetTuanProduct?" + com;
+    //开团插入团购订单
+    public static String http_InsertTuanOrder = www + "order/InsertTuanOrder?" + com;
+    //通过服务站查询团购,1为按时间，2为按进度
+    public static String GetTuanOrderByPoint = www + "order/GetTuanOrderByPoint?" + com;
 
     // 需要setContentView之前调用
     public static void setTranslucentStatus(Activity con) {
@@ -201,7 +206,8 @@ public class Variables {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 透明状态栏
-            con.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);}
+            con.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
     }
 
     /**

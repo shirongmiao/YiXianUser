@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/history"
             style="@style/Right"
-            android:src="@mipmap/mine_set_up" />
+            android:src="@mipmap/balance_history_button" />
 
     </FrameLayout>
 
@@ -101,6 +101,14 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_weight="1"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/balance_Agreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:drawableLeft="@mipmap/balance_what"
+        android:text="  充值协议" />
 
     <TextView
         android:id="@+id/balance_what"

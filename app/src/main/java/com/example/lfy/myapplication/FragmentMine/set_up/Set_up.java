@@ -143,7 +143,6 @@ public class Set_up extends AppCompatActivity {
         params.addBodyParameter("customerID", Variables.my.getCustomerID());
         params.addBodyParameter("devicetoken", Variables.DEVICE_ID);
         params.setCacheMaxAge(10000 * 60);
-
         x.http().get(params, new Callback.CacheCallback<String>() {
             private boolean hasError = false;
             private String result = null;

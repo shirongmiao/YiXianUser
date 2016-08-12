@@ -39,7 +39,16 @@ import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @description
@@ -127,7 +136,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
 
-
     private void initViewPager() {
         myViewPager = (ViewPager) this.findViewById(R.id.viewPager);
         FragmentPagerAdapter mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -144,6 +152,76 @@ public class SplashActivity extends AppCompatActivity {
 
         };
         myViewPager.setAdapter(mAdapter);
+        phone();
+    }
+
+    //获取设备信息
+    private void phone() {
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        String androidId = "" + android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+        String tmDevice = "" + tm.getDeviceId();
+        String tmSerial = "" + tm.getSimSerialNumber();
+        UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32) | tmSerial.hashCode());
+        String uniqueId = deviceUuid.toString();
+
+        RequestParams params = new RequestParams(Variables.http_login);
+        params.addBodyParameter("DeviceToken", tm.getDeviceId());
+        params.addBodyParameter("DeviceModel", android.os.Build.MODEL);
+        params.addBodyParameter("Uuid", uniqueId);
+        params.addBodyParameter("DeviceVersion", android.os.Build.VERSION.RELEASE);
+
+        params.addBodyParameter("DeviceName", android.os.Build.MANUFACTURER);
+        params.addBodyParameter("DeviceSystem ", android.os.Build.VERSION.RELEASE);
+        params.addBodyParameter("PublicIp", "0");
+        params.addBodyParameter("DeviceCity", "0");
+
+
+        params.setCacheMaxAge(10000 * 60);
+        x.http().get(params, new Callback.CacheCallback<String>() {
+            private boolean hasError = false;
+            private String result = null;
+
+            @Override
+            public boolean onCache(String result) {
+                this.result = result;
+                return false; // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
+                if (result != null) {
+                    this.result = result;
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                hasError = true;
+                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                if (ex instanceof HttpException) { // 网络错误
+                    HttpException httpEx = (HttpException) ex;
+                    int responseCode = httpEx.getCode();
+                    String responseMsg = httpEx.getMessage();
+                    String errorResult = httpEx.getResult();
+                    // ...
+                } else { // 其他错误
+                    // ...
+                }
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFinished() {
+                if (!hasError && result != null) {
+                    // 成功获取数据
+                }
+            }
+        });
     }
 
 
@@ -233,13 +311,6 @@ public class SplashActivity extends AppCompatActivity {
                 communication.setEmailAddress(Customer.getString("EmailAddress"));
                 communication.setIsChecked(Customer.getString("IsChecked"));
                 communication.setCheckedType(Customer.getString("CheckedType"));
-                communication.setAddressP(Customer.getString("AddressP"));
-                communication.setAddressC(Customer.getString("AddressC"));
-                communication.setAddressD(Customer.getString("AddressD"));
-                communication.setAddressSQ(Customer.getString("AddressSQ"));
-                communication.setAddressZ(Customer.getString("AddressZ"));
-                communication.setAddressDY(Customer.getString("AddressDY"));
-                communication.setAddressS(Customer.getString("AddressS"));
                 communication.setRecommendNo(Customer.getString("RecommendNo"));
                 communication.setRecommendName(Customer.getString("RecommendName"));
                 communication.setCustomerLevel(Customer.getString("CustomerLevel"));

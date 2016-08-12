@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,17 +14,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lfy.myapplication.Bean.AddressBean;
 import com.example.lfy.myapplication.Bean.CarDbBean;
 import com.example.lfy.myapplication.Bean.OrderBean;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.Listview;
 import com.example.lfy.myapplication.Variables;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,10 +40,10 @@ public class Order_Particular extends AppCompatActivity {
 
     List<CarDbBean> goods;
     OrderBean orders;
-    Button once_again;
     TextView OrderNO;
     TextView SwiftNumber;
     TextView CreateTime;
+    TextView SendTime;
     TextView CustomerSay;
 
     TextView order_particular_myname;
@@ -78,9 +84,11 @@ public class Order_Particular extends AppCompatActivity {
     private void init() {
         imageView1 = (ImageView) findViewById(R.id.imageView1);
         OrderNO = (TextView) findViewById(R.id.order_particular_OrderNO);
-        once_again = (Button) findViewById(R.id.once_again);
+
+
         SwiftNumber = (TextView) findViewById(R.id.order_particular_SwiftNumber);
         CreateTime = (TextView) findViewById(R.id.order_particular_CreateTime);
+        SendTime = (TextView) findViewById(R.id.order_particular_SendTime);
         CustomerSay = (TextView) findViewById(R.id.order_particular_CustomerSay);
 
         line_my_address = (LinearLayout) findViewById(R.id.line_my_address);
@@ -110,17 +118,6 @@ public class Order_Particular extends AppCompatActivity {
             }
         });
 
-        once_again.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(Order_Particular.this, Order_Once.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("orders", (Serializable) orders);
-//                bundle.putSerializable("order", (Serializable) goods);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-            }
-        });
 
         call.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,23 +129,15 @@ public class Order_Particular extends AppCompatActivity {
             }
         });
 
-        if (orders.getOrderType().equals("0")) {//未付款
-            once_again.setVisibility(View.GONE);
-        }
-        try {
-            if (goods.get(0).getTitle().contains("新用户"))
-                once_again.setVisibility(View.GONE);
-
-        } catch (Exception e) {
-            once_again.setVisibility(View.VISIBLE);
-        }
-
 
         OrderNO.setText(orders.getOrderNO());
         SwiftNumber.setText(orders.getSwiftNumber());
         CreateTime.setText(orders.getCreateTime().substring(0, 19).replaceAll("T", " "));
+        SendTime.setText(orders.getDeliveryTime());
         CustomerSay.setText(orders.getCustomerSay());
 
+
+        //目前只有配送到家
         if (orders.getDelivery().equals("0")) {
             send_type.setText("服务站自提");
             line_my_address.setVisibility(View.GONE);
@@ -156,9 +145,9 @@ public class Order_Particular extends AppCompatActivity {
             order_particular_myphone.setText(Variables.my.getPhoneNameber() + "");
 
         } else {
-            send_type.setText("配送到家 ");
+            send_type.setText("配送到家");
             line_my_address.setVisibility(View.VISIBLE);
-            addressID_xUtils(orders.getDelivery());
+            addressID_xUtils(orders.getAddress());
         }
         point_address.setText(Variables.point.getAddress());
         point_phone.setText(Variables.point.getPhone());
@@ -168,14 +157,14 @@ public class Order_Particular extends AppCompatActivity {
 
         if (orders.getIsNextDay().equals("1")) {
             order_particular_next.setText("￥" + AllNextDay());
-            order_particular_disprice.setText((Math.round((discoupon - AllNextDay()) * 10000) / 10000.00) + "");
+            order_particular_disprice.setText((Math.round((discoupon) * 10000) / 10000.00) + "");
         } else {
             order_particular_next.setText("未选择会员");
             order_particular_disprice.setText((Math.round((discoupon) * 10000) / 10000.00) + "");
         }
         order_particular_price.setText("￥" + orders.getOrderPrice());
         order_particular_payprice.setText("实付:￥" + orders.getPayedPrice());
-        order_particular_dis_all.setText("￥" + (Math.round((discoupon) * 10000) / 10000.00) + "");
+        order_particular_dis_all.setText("￥" + (Math.round((discoupon + AllNextDay()) * 10000) / 10000.00) + "");
     }
 
     public double AllNextDay() {
@@ -193,7 +182,6 @@ public class Order_Particular extends AppCompatActivity {
     }
 
     private void addressID_xUtils(String id) {
-
         RequestParams params = new RequestParams(Variables.http_address_particular);
         params.addBodyParameter("addressID", id);
         x.http().get(params, new Callback.CacheCallback<String>() {
@@ -244,40 +232,40 @@ public class Order_Particular extends AppCompatActivity {
     }
 
     private void JSON(String result) {
-//        try {
-//            Log.d("我是领取point", result);
-//            JSONObject jsonObject = new JSONObject(result);
-//            String Ret = jsonObject.getString("Ret");
-//            if (Ret.equals("1")) {
-//                List<Address_bean> all = new ArrayList<Address_bean>();
-//                JSONArray jsonArray = jsonObject.getJSONArray("Data");
-//                for (int i = 0; i < jsonArray.length(); i++) {
-//                    JSONObject object = jsonArray.getJSONObject(i);
-//                    Address_bean address = new Address_bean();
-//                    address.setId(object.getString("id"));
-//                    address.setCustomerID(object.getString("customerID"));
-//                    address.setName(object.getString("name"));
-//                    address.setPointname(object.getString("pointname"));
-//                    address.setCity(object.getString("city"));
-//                    address.setPhone(object.getString("phone"));
-//                    address.setDistrict(object.getString("district"));
-//                    address.setAddress(object.getString("address"));
-//                    address.setSex(object.getString("sex"));
-//                    address.setIsdefault(object.getString("Isdefault"));
-//                    all.add(address);
-//                }
-//
-//                order_particular_myname.setText(all.get(0).getName());
-//                order_particular_myaddress.setText(all.get(0).getAddress());
-//                order_particular_myphone.setText(all.get(0).getPhone());
-//
-//
-//            } else {
-//                Toast.makeText(getApplicationContext(), "地址已被删除", Toast.LENGTH_SHORT).show();
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Log.d("我是领取point", result);
+            JSONObject jsonObject = new JSONObject(result);
+            String Ret = jsonObject.getString("Ret");
+            if (Ret.equals("1")) {
+                List<AddressBean> all = new ArrayList<>();
+                JSONArray jsonArray = jsonObject.getJSONArray("Data");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    AddressBean address = new AddressBean();
+                    address.setId(object.getString("id"));
+                    address.setCustomerID(object.getString("customerID"));
+                    address.setName(object.getString("name"));
+                    address.setPointname(object.getString("pointname"));
+                    address.setCity(object.getString("city"));
+                    address.setPhone(object.getString("phone"));
+                    address.setDistrict(object.getString("district"));
+                    address.setAddress(object.getString("address"));
+                    address.setSex(object.getString("sex"));
+                    address.setIsdefault(object.getString("Isdefault"));
+                    all.add(address);
+                }
+
+                order_particular_myname.setText(all.get(0).getName());
+                order_particular_myaddress.setText(all.get(0).getAddress());
+                order_particular_myphone.setText(all.get(0).getPhone());
+
+
+            } else {
+                Toast.makeText(getApplicationContext(), "地址已被删除", Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 

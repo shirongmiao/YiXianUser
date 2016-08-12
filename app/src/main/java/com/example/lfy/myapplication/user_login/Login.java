@@ -195,13 +195,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 communication.setEmailAddress(Customer.getString("EmailAddress"));
                 communication.setIsChecked(Customer.getString("IsChecked"));
                 communication.setCheckedType(Customer.getString("CheckedType"));
-                communication.setAddressP(Customer.getString("AddressP"));
-                communication.setAddressC(Customer.getString("AddressC"));
-                communication.setAddressD(Customer.getString("AddressD"));
-                communication.setAddressSQ(Customer.getString("AddressSQ"));
-                communication.setAddressZ(Customer.getString("AddressZ"));
-                communication.setAddressDY(Customer.getString("AddressDY"));
-                communication.setAddressS(Customer.getString("AddressS"));
                 communication.setRecommendNo(Customer.getString("RecommendNo"));
                 communication.setRecommendName(Customer.getString("RecommendName"));
                 communication.setCustomerLevel(Customer.getString("CustomerLevel"));
@@ -260,6 +253,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 break;
         }
     }
+
     private void Select_xUtils(String mobile) {
         //查询用户是否存在
         RequestParams params = new RequestParams(Variables.http_phone);

@@ -21,6 +21,7 @@ import com.example.lfy.myapplication.FragmentCar.Shop_Car;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.BadgeView;
 import com.example.lfy.myapplication.Variables;
+import com.example.lfy.myapplication.user_login.Login;
 import com.example.lfy.myapplication.user_login.LoginBg;
 
 import org.json.JSONArray;
@@ -128,9 +129,13 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
         if (Variables.point.getState().equals("1")) {
             add_car.setEnabled(true);
             add_car.setBackgroundResource(R.color.green);
+            intent_car.setEnabled(true);
+            intent_car.setBackgroundResource(R.color.actionsheet_red);
         } else {
             add_car.setEnabled(false);
             add_car.setBackgroundResource(R.color.line_grey);
+            intent_car.setEnabled(false);
+            intent_car.setBackgroundResource(R.color.huiseziti);
         }
     }
 
@@ -153,21 +158,15 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
                 count.setText(a + "");
                 break;
             case R.id.intent_car:
-                if (Variables.my != null) {
-                    Intent intent = new Intent(Goods_Particular.this, Shop_Car.class);
-                    startActivity(intent);
+                if (Variables.point.getState().equals("1")) {
+                    if (Variables.my != null) {
+                        Insert_xUtils(productId, "into");
+                    } else {
+                        login();
+                    }
                 } else {
-                    Intent intent = new Intent(Goods_Particular.this, LoginBg.class);
-                    startActivity(intent);
-                }
-                break;
-            case R.id.car:
-                if (Variables.my != null) {
-                    Intent intent = new Intent(Goods_Particular.this, Shop_Car.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(Goods_Particular.this, LoginBg.class);
-                    startActivity(intent);
+                    intent_car.setEnabled(false);
+                    intent_car.setBackgroundResource(R.color.huiseziti);
                 }
                 break;
             case R.id.add_car:
@@ -175,20 +174,27 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
                     add_car.setEnabled(true);
                     add_car.setBackgroundResource(R.color.green);
                     if (Variables.my != null) {
-                        Insert_xUtils(productId);
+                        Insert_xUtils(productId, "add_car");
                     } else {
-                        Intent intent = new Intent(Goods_Particular.this, LoginBg.class);
-                        startActivity(intent);
+                        login();
                     }
                 } else {
                     add_car.setEnabled(false);
                     add_car.setBackgroundResource(R.color.line_grey);
                 }
                 break;
+            case R.id.car:
+                if (Variables.my != null) {
+                    Intent intent = new Intent(Goods_Particular.this, Shop_Car.class);
+                    startActivity(intent);
+                } else {
+                    login();
+                }
+                break;
             case R.id.classify_favorite:
                 if (Variables.my == null) {
-
                     mine_favorite.setChecked(false);
+                    login();
                 } else {
                     if (mine_favorite.isChecked()) {
                         my_favorite(Variables.http_collection, "add");
@@ -200,7 +206,7 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private  void login(){
+    private void login() {
         Intent intent = new Intent(Goods_Particular.this, LoginBg.class);
         startActivity(intent);
     }
@@ -327,7 +333,7 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
     }
 
 
-    private void Insert_xUtils(String productId) {
+    private void Insert_xUtils(String productId, final String type) {
 
         RequestParams params = new RequestParams(Variables.http_InsertCar);
         params.addBodyParameter("CustomerID", Variables.my.getCustomerID());
@@ -381,6 +387,10 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(Goods_Particular.this, "加入成功", Toast.LENGTH_SHORT).show();
                     Variables.count = Variables.count + a;
                     bv.setBadgeCount(Variables.count);
+                    if (type.equals("into")){
+                        Intent intent = new Intent(Goods_Particular.this, Shop_Car.class);
+                        startActivity(intent);
+                    }
                 } else {
                     Toast.makeText(Goods_Particular.this, "加入失败，请重新尝试", Toast.LENGTH_SHORT).show();
                 }

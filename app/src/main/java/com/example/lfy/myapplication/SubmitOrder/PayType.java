@@ -64,7 +64,6 @@ public class PayType extends AppCompatActivity {
             public void onClick(View v) {
                 if (type.equals("支付成功")) {
                     MainActivity.jump(0);
-
                 } else {
                     MainActivity.jump(1);
                 }

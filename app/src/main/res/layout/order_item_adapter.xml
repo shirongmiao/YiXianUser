@@ -69,7 +69,6 @@
                 android:gravity="center"
                 android:paddingLeft="3dp"
                 android:paddingRight="3dp"
-                android:text="买一送一"
                 android:textColor="@color/white"
                 android:textSize="9sp" />
 

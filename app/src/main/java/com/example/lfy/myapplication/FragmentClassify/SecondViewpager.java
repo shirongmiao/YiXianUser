@@ -138,7 +138,6 @@ public class SecondViewpager extends AppCompatActivity implements View.OnClickLi
             }
         };
         mViewPager.setAdapter(mAdapter);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         if (orderby.size() < 5) {
             tabLayout.setTabMode(TabLayout.MODE_FIXED);

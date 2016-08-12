@@ -111,14 +111,6 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
         car_submit.setOnClickListener(this);
         car_delete.setOnClickListener(this);
         car_shopping.setOnClickListener(this);
-
-        if (Variables.point.getState().equals("1")) {
-            car_submit.setEnabled(true);
-            car_submit.setBackgroundResource(R.color.actionsheet_red);
-        } else {
-            car_submit.setEnabled(false);
-            car_submit.setBackgroundResource(R.color.line_grey);
-        }
     }
 
     public void setUpdate() {
@@ -130,12 +122,20 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
         Intent intent;
         switch (v.getId()) {
             case R.id.car_submit:
-                if (price > Variables.point.deliveryPrice) {
-                    intent = new Intent(getActivity(), SubmitOrder.class);
-                    startActivity(intent);
+                if (Variables.point.getState().equals("1")) {
+                    car_submit.setEnabled(true);
+                    car_submit.setBackgroundResource(R.color.actionsheet_red);
+                    if (price > Variables.point.deliveryPrice) {
+                        intent = new Intent(getActivity(), SubmitOrder.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getActivity(), "未达到配送金额", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getActivity(), "未达到配送金额", Toast.LENGTH_SHORT).show();
+                    car_submit.setEnabled(false);
+                    car_submit.setBackgroundResource(R.color.line_grey);
                 }
+
                 break;
             case R.id.car_delete:
                 Dialog dialog = new android.support.v7.app.AlertDialog.Builder(getActivity())
@@ -331,7 +331,6 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
             price = price + persons.get(a).getPrice() * persons.get(a).getProductCount();
             PromotionPrice = PromotionPrice + persons.get(a).getPromotionPrice() * persons.get(a).getProductCount();
         }
-
         double free = Variables.point.getFreePrice() - price;
         carAdapter.FreedPrice(free);
         car_sendPrice.setText("含配送费:￥" + Variables.point.getDeliveryPrice() + "元");
@@ -343,22 +342,27 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
             car_sendPrice.setText("配送费：￥0.0元");
         }
         //配送费
-        double c = Variables.point.getDeliveryPrice() - price;
+        double c = Variables.point.getSendPrice() - price;
         if (c < 0) {
             car_submit.setEnabled(true);
             car_submit.setBackgroundResource(R.color.actionsheet_red);
             car_submit.setText("结算");
         } else {
-            car_submit.setText("还差" + c + "元");
+            String cha = String.format("%.2f", c);
+            car_submit.setEnabled(false);
+            car_submit.setText("还差" + cha + "元");
             car_submit.setBackgroundResource(R.color.line_grey);
         }
-
         String result = String.format("%.2f", price);
         String vip = String.format("%.2f", PromotionPrice);
         car_money.setText("合计:￥" + result);
         vip_money.setText("会员:￥" + vip);
-    }
 
+        if (Variables.point.getState().equals("0")) {
+            car_submit.setEnabled(false);
+            car_submit.setBackgroundResource(R.color.line_grey);
+        }
+    }
 
     private void Insert_xUtils(final int position, String productId, final String type) {
 
@@ -420,11 +424,13 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
                                 carAdapter.titles.remove(position);
                                 carAdapter.notifyDataSetChanged();
                                 Money(carAdapter.titles);
-                                Variables.count = Variables.count - 1;
                                 if (carAdapter.titles.size() == 0) {
                                     car_bottom_line.setVisibility(View.INVISIBLE);
                                     car_none.setVisibility(View.VISIBLE);
                                     car_recyclerView.setVisibility(View.GONE);
+                                    Variables.count = 0;
+                                }else {
+                                    Variables.count = Variables.count - 1;
                                 }
                             } else {
                                 JSONArray jsonArray = jsonObject.getJSONArray("Data");

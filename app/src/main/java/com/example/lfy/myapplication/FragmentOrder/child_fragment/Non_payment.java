@@ -175,6 +175,7 @@ public class Non_payment extends Fragment implements SwipeRefreshLayout.OnRefres
                                         @Override
                                         public void onClick(int which) {
                                             order_no = my_orders.getOrderNO();
+                                            order_price = my_orders.getPayedPrice();
                                             double pr = Double.parseDouble(my_orders.getPayedPrice());
                                             money_xUtils(pr);
                                         }
@@ -274,7 +275,9 @@ public class Non_payment extends Fragment implements SwipeRefreshLayout.OnRefres
                         order.setIsNextDay(point.getString("isNextDay"));
                         order.setPoint(point.getString("point"));
                         order.setDelivery(point.getString("Delivery"));
-
+                        order.setAddress(point.getString("Address"));
+                        order.setDeliveryTime(point.getString("DeliveryTime"));
+                        
                         date.add(order);//全部订单
                         ProductStr.add(json(order.getProductStr()));
                     }

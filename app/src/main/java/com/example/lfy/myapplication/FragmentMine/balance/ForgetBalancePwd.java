@@ -14,6 +14,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class ForgetBalancePwd extends AppCompatActivity {
     int yan;
     EditText validation;
     String duanxin;
+    FrameLayout forget_all;
 
     ImageView imageView1;
 
@@ -59,7 +61,14 @@ public class ForgetBalancePwd extends AppCompatActivity {
 
     private void init() {
         imageView1 = (ImageView) findViewById(R.id.imageView1);
+
+        forget_all = (FrameLayout) findViewById(R.id.forget_all);
+        forget_all.setBackgroundResource(R.mipmap.login_bg);
         text_ma = (Button) findViewById(R.id.text_ma);
+
+        text_ma.setBackgroundResource(R.drawable.round_hollow);
+        text_ma.setTextColor(0xff000000);
+
         validation = (EditText) findViewById(R.id.validation);
         validation.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         user_phone = (EditText) findViewById(R.id.user_phone);
@@ -84,6 +93,8 @@ public class ForgetBalancePwd extends AppCompatActivity {
                 if (flag2) {
                     text_ma.setClickable(false);
                     text_ma.setBackgroundResource(R.drawable.round_greay);
+                    text_ma.setTextColor(0xff8e8e93);
+
                     duanxin(mobile);
 
                     //验证码输入框获得焦点
@@ -146,6 +157,7 @@ public class ForgetBalancePwd extends AppCompatActivity {
                 Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
                 text_ma.setClickable(true);
                 text_ma.setBackgroundResource(R.drawable.round_hollow);
+                text_ma.setTextColor(0xff000000);
                 if (ex instanceof HttpException) { // 网络错误
                     HttpException httpEx = (HttpException) ex;
                     int responseCode = httpEx.getCode();
@@ -166,8 +178,8 @@ public class ForgetBalancePwd extends AppCompatActivity {
             public void onFinished() {
                 if (!hasError && result != null) {
                     try {
-                        JSONObject jsonObject  = new JSONObject(result);
-                        int  msg = jsonObject.getInt("Msg");
+                        JSONObject jsonObject = new JSONObject(result);
+                        int msg = jsonObject.getInt("Msg");
                         yan = msg;
 
                         time.start();
@@ -190,13 +202,15 @@ public class ForgetBalancePwd extends AppCompatActivity {
         public void onFinish() {//计时完毕时触发
             text_ma.setText("重新验证");
             text_ma.setClickable(true);
-            text_ma.setBackgroundResource(R.drawable.round_green);
+            text_ma.setBackgroundResource(R.drawable.round_hollow);
+            text_ma.setTextColor(0xff000000);
         }
 
         @Override
         public void onTick(long millisUntilFinished) {//计时过程显示
             text_ma.setClickable(false);
             text_ma.setBackgroundResource(R.drawable.round_greay);
+            text_ma.setTextColor(0xff8e8e93);
             text_ma.setText(millisUntilFinished / 1000 + "秒");
         }
     }

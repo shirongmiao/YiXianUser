@@ -5,7 +5,20 @@
     <color name="colorAccent">#FF4081</color>
 
 
+    <color name="bg_black">#000000</color>
+    <color name="bg_white">#FFFFFF</color>
+    <color name="bg_topbar">#11cd6e</color>
+    <color name="bg_gray">#00F1F1F1</color>
+    <color name="transparent">#dd4c03</color>
+
+    <color name="text_gray">#FFFFFF</color>
+    <color name="text_black">#1d1d1d</color>
+    <color name="text_orgin">#f95300</color>
+    <color name="text_topbar">#ffffff</color>
+    <color name="div_white">#FFFFFF</color>
+
     <color name="white">#ffffff</color>
+    <color name="edit_white">#77ffffff</color>
     <!-- 白色 -->
     <color name="black">#000000</color>
     <!-- 一鲜黄 -->

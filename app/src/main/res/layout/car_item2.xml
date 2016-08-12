@@ -9,14 +9,16 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:text="起送费"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_height="wrap_content" />
+        android:text="起送金额" />
+
     <TextView
         android:id="@+id/car_item2_SendPrice"
         android:layout_width="wrap_content"
-        android:textColor="@color/orange"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/orange" />
+
     <TextView
         android:id="@+id/tv_item2_text"
         android:layout_width="0dp"

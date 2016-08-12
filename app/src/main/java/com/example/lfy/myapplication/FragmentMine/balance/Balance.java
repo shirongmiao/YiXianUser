@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lfy.myapplication.Bean.BalanceBean;
+import com.example.lfy.myapplication.FragmentHome.scan.WEB;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.dialog_widget.ActionSheetDialog;
 import com.example.lfy.myapplication.Variables;
@@ -41,6 +42,11 @@ public class Balance extends AppCompatActivity {
     ImageView new_break;
     ImageView history;
     TextView my_money;
+
+    TextView balance_Agreement;
+    TextView balance_what;
+
+    //http://www.baifenxian.com/xieyi/PayProtocol.html;
     TextView password;
     RecyclerView recyclerView;
 
@@ -72,6 +78,8 @@ public class Balance extends AppCompatActivity {
         history = (ImageView) findViewById(R.id.history);
         new_break = (ImageView) findViewById(R.id.new_break);
         password = (TextView) findViewById(R.id.password);
+        balance_Agreement = (TextView) findViewById(R.id.balance_Agreement);
+        balance_what = (TextView) findViewById(R.id.balance_what);
 
         balance_adapter.SetOnItemClick(new Balance_adapter.OnItemClick() {
             @Override
@@ -116,6 +124,24 @@ public class Balance extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        balance_Agreement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Balance.this, WEB.class);
+                intent.putExtra("title", "《充值协议》");
+                intent.putExtra("url", "http://www.baifenxian.com/xieyi/PayProtocol.html");
+                startActivity(intent);
+            }
+        });
+        balance_what.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Balance.this, WEB.class);
+                intent.putExtra("title", "支付遇到问题！");
+                intent.putExtra("url", "http://www.baifenxian.com/html/payquestion.html");
+                startActivity(intent);
             }
         });
     }
@@ -429,7 +455,7 @@ public class Balance extends AppCompatActivity {
                             String money = jsonArray.getJSONObject(0).getString("TopUpPrice");
                             double yue = Double.parseDouble(money);
                             yue = (Math.round(yue * 10000) / 10000.00);
-                            my_money.setText("￥" + yue);
+                            my_money.setText(yue + "");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -1,20 +1,25 @@
 package com.example.lfy.myapplication.user_login;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lfy.myapplication.Bean.MineBean;
+import com.example.lfy.myapplication.FragmentMine.discount.Coupon;
 import com.example.lfy.myapplication.FragmentMine.help.Help;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.Send;
@@ -79,6 +84,9 @@ public class Register extends AppCompatActivity {
         register_all = (FrameLayout) findViewById(R.id.register_all);
         register_send = (Button) findViewById(R.id.register_send);
 
+        register_send.setBackgroundResource(R.drawable.round_hollow);
+        register_send.setTextColor(0xff000000);
+
         register_test = (EditText) findViewById(R.id.register_test);
         register_phone = (EditText) findViewById(R.id.register_phone);
         register_password = (EditText) findViewById(R.id.register_password);
@@ -115,6 +123,7 @@ public class Register extends AppCompatActivity {
                 register_test.requestFocus();
 
                 register_send.setBackgroundResource(R.drawable.round_greay);
+                register_send.setTextColor(0xff8e8e93);
 
                 xUtils(mobile);
                 register_send.setText("稍等...");
@@ -228,7 +237,10 @@ public class Register extends AppCompatActivity {
         @Override
         public void onTick(long millisUntilFinished) {//计时过程显示
             register_send.setClickable(false);
+
             register_send.setBackgroundResource(R.drawable.round_greay);
+            register_send.setTextColor(0xff8e8e93);
+
             register_send.setText(millisUntilFinished / 1000 + "秒");
         }
     }
@@ -465,13 +477,6 @@ public class Register extends AppCompatActivity {
                 communication.setEmailAddress(Customer.getString("EmailAddress"));
                 communication.setIsChecked(Customer.getString("IsChecked"));
                 communication.setCheckedType(Customer.getString("CheckedType"));
-                communication.setAddressP(Customer.getString("AddressP"));
-                communication.setAddressC(Customer.getString("AddressC"));
-                communication.setAddressD(Customer.getString("AddressD"));
-                communication.setAddressSQ(Customer.getString("AddressSQ"));
-                communication.setAddressZ(Customer.getString("AddressZ"));
-                communication.setAddressDY(Customer.getString("AddressDY"));
-                communication.setAddressS(Customer.getString("AddressS"));
                 communication.setRecommendNo(Customer.getString("RecommendNo"));
                 communication.setRecommendName(Customer.getString("RecommendName"));
                 communication.setCustomerLevel(Customer.getString("CustomerLevel"));
@@ -488,6 +493,10 @@ public class Register extends AppCompatActivity {
                 communication.setPartnerName(Customer.getString("partnerName"));
 
                 Variables.my = communication;
+
+                Intent intent = new Intent(Register.this, Register_Dialog.class);
+                startActivity(intent);
+
                 Login.instance.finish();
                 finish();
             }
@@ -497,5 +506,6 @@ public class Register extends AppCompatActivity {
         }
 
     }
+
 
 }

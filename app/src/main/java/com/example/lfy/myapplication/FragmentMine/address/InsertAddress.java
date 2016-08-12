@@ -105,7 +105,7 @@ public class InsertAddress extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ChangeAddressDialog mChangeAddressDialog = new ChangeAddressDialog(InsertAddress.this);
-                mChangeAddressDialog.setAddress(Variables.my.getAddressP(), Variables.my.getAddressC(), Variables.my.getAddressD());
+                mChangeAddressDialog.setAddress("浙江", "杭州", "江干区");
                 mChangeAddressDialog.show();
                 mChangeAddressDialog.setAddresskListener(new ChangeAddressDialog.OnAddressCListener() {
                     @Override
@@ -117,7 +117,6 @@ public class InsertAddress extends AppCompatActivity {
                 });
             }
         });
-
     }
 
     private void Insert_xUtil(String name, String sex, String phone, String district, String address) {

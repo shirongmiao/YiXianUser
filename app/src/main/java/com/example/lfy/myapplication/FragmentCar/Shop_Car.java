@@ -1,6 +1,8 @@
 package com.example.lfy.myapplication.FragmentCar;
 
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -111,14 +113,6 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
         car_shopping.setOnClickListener(this);
         car_left.setOnClickListener(this);
 
-        if (Variables.point.getState().equals("1")) {
-            car_submit.setEnabled(true);
-            car_submit.setBackgroundResource(R.color.actionsheet_red);
-        } else {
-            car_submit.setEnabled(false);
-            car_submit.setBackgroundResource(R.color.line_grey);
-        }
-
     }
 
     public void setUpdate() {
@@ -130,22 +124,25 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
         Intent intent;
         switch (v.getId()) {
             case R.id.car_submit:
-                if (Variables.point.getState().equals("1")) {
-                    car_submit.setEnabled(true);
-                    car_submit.setBackgroundResource(R.color.actionsheet_red);
-                    if (price > Variables.point.deliveryPrice) {
-                        intent = new Intent(Shop_Car.this, SubmitOrder.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(Shop_Car.this, "未达到配送金额", Toast.LENGTH_SHORT).show();
-                    }
+                if (price > Variables.point.deliveryPrice) {
+                    intent = new Intent(Shop_Car.this, SubmitOrder.class);
+                    startActivity(intent);
                 } else {
-                    car_submit.setEnabled(false);
-                    car_submit.setBackgroundResource(R.color.line_grey);
+                    Toast.makeText(Shop_Car.this, "未达到配送金额", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.car_delete:
-                DeleteCar_xUtils();
+                Dialog dialog = new android.support.v7.app.AlertDialog.Builder(Shop_Car.this)
+                        .setMessage("确认清空购物车？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                DeleteCar_xUtils();
+                            }
+                        })
+                        .setNegativeButton("取消", null).create();
+                dialog.show();
                 break;
             case R.id.car_shopping:
                 MainActivity.classify.performClick();
@@ -248,7 +245,6 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
                 Money(list);
                 car_none.setVisibility(View.GONE);
                 car_recyclerView.setVisibility(View.VISIBLE);
-                car_submit.setEnabled(true);
                 car_bottom_line.setVisibility(View.VISIBLE);
             } else {
                 carAdapter.addDate(null);
@@ -344,11 +340,28 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
             car_sendPrice.setText("配送费：￥0.0元");
         }
 
+        //配送费
+        double c = Variables.point.getSendPrice() - price;
+        if (c < 0) {
+            car_submit.setEnabled(true);
+            car_submit.setBackgroundResource(R.color.actionsheet_red);
+            car_submit.setText("结算（" + Variables.count + "）");
+        } else {
+            String cha = String.format("%.2f", c);
+            car_submit.setText("还差" + cha + "元");
+            car_submit.setEnabled(false);
+            car_submit.setBackgroundResource(R.color.line_grey);
+        }
+
         String result = String.format("%.2f", price);
         String vip = String.format("%.2f", PromotionPrice);
         car_money.setText("价格:￥" + result);
         vip_money.setText("会员:￥" + vip);
-        car_submit.setText("结算（" + Variables.count + "）");
+
+        if (Variables.point.getState().equals("0")) {
+            car_submit.setEnabled(false);
+            car_submit.setBackgroundResource(R.color.line_grey);
+        }
     }
 
     private void Insert_xUtils(final int position, String productId, final String type) {
@@ -416,9 +429,9 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
                                     car_none.setVisibility(View.VISIBLE);
                                     car_recyclerView.setVisibility(View.GONE);
                                     Variables.count = 0;
+                                } else {
+                                    Variables.count = Variables.count - 1;
                                 }
-
-                                Variables.count = Variables.count - 1;
                                 Money(carAdapter.titles);
                             } else {
                                 JSONArray jsonArray = jsonObject.getJSONArray("Data");
@@ -432,6 +445,7 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
                                 }
                                 Money(carAdapter.titles);
                             }
+
                         } else {
                             if (type.equals("1")) {
                                 carAdapter.titles.get(position).setProductCount(carAdapter.titles.get(position).getProductCount() - 1);
@@ -445,6 +459,7 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 } else {
                     if (type.equals("1")) {
                         carAdapter.titles.get(position).setProductCount(carAdapter.titles.get(position).getProductCount() - 1);
@@ -455,7 +470,6 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
 
                     }
                 }
-                car_submit.setText("结算（" + Variables.count + "）");
             }
         });
 

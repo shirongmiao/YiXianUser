@@ -48,7 +48,7 @@
                 android:password="true"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/edit_white"
                 android:textSize="13sp">
 
                 <requestFocus />
@@ -67,7 +67,7 @@
                 android:password="true"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/edit_white"
                 android:textSize="13sp" />
 
             <Button
@@ -75,6 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_marginTop="20dp"
+                android:textColor="@color/white"
                 android:background="@drawable/round_hollow"
                 android:text="确定" />
         </LinearLayout>

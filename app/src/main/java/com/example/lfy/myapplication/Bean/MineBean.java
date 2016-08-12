@@ -14,13 +14,6 @@ public class MineBean {
     public String EmailAddress;//邮箱
     public String IsChecked;//
     public String CheckedType;//
-    public String AddressP;//
-    public String AddressC;//
-    public String AddressD;//
-    public String AddressSQ;//
-    public String AddressZ;//
-    public String AddressDY;//
-    public String AddressS;//
     public String RecommendNo;//
     public String RecommendName;//
     public String CustomerLevel;//等级
@@ -165,61 +158,6 @@ public class MineBean {
         CheckedType = checkedType;
     }
 
-    public String getAddressP() {
-        return AddressP;
-    }
-
-    public void setAddressP(String addressP) {
-        AddressP = addressP;
-    }
-
-    public String getAddressC() {
-        return AddressC;
-    }
-
-    public void setAddressC(String addressC) {
-        AddressC = addressC;
-    }
-
-    public String getAddressD() {
-        return AddressD;
-    }
-
-    public void setAddressD(String addressD) {
-        AddressD = addressD;
-    }
-
-    public String getAddressSQ() {
-        return AddressSQ;
-    }
-
-    public void setAddressSQ(String addressSQ) {
-        AddressSQ = addressSQ;
-    }
-
-    public String getAddressZ() {
-        return AddressZ;
-    }
-
-    public void setAddressZ(String addressZ) {
-        AddressZ = addressZ;
-    }
-
-    public String getAddressDY() {
-        return AddressDY;
-    }
-
-    public void setAddressDY(String addressDY) {
-        AddressDY = addressDY;
-    }
-
-    public String getAddressS() {
-        return AddressS;
-    }
-
-    public void setAddressS(String addressS) {
-        AddressS = addressS;
-    }
 
     public String getRecommendNo() {
         return RecommendNo;

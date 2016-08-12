@@ -24,7 +24,7 @@ public class UserInfo {
     }
 
     public void setUserInfo(String key, String value) {
-        SharedPreferences sp = context.getSharedPreferences(USER_INFO, Context.MODE_APPEND);
+        SharedPreferences sp = context.getSharedPreferences(USER_INFO, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.remove(key);
         editor.putString(key, value);
@@ -41,19 +41,19 @@ public class UserInfo {
     }
 
     public void clear() {
-        SharedPreferences sp = context.getSharedPreferences(USER_INFO, Context.MODE_APPEND);
+        SharedPreferences sp = context.getSharedPreferences(USER_INFO, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
         editor.commit();
     }
 
     public String getStringInfo(String key) {
-        SharedPreferences sp = context.getSharedPreferences(USER_INFO, Context.MODE_APPEND);
+        SharedPreferences sp = context.getSharedPreferences(USER_INFO, Context.MODE_PRIVATE);
         return sp.getString(key, "");
     }
 
     public boolean getBooleanInfo(String key) {
-        SharedPreferences sp = context.getSharedPreferences(USER_INFO, Context.MODE_APPEND);
+        SharedPreferences sp = context.getSharedPreferences(USER_INFO, Context.MODE_PRIVATE);
         return sp.getBoolean(key, false);
     }
 }

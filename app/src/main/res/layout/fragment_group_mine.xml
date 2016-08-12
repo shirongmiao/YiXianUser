@@ -1,0 +1,63 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.lfy.myapplication.Group.GroupMine">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/rg_tab_bar"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/myradiogroup"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_grouping"
+                style="@style/top_menu_item"
+                android:checked="true"
+                android:text="拼团中" />
+
+            <View
+                android:layout_width="@dimen/size1"
+                android:layout_height="match_parent"
+                android:background="@color/text_orgin"></View>
+
+            <RadioButton
+                android:id="@+id/rb_groupsuccess"
+                style="@style/top_menu_item"
+                android:text="团购成功" />
+
+            <View
+                android:layout_width="@dimen/size1"
+                android:layout_height="match_parent"
+                android:background="@color/text_orgin"></View>
+
+            <RadioButton
+                android:id="@+id/rb_groupfalse"
+                style="@style/top_menu_item"
+                android:text="团购失败" />
+        </RadioGroup>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/groupmine_swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/groupmine_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+</FrameLayout>

@@ -47,7 +47,6 @@ public class GetCoupon extends AppCompatActivity {
 
     TextView coupon_content;
 
-    String content;
     FrameLayout coupon_dialog;
     View coupon_sure;
 
@@ -155,17 +154,18 @@ public class GetCoupon extends AppCompatActivity {
                         if (Ret.equals("1")) {
                             JSONArray data = object.getJSONArray("Data");
                             JSONObject everyone = data.getJSONObject(0);
-                            content = everyone.getString("CouponPrice");
                             String CouponEnd = everyone.getString("CouponEnd").substring(0, 19);
-
                             CouponEnd = CouponEnd.replaceAll("T", "-");
                             SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
                             String newday = sDateFormat.format(new Date());
                             compare_date(newday, CouponEnd);
+
                         } else {
+
                             liquan_button.setEnabled(true);
                             bottom_text.setText("点击领取按钮，即可领取！");
                             liquan_button.setImageResource(R.mipmap.coupon_bottom);
+
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -279,13 +279,16 @@ public class GetCoupon extends AppCompatActivity {
                         Log.d("我是领取point", result);
                         JSONObject object = new JSONObject(result);
                         String Ret = object.getString("Ret");
+                        String Msg = object.getString("Msg");
+                        Msg = Msg.substring(Msg.indexOf("插入成功"), Msg.length());
+                        Log.d("我是Msg", Msg);
                         if (Ret.equals("1")) {
                             coupon_dialog.setVisibility(View.VISIBLE);
                             coupon_dialog.startAnimation(new MyScaler(1.0f, 1.0f, 0.0f, 1.0f, 700, coupon_dialog, false));
-                            money.setText("￥" + content);
+                            money.setText("￥" + Msg);
                             bottom_text.setText("领取成功");
                             liquan_button.setImageResource(R.mipmap.coupon_bottom_down);
-                            String str = "￥" + content + "元现金已经存入到您的账户中,可在我的优惠券中查看";
+                            String str = "￥" + Msg + "元现金已经存入到您的账户中,可在我的优惠券中查看";
                             SpannableStringBuilder builder = new SpannableStringBuilder(str);
                             ForegroundColorSpan redSpan = new ForegroundColorSpan(Color.RED);
                             AbsoluteSizeSpan bigSpan = new AbsoluteSizeSpan(23, true);

@@ -95,15 +95,12 @@ public class UpdateAddress extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ChangeAddressDialog mChangeAddressDialog = new ChangeAddressDialog(UpdateAddress.this);
-                mChangeAddressDialog.setAddress(Variables.my.getAddressP(), Variables.my.getAddressC(), Variables.my.getAddressD());
+                mChangeAddressDialog.setAddress("浙江", "杭州", "江干区");
                 mChangeAddressDialog.show();
                 mChangeAddressDialog.setAddresskListener(new ChangeAddressDialog.OnAddressCListener() {
                     @Override
                     public void onClick(String province, String city_item, String dis) {
                         list_address.setCity(province + "-" + city_item + "-" + dis);
-                        Variables.my.setAddressP(province);
-                        Variables.my.setAddressC(city_item);
-                        Variables.my.setAddressD(dis);
                         city.setText(province + "-" + city_item + "-" + dis);
                     }
                 });

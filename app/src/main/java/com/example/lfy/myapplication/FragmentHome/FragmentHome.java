@@ -39,6 +39,7 @@ import com.example.lfy.myapplication.FragmentHome.search.Search_edit;
 import com.example.lfy.myapplication.FragmentMine.balance.Balance;
 import com.example.lfy.myapplication.FragmentMine.help.Help;
 import com.example.lfy.myapplication.GoodsParticular.Goods_Particular;
+import com.example.lfy.myapplication.Group.GroupMainActivity;
 import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.UserInfo;
@@ -299,7 +300,8 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                     @Override
                     public void onClick(View v) {
                         if (position == 0) {
-                            Toast.makeText(getActivity(), "团购未开启", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getActivity(), GroupMainActivity.class);
+                            startActivity(intent);
                         } else if (position == 1) {
                             if (Variables.my != null) {
                                 new_user();
@@ -553,7 +555,12 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                         small.add(ever);
                     }
                     all.setProducts(small);
-                    activityPhoto.add(all);
+                    if (activityPhoto != null) {
+                        activityPhoto.clear();
+                        activityPhoto.add(all);
+                    } else {
+                        activityPhoto.add(all);
+                    }
                 }
                 success();
             } else {
@@ -926,10 +933,14 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
 
                         boolean flag1 = Variables.compare_date(start, date);
                         boolean flag2 = Variables.compare_date(date, end);
-                        if (flag1 && flag2) {
-                            Variables.point.setState(1 + "");
+                        if (Variables.point.getState().equals("1")) {
+                            if (flag1 && flag2) {
+                                Variables.point.setState("1");
+                            } else {
+                                Variables.point.setState("0");
+                            }
                         } else {
-                            Variables.point.setState(0 + "");
+                            Variables.point.setState("0");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

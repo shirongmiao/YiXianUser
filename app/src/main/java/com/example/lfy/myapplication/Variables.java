@@ -190,6 +190,10 @@ public class Variables {
     public static String http_InsertTuanOrder = www + "order/InsertTuanOrder?" + com;
     //通过服务站查询团购,1为按时间，2为按进度
     public static String GetTuanOrderByPoint = www + "order/GetTuanOrderByPoint?" + com;
+    //用户参团
+    public static String JoinTuan = www + "order/JoinTuan?" + com;
+    //删除团购订单
+    public static String DeleteTuanOrder = www + "order/DeleteTuanOrder?" + com;
 
     // 需要setContentView之前调用
     public static void setTranslucentStatus(Activity con) {

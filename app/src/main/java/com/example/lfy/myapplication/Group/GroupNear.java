@@ -1,12 +1,10 @@
 package com.example.lfy.myapplication.Group;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,12 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lfy.myapplication.Bean.GroupGoodsBean;
 import com.example.lfy.myapplication.Bean.GroupOrder;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.DividerItemDecoration;
@@ -44,11 +42,12 @@ public class GroupNear extends Fragment implements SwipeRefreshLayout.OnRefreshL
     private RecyclerView rv;
     private LinearLayoutManager manager;
     View view;
-    private List<Integer> myList = new ArrayList<Integer>();
     private List<GroupOrder> groupOrders;
     MyAdapter adapter;
     RadioButton rb_progress, rb_time;
+    //当前选中的radiobutton，默认是2按进度（后台获取按进度订单的参数为2，按时间为1）
     int CurrentRb = 2;
+
 
     public GroupNear() {
         // Required empty public constructor
@@ -64,6 +63,7 @@ public class GroupNear extends Fragment implements SwipeRefreshLayout.OnRefreshL
         RequestParams params = new RequestParams(Variables.GetTuanOrderByPoint);
         params.addBodyParameter("point", Variables.point.getID());
         params.addBodyParameter("type", type + "");
+        params.addBodyParameter("customerId", Variables.my.getCustomerID());
         x.http().get(params, new Callback.CacheCallback<String>() {
             private boolean hasError = false;
             private String result = null;
@@ -140,7 +140,7 @@ public class GroupNear extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     good.setCustomerStr(everyone.getString("CustomerStr"));
                     good.setCustomerNum(everyone.getInt("CustomerNum"));
                     good.setTuanNumber(everyone.getString("TuanNumber"));
-                    good.setCost(everyone.getString("Cost"));
+                    good.setCost(everyone.getDouble("Cost"));
                     good.setCommand(everyone.getString("command"));
                     good.setIsSingleBuy(everyone.getString("IsSingleBuy"));
                     good.setCustomerID(everyone.getString("CustomerID"));
@@ -153,7 +153,7 @@ public class GroupNear extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     String url = everyone.getString("img");
                     url = "http://www.baifenxian.com/" + java.net.URLEncoder.encode(url, "UTF-8");
                     good.setImg(url);
-                    good.setTuanPrice(everyone.getString("tuanPrice"));
+                    good.setTuanPrice(everyone.getDouble("tuanPrice"));
                     good.setMarketPrice(everyone.getString("marketPrice"));
                     good.setSinglePrice(everyone.getString("singlePrice"));
                     good.setStandard(everyone.getString("Standard"));
@@ -181,11 +181,9 @@ public class GroupNear extends Fragment implements SwipeRefreshLayout.OnRefreshL
         sw.setColorSchemeColors(R.color.green);
         sw.setOnRefreshListener(this);
         rv = (RecyclerView) view.findViewById(R.id.groupnear_recyclerView);
-        rv.setItemAnimator(new DefaultItemAnimator());
         rv.setLayoutManager(manager);
         rv.setAdapter(adapter);
-
-//        new MyThread().start();
+        //添加下划线
         rv.addItemDecoration(new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL_LIST));
         rb_time = (RadioButton) view.findViewById(R.id.rb_time);
@@ -198,6 +196,7 @@ public class GroupNear extends Fragment implements SwipeRefreshLayout.OnRefreshL
     //下拉刷新里的操作
     @Override
     public void onRefresh() {
+        //根据当前选中的radiobutton进行网络请求刷新
         Near_xUtils(CurrentRb);
     }
 
@@ -229,7 +228,7 @@ public class GroupNear extends Fragment implements SwipeRefreshLayout.OnRefreshL
         }
 
         @Override
-        public void onBindViewHolder(final MyViewHolder holder, int position) {
+        public void onBindViewHolder(final MyViewHolder holder, final int position) {
 //            holder.countdowntime_tv.setText(list.get(position) + "");
             ImageOptions imageOptions = new ImageOptions.Builder()
                     .setIgnoreGif(false)//是否忽略gif图。false表示不忽略。不写这句，默认是true
@@ -241,12 +240,26 @@ public class GroupNear extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     .build();
             x.image().bind(holder.groupnear_item_image, list.get(position).getImg(), imageOptions);
             holder.groupnear_item_title.setText(list.get(position).getTitle());
-            holder.groupfind_item_price.setText(list.get(position).getTuanPrice());
+            holder.groupfind_item_price.setText(list.get(position).getTuanPrice() + "");
             holder.countdowntime_tv.setText(list.get(position).getCreateTime());
             holder.groupnear_item_progressbar.setMax(list.get(position).getPersonNum());
             holder.groupnear_item_progressbar.setProgress(list.get(position).getCustomerNum());
-            holder.groupnear_item_needmore.setText("还差" + (list.get(position).getPersonNum() - list.get(position).getCustomerNum()) + "人")
-            ;
+            int num = list.get(position).getPersonNum() - list.get(position).getCustomerNum();
+            if (num < 5) {
+                holder.groupnear_item_needmore.setText("仅剩" + num + "人");
+            } else {
+                holder.groupnear_item_needmore.setText("还差" + num + "人");
+            }
+
+            holder.groupnear_item_linearlayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), GroupGoodParticular.class);
+                    intent.putExtra("groupgood", list.get(position));
+                    intent.putExtra("from", "GroupNear");
+                    startActivity(intent);
+                }
+            });
 
 
         }
@@ -260,6 +273,7 @@ public class GroupNear extends Fragment implements SwipeRefreshLayout.OnRefreshL
             TextView countdowntime_tv, groupnear_item_title, groupfind_item_price, groupnear_item_needmore;
             ImageView groupnear_item_image;
             ProgressBar groupnear_item_progressbar;
+            LinearLayout groupnear_item_linearlayout;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
@@ -281,6 +295,7 @@ public class GroupNear extends Fragment implements SwipeRefreshLayout.OnRefreshL
                 groupfind_item_price = (TextView) itemView.findViewById(R.id.groupfind_item_price);
                 groupnear_item_needmore = (TextView) itemView.findViewById(R.id.groupnear_item_needmore);
                 groupnear_item_progressbar = (ProgressBar) itemView.findViewById(R.id.groupnear_item_progressbar);
+                groupnear_item_linearlayout = (LinearLayout) itemView.findViewById(R.id.groupnear_item_linearlayout);
             }
         }
     }

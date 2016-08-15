@@ -27,7 +27,7 @@
                     <ImageView
                         android:id="@+id/group_good_image"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_height="350dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/testa" />
 
@@ -48,21 +48,21 @@
                                 android:layout_marginLeft="11dp"
                                 android:layout_marginTop="10dp"
                                 android:text="[直降3元】泰国椰皇4个42.9元【感受泰国 舌尖上的风情】"
-                                android:textSize="16sp"
+                                android:textSize="19sp"
                                 android:textStyle="bold" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="5dp">
+                                android:layout_marginTop="10dp">
 
                                 <TextView
                                     android:id="@+id/group_goods_content"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="泰国·椰汁浓郁醇香·椰肉清甜"
-                                    android:textSize="13sp" />
+                                    android:textSize="16sp" />
 
                                 <TextView
                                     android:id="@+id/group_good_Standard"
@@ -96,7 +96,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="42.90"
                                         android:textColor="@color/actionsheet_red"
-                                        android:textSize="30sp" />
+                                        android:textSize="35sp" />
 
                                     <TextView
                                         android:id="@+id/group_goods_originalprice"
@@ -104,7 +104,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="5dp"
                                         android:text="￥58.00（市场价）"
-                                        android:textSize="14sp" />
+                                        android:textSize="16sp" />
                                 </LinearLayout>
 
                                 <ImageView
@@ -123,7 +123,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="9dp"
+                        android:layout_height="12dp"
                         android:background="@color/line_grey"></View>
 
 
@@ -131,8 +131,8 @@
                         android:id="@+id/group_good_help"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="15dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -142,7 +142,8 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            android:text="开团并邀请2人参团，人数不足自动退款。 \n详见拼团玩法" />
+                            android:text="开团并邀请2人参团，人数不足自动退款。 \n详见拼团玩法"
+                            android:textSize="16sp" />
 
                         <ImageView
                             android:layout_width="15dp"
@@ -155,27 +156,36 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="9dp"
+                        android:layout_height="12dp"
                         android:background="@color/line_grey"></View>
-
-                    <ImageView
-                        android:id="@+id/group_good_more_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
 
 
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/imagesLayout"
                     android:background="@color/line_grey"
                     android:gravity="center"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/bottom_width"
-                    android:paddingTop="10dp"
-                    android:text="上拉查看详情"
-                    android:textSize="12sp" />
+                    android:paddingTop="20dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/groupdetail" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请拖动，查看图文详情"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
+
             </RelativeLayout>
         </ScrollView>
 
@@ -207,10 +217,12 @@
 
 
     <LinearLayout
+        android:id="@+id/group_good_forfind"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_width"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <RelativeLayout
             android:id="@+id/group_gp_singlebuy_btn"
@@ -220,12 +232,21 @@
             android:background="@drawable/content_bg"
             android:gravity="center">
 
+            <TextView
+                android:id="@+id/group_group_gp_rmb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥"
+                android:textColor="@color/text_orgin" />
 
             <TextView
                 android:id="@+id/group_gp_singlebuy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/group_group_gp_rmb"
+                android:layout_toRightOf="@id/group_group_gp_rmb"
                 android:text="51.90"
+                android:layout_margin="2dp"
                 android:textColor="@color/text_orgin"
                 android:textSize="20sp" />
 
@@ -233,16 +254,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@id/group_gp_singlebuy"
-                android:layout_marginRight="3dp"
-                android:layout_toLeftOf="@id/group_gp_singlebuy"
-                android:text="￥"
-                android:textColor="@color/text_orgin" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/group_gp_singlebuy"
-                android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/group_gp_singlebuy"
                 android:text="单独购"
                 android:textColor="@color/text_orgin" />
@@ -257,30 +268,29 @@
             android:background="@color/orange"
             android:gravity="center">
 
+            <TextView
+                android:id="@+id/group_gp_buy_rmb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/group_gp_buy"
+                android:layout_alignBaseline="@id/group_gp_buy_rmb"
+                android:layout_toRightOf="@id/group_gp_buy_rmb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="42.90"
+                android:layout_margin="2dp"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/group_gp_buy"
-                android:layout_marginRight="3dp"
-                android:layout_toLeftOf="@id/group_gp_buy"
-                android:text="￥"
-                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/group_gp_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@id/group_gp_buy"
-                android:layout_marginLeft="3dp"
                 android:layout_toRightOf="@id/group_gp_buy"
                 android:text="3人团"
                 android:textColor="@color/white" />
@@ -289,4 +299,51 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/group_good_fornear"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_width"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/green"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/group_good_personnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="差1人成团"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/group_gp_buy_join"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/orange"
+            android:gravity="center">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="立即参团"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
 </RelativeLayout>

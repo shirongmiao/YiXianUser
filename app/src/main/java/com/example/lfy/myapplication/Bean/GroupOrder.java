@@ -17,7 +17,7 @@ public class GroupOrder implements Serializable {
     String CustomerStr;
     int CustomerNum;
     String TuanNumber;
-    String Cost;
+    double Cost;
     String command;
     String IsSingleBuy;
     String CustomerID;
@@ -28,7 +28,7 @@ public class GroupOrder implements Serializable {
     String tuanid;
     String title;
     String img;
-    String tuanPrice;
+    double tuanPrice;
     String marketPrice;
     String singlePrice;
     String Standard;
@@ -36,12 +36,21 @@ public class GroupOrder implements Serializable {
     int personNum;
     String tuanCount;
     String ShelfState;
+    String detail;
 
-    public String getCost() {
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public double getCost() {
         return Cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(double cost) {
         Cost = cost;
     }
 
@@ -213,11 +222,11 @@ public class GroupOrder implements Serializable {
         this.img = img;
     }
 
-    public String getTuanPrice() {
+    public double getTuanPrice() {
         return tuanPrice;
     }
 
-    public void setTuanPrice(String tuanPrice) {
+    public void setTuanPrice(double tuanPrice) {
         this.tuanPrice = tuanPrice;
     }
 

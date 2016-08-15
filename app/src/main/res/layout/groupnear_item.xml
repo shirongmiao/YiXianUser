@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/groupnear_item_linearlayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -24,6 +25,8 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="14dp"
+            android:ellipsize="end"
+            android:lines="2"
             android:text="[直降3元]泰国椰皇4个42.9元[
 感受泰国舌尖上的风情]" />
 
@@ -83,9 +86,9 @@
 
             <TextView
                 android:id="@+id/groupnear_item_needmore"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.6"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
                 android:text="还差1人" />
         </LinearLayout>
 

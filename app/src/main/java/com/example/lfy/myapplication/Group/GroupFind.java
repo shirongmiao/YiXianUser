@@ -1,11 +1,7 @@
 package com.example.lfy.myapplication.Group;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
@@ -16,18 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.lfy.myapplication.Bean.GroupGoodsBean;
+import com.example.lfy.myapplication.Bean.GroupOrder;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Variables;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 import org.xutils.common.Callback;
 import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
@@ -44,7 +38,7 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
     TextView tv;
     RecyclerView rv;
     View view;
-    List<GroupGoodsBean> groupGoodslist;
+    List<GroupOrder> groupGoodslist;
     MyAdapter adapter;
 
     public GroupFind() {
@@ -139,7 +133,7 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
                 JSONArray data = object.getJSONArray("Data");
                 for (int i = 0; i < data.length(); i++) {
                     JSONObject everyone = data.getJSONObject(i);
-                    GroupGoodsBean good = new GroupGoodsBean();
+                    GroupOrder good = new GroupOrder();
                     good.setTuanid(everyone.getString("tuanid"));
                     good.setTitle(everyone.getString("title"));
                     String url = everyone.getString("img");
@@ -152,7 +146,7 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     good.setCost(everyone.getDouble("cost"));
                     good.setStandard(everyone.getString("Standard"));
                     good.setPlace(everyone.getString("Place"));
-                    good.setPersonNum(everyone.getString("personNum"));
+                    good.setPersonNum(everyone.getInt("personNum"));
                     good.setTuanCount(everyone.getString("tuanCount"));
                     good.setShelfState(everyone.getString("ShelfState"));
                     groupGoodslist.add(good);
@@ -167,9 +161,9 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-        List<GroupGoodsBean> goodslist;
+        List<GroupOrder> goodslist;
 
-        MyAdapter(List<GroupGoodsBean> goodslist) {
+        MyAdapter(List<GroupOrder> goodslist) {
             this.goodslist = goodslist;
         }
 
@@ -199,6 +193,7 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
 //                    Toast.makeText(getContext(), groupGoodslist.get(position).getTuanid()+"", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), GroupGoodParticular.class);
                     intent.putExtra("groupgood", groupGoodslist.get(position));
+                    intent.putExtra("from", "GroupFind");
                     startActivity(intent);
                 }
             });
@@ -207,6 +202,7 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), GroupGoodParticular.class);
                     intent.putExtra("groupgood", groupGoodslist.get(position));
+                    intent.putExtra("from", "GroupFind");
                     startActivity(intent);
                 }
             });

@@ -44,6 +44,8 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
         return view;
     }
 
+
+
     @Override
     public void onRefresh() {
 

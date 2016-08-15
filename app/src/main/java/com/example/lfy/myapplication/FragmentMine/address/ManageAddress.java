@@ -100,6 +100,20 @@ public class ManageAddress extends AppCompatActivity {
         });
     }
 
+    AddressBean Default_address;
+    @Override
+    public void onBackPressed() {
+        if (from.equals("order")) {
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("address", Default_address);
+            intent.putExtras(bundle);
+            setResult(RESULT_OK, intent);
+            finish();
+        }else {
+            super.onBackPressed();
+        }
+    }
 
     private void address_xUtil() {
 
@@ -176,6 +190,9 @@ public class ManageAddress extends AppCompatActivity {
                     address.setAddress(object.getString("address"));
                     address.setSex(object.getString("sex"));
                     address.setIsdefault(object.getString("Isdefault"));
+                    if (object.getString("id").equals(addressId)){
+                        Default_address = address;
+                    }
                     all.add(address);
                 }
                 if (adapter.date == null) {

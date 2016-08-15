@@ -1,12 +1,10 @@
 package com.example.lfy.myapplication.Group;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,14 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lfy.myapplication.Bean.AddressBean;
-import com.example.lfy.myapplication.Bean.GroupGoodsBean;
+import com.example.lfy.myapplication.Bean.GroupOrder;
 import com.example.lfy.myapplication.FragmentMine.address.ManageAddress;
-import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.SubmitOrder.PayType;
-import com.example.lfy.myapplication.Util.Send;
 import com.example.lfy.myapplication.Util.pay_dialog.DialogWidget;
-import com.example.lfy.myapplication.Util.pay_dialog.PayPasswordView;
 import com.example.lfy.myapplication.Variables;
 import com.pingplusplus.android.Pingpp;
 
@@ -36,7 +31,7 @@ import org.xutils.x;
 import java.text.SimpleDateFormat;
 
 public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickListener {
-    GroupGoodsBean groupGoods;
+    GroupOrder groupGoods;
     TextView group_submit_price, group_submit_Default, group_submit_name, group_submit_phone, group_submit_address;
     AddressBean Delivery = null;
     LinearLayout group_submit_choose, group_submit_alipay;
@@ -48,6 +43,7 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
     DialogWidget mDialogWidget;
     //获取change
     String charge;
+    ////IsSingleBuy 2:用户参团 1：单独购  0:开团
     int IsSingleBuy = 0;
 
     @Override
@@ -56,9 +52,8 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
         Variables.setTranslucentStatus(this);
         setContentView(R.layout.activity_group_submit_order);
         Intent intent = getIntent();
-        groupGoods = (GroupGoodsBean) intent.getSerializableExtra("groupgood");
+        groupGoods = (GroupOrder) intent.getSerializableExtra("groupgood");
         IsSingleBuy = intent.getIntExtra("IsSingleBuy", 0);
-        Toast.makeText(GroupSubmitOrder.this, "IsSingleBuy:"+IsSingleBuy, Toast.LENGTH_SHORT).show();
         initView();
         address_xUtil();
     }
@@ -223,7 +218,12 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
                 case R.id.group_submit_alipay:
                     if (submit_goods) {
                         if (Delivery != null) {
-                            sure(groupGoods.getTuanPrice(), "alipay");
+                            if (IsSingleBuy == 2) {
+                                joinTuan(groupGoods.getTuanPrice(), "alipay");
+                            } else {
+                                sure(groupGoods.getTuanPrice(), "alipay");
+                            }
+
                             flag = false;
                         } else {
                             Toast.makeText(GroupSubmitOrder.this, "请选择地址", Toast.LENGTH_SHORT).show();
@@ -251,6 +251,138 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
 
     private String keep(double price) {
         return String.format("%.2f", price);
+    }
+
+    //删除团购订单
+    public void DeleteTuanOrder() {
+
+        RequestParams params = new RequestParams(Variables.DeleteTuanOrder);
+        params.addBodyParameter("OrderNo", orderno);
+        x.http().get(params, new Callback.CacheCallback<String>() {
+            private boolean hasError = false;
+            private String result = null;
+
+            @Override
+            public void onSuccess(String result) {
+                // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
+                if (result != null) {
+                    this.result = result;
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                hasError = true;
+                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                if (ex instanceof HttpException) { // 网络错误
+                    HttpException httpEx = (HttpException) ex;
+                    int responseCode = httpEx.getCode();
+                    String responseMsg = httpEx.getMessage();
+                    String errorResult = httpEx.getResult();
+                    // ...
+                } else { // 其他错误
+                    // ...
+
+                }
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFinished() {
+                if (!hasError && result != null) {
+                    // 成功获取数据
+                } else {
+//                    success();
+                }
+            }
+
+            @Override
+            public boolean onCache(String result) {
+                this.result = result;
+                return false; // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
+            }
+        });
+    }
+
+    //用户参团
+    private void joinTuan(final double price, final String pay) {
+        String addressId = Delivery == null ? "0" : Delivery.getId();
+        orderno = getOrderNO();
+
+        JSONObject js_request = new JSONObject();
+        try {
+            js_request.put("TuanID", groupGoods.getOrderID());
+            js_request.put("CustomerID", Variables.my.getCustomerID());
+            js_request.put("CustomerOrderNo", orderno);
+            js_request.put("address", addressId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestParams params = new RequestParams(Variables.JoinTuan);
+        params.setAsJsonContent(true);
+        params.setBodyContent(js_request.toString());
+
+        Log.d("我是接口", params.toString());
+
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            private boolean hasError = false;
+            private String result = null;
+
+            @Override
+            public boolean onCache(String result) {
+                this.result = result;
+                return false; // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
+                if (result != null) {
+                    this.result = result;
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                hasError = true;
+                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                if (ex instanceof HttpException) { // 网络错误
+                    HttpException httpEx = (HttpException) ex;
+                    int responseCode = httpEx.getCode();
+                    String responseMsg = httpEx.getMessage();
+                    String errorResult = httpEx.getResult();
+                    // ...
+                } else { // 其他错误
+                    // ...
+                }
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFinished() {
+                if (!hasError && result != null) {
+                    // 成功获取数据
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        String Ret = jsonObject.getString("Ret");
+                        if (Ret.equals("1")) {
+                            charge_xUtil(orderno, pay, price);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     private void sure(final double price, final String pay) {
@@ -425,21 +557,17 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
         String str = "支付成功";
         if (null != msg1 && msg1.length() != 0) {
             str = "取消支付";
-            Log.d("我是取消支付", msg1);
+            if (IsSingleBuy != 2) {
+                DeleteTuanOrder();
+            }
         }
         if (null != msg2 && msg2.length() != 0) {
             str = "支付失败";
-            Log.d("我是支付失败", msg2);
+            if (IsSingleBuy != 2) {
+                DeleteTuanOrder();
+            }
         }
-        Variables.count = 0;
-
-        Intent intent = new Intent(GroupSubmitOrder.this, PayType.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("payType", str);
-        bundle.putString("money", keep(groupGoods.getTuanPrice()));
-        bundle.putSerializable("address", Delivery);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        Toast.makeText(GroupSubmitOrder.this, str, Toast.LENGTH_SHORT).show();
         finish();
     }
 }

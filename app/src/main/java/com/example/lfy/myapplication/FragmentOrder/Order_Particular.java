@@ -2,34 +2,20 @@ package com.example.lfy.myapplication.FragmentOrder;
 
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.lfy.myapplication.Bean.AddressBean;
 import com.example.lfy.myapplication.Bean.CarDbBean;
 import com.example.lfy.myapplication.Bean.OrderBean;
 import com.example.lfy.myapplication.R;
-import com.example.lfy.myapplication.Util.Listview;
 import com.example.lfy.myapplication.Variables;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.ex.HttpException;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,236 +23,87 @@ import java.util.List;
  */
 public class Order_Particular extends AppCompatActivity {
 
-
     List<CarDbBean> goods;
     OrderBean orders;
-    TextView OrderNO;
-    TextView SwiftNumber;
-    TextView CreateTime;
-    TextView SendTime;
-    TextView CustomerSay;
 
-    TextView order_particular_myname;
-    TextView order_particular_myaddress;
-    TextView order_particular_myphone;
-    TextView point_name;
-    TextView point_phone;
-    TextView call;
-    TextView point_address;
-    TextView send_type;
-    LinearLayout line_my_address;
-
-    TextView order_particular_disprice;
-    TextView order_particular_next;
-    TextView order_particular_dis_all;
-    TextView order_particular_price;
-
-    TextView order_particular_payprice;
-    Listview order_particular_listview;
     ImageView imageView1;
+    TextView particular_zhuantai;
+    TextView particular_xiangqing;
+
+    private FragmentManager fm;
+    private Order_Particular_fragment1 fg1;
+    private Order_Particular_fragment2 fg2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Variables.setTranslucentStatus(this);
         setContentView(R.layout.order_particular);
+        fm = getSupportFragmentManager();
+
         Intent intent = getIntent();
         orders = (OrderBean) intent.getSerializableExtra("orders");
         goods = (List<CarDbBean>) intent.getSerializableExtra("order");
-
         init();
-        indate();
+        chick("2");
+    }
 
-        Order_item_adapter adapter = new Order_item_adapter(goods);
-        order_particular_listview.setAdapter(adapter);
+    private void chick(String num) {
+        FragmentTransaction ft1 = fm.beginTransaction();
+        hideFragments(ft1);
+        if (num.endsWith("1")) {
+            if (fg1 == null) {
+                fg1 = new Order_Particular_fragment1();// 如果fg1为空，则创建一个并添加到界面上
+                fg1.setGoods(goods);
+                fg1.setOrders(orders);
+                ft1.add(R.id.particular_fragment, fg1);
+            } else {
+                ft1.show(fg1);// 如果MessageFragment不为空，则直接将它显示出来
+            }
+        } else {
+            if (fg2 == null) {
+                fg2 = new Order_Particular_fragment2();// 如果fg1为空，则创建一个并添加到界面上
+                fg2.setOrderId(orders.getOrderID());
+                ft1.add(R.id.particular_fragment, fg2);
+            } else {
+                ft1.show(fg2);// 如果MessageFragment不为空，则直接将它显示出来
+            }
+        }
+        ft1.commitAllowingStateLoss();
+    }
+
+    private void hideFragments(FragmentTransaction transaction) {
+        if (fg1 != null) {
+            transaction.hide(fg1);
+        }
+        if (fg2 != null) {
+            transaction.hide(fg2);
+        }
     }
 
     private void init() {
         imageView1 = (ImageView) findViewById(R.id.imageView1);
-        OrderNO = (TextView) findViewById(R.id.order_particular_OrderNO);
+        particular_zhuantai = (TextView) findViewById(R.id.particular_zhuantai);
+        particular_xiangqing = (TextView) findViewById(R.id.particular_xiangqing);
 
-
-        SwiftNumber = (TextView) findViewById(R.id.order_particular_SwiftNumber);
-        CreateTime = (TextView) findViewById(R.id.order_particular_CreateTime);
-        SendTime = (TextView) findViewById(R.id.order_particular_SendTime);
-        CustomerSay = (TextView) findViewById(R.id.order_particular_CustomerSay);
-
-        line_my_address = (LinearLayout) findViewById(R.id.line_my_address);
-        order_particular_myname = (TextView) findViewById(R.id.order_particular_myname);
-        order_particular_myaddress = (TextView) findViewById(R.id.order_particular_myaddress);
-        order_particular_myphone = (TextView) findViewById(R.id.order_particular_myphone);
-        point_name = (TextView) findViewById(R.id.point_name);
-        point_phone = (TextView) findViewById(R.id.point_phone);
-        call = (TextView) findViewById(R.id.call);
-        point_address = (TextView) findViewById(R.id.point_address);
-        send_type = (TextView) findViewById(R.id.send_type);
-
-        order_particular_disprice = (TextView) findViewById(R.id.order_particular_disprice);
-        order_particular_next = (TextView) findViewById(R.id.order_particular_next);
-        order_particular_payprice = (TextView) findViewById(R.id.order_particular_payprice);
-        order_particular_price = (TextView) findViewById(R.id.order_particular_price);
-        order_particular_dis_all = (TextView) findViewById(R.id.order_particular_dis_all);
-        order_particular_listview = (Listview) findViewById(R.id.order_particular_listview);
-
-    }
-
-    private void indate() {
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-
-        call.setOnClickListener(new View.OnClickListener() {
+        particular_zhuantai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse("tel:" + Variables.point.getPhone());
-                intent.setData(data);
-                startActivity(intent);
+                chick("2");
+            }
+        });
+        particular_xiangqing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chick("1");
             }
         });
 
-
-        OrderNO.setText(orders.getOrderNO());
-        SwiftNumber.setText(orders.getSwiftNumber());
-        CreateTime.setText(orders.getCreateTime().substring(0, 19).replaceAll("T", " "));
-        SendTime.setText(orders.getDeliveryTime());
-        CustomerSay.setText(orders.getCustomerSay());
-
-
-        //目前只有配送到家
-        if (orders.getDelivery().equals("0")) {
-            send_type.setText("服务站自提");
-            line_my_address.setVisibility(View.GONE);
-            order_particular_myname.setText(Variables.my.getCustomerName() + "");
-            order_particular_myphone.setText(Variables.my.getPhoneNameber() + "");
-
-        } else {
-            send_type.setText("配送到家");
-            line_my_address.setVisibility(View.VISIBLE);
-            addressID_xUtils(orders.getAddress());
-        }
-        point_address.setText(Variables.point.getAddress());
-        point_phone.setText(Variables.point.getPhone());
-        point_name.setText(Variables.point.getName());
-
-        double discoupon = Double.parseDouble(orders.getDiscount());//优惠券价格
-
-        if (orders.getIsNextDay().equals("1")) {
-            order_particular_next.setText("￥" + AllNextDay());
-            order_particular_disprice.setText((Math.round((discoupon) * 10000) / 10000.00) + "");
-        } else {
-            order_particular_next.setText("未选择会员");
-            order_particular_disprice.setText((Math.round((discoupon) * 10000) / 10000.00) + "");
-        }
-        order_particular_price.setText("￥" + orders.getOrderPrice());
-        order_particular_payprice.setText("实付:￥" + orders.getPayedPrice());
-        order_particular_dis_all.setText("￥" + (Math.round((discoupon + AllNextDay()) * 10000) / 10000.00) + "");
     }
-
-    public double AllNextDay() {
-        double all = 0;
-        if (orders != null) {
-            for (int i = 0; i < goods.size(); i++) {
-                double p = goods.get(i).getPromotionPrice();
-                double d = goods.get(i).getPrice();
-                double one = goods.get(i).getProductCount() * (d - p);
-                all = all + one;
-            }
-            all = (Math.round(all * 10000) / 10000.00);
-        }
-        return all;
-    }
-
-    private void addressID_xUtils(String id) {
-        RequestParams params = new RequestParams(Variables.http_address_particular);
-        params.addBodyParameter("addressID", id);
-        x.http().get(params, new Callback.CacheCallback<String>() {
-            private boolean hasError = false;
-            private String result = null;
-
-            @Override
-            public boolean onCache(String result) {
-                this.result = result;
-                return false; // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
-            }
-
-            @Override
-            public void onSuccess(String result) {
-                // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
-                if (result != null) {
-                    this.result = result;
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                hasError = true;
-                if (ex instanceof HttpException) { // 网络错误
-                    HttpException httpEx = (HttpException) ex;
-                    int responseCode = httpEx.getCode();
-                    String responseMsg = httpEx.getMessage();
-                    String errorResult = httpEx.getResult();
-                    // ...
-                } else { // 其他错误
-                    // ...
-                }
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFinished() {
-                if (!hasError && result != null) {
-                    // 成功获取数据
-                    JSON(result);
-                }
-            }
-        });
-    }
-
-    private void JSON(String result) {
-        try {
-            Log.d("我是领取point", result);
-            JSONObject jsonObject = new JSONObject(result);
-            String Ret = jsonObject.getString("Ret");
-            if (Ret.equals("1")) {
-                List<AddressBean> all = new ArrayList<>();
-                JSONArray jsonArray = jsonObject.getJSONArray("Data");
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject object = jsonArray.getJSONObject(i);
-                    AddressBean address = new AddressBean();
-                    address.setId(object.getString("id"));
-                    address.setCustomerID(object.getString("customerID"));
-                    address.setName(object.getString("name"));
-                    address.setPointname(object.getString("pointname"));
-                    address.setCity(object.getString("city"));
-                    address.setPhone(object.getString("phone"));
-                    address.setDistrict(object.getString("district"));
-                    address.setAddress(object.getString("address"));
-                    address.setSex(object.getString("sex"));
-                    address.setIsdefault(object.getString("Isdefault"));
-                    all.add(address);
-                }
-
-                order_particular_myname.setText(all.get(0).getName());
-                order_particular_myaddress.setText(all.get(0).getAddress());
-                order_particular_myphone.setText(all.get(0).getPhone());
-
-
-            } else {
-                Toast.makeText(getApplicationContext(), "地址已被删除", Toast.LENGTH_SHORT).show();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-
 }

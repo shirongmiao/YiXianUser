@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.CountDownTimer;
-import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.lfy.myapplication.Bean.CarDbBean;
 import com.example.lfy.myapplication.Bean.OrderBean;
-import com.example.lfy.myapplication.FragmentOrder.FragmentOrder;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Variables;
 
@@ -27,7 +26,6 @@ import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -112,6 +110,7 @@ public class ExpandListViewAdapter extends BaseExpandableListAdapter {
         } else {
             groupHolder = (GroupHolder) convertView.getTag();
         }
+
         groupHolder.order_number.setText(group_list.get(groupPosition).getSwiftNumber());
         String next = group_list.get(groupPosition).getIsNextDay();
         if (next.equals("1")) {
@@ -122,9 +121,12 @@ public class ExpandListViewAdapter extends BaseExpandableListAdapter {
         String a = group_list.get(groupPosition).getOrderType();
         if (a.equals("0")) {
             groupHolder.order_type.setText("待付款");
-            groupHolder.timer_line.setVisibility(View.GONE);
-//            TimeStamp(groupHolder.timer, groupHolder.timer_line, group_list.get(groupPosition).getCreateTime());
-
+            if (groupHolder.CD == null) {
+                TimeStamp(groupHolder, group_list.get(groupPosition).getCreateTime());
+            } else {
+                groupHolder.CD.cancel();
+                TimeStamp(groupHolder, group_list.get(groupPosition).getCreateTime());
+            }
         } else if (a.equals("1")) {
             groupHolder.order_type.setText("未提货");
             groupHolder.timer_line.setVisibility(View.GONE);
@@ -135,6 +137,47 @@ public class ExpandListViewAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+
+    private void TimeStamp(final GroupHolder groupHolder, String createTime) {
+
+        createTime = createTime.substring(0, 19).replace("T", " ");
+        Log.d("我是创建时间", createTime);
+        groupHolder.timer_line.setVisibility(View.VISIBLE);
+        groupHolder.CD = new CountDownTimer(compare_date(createTime), 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long nd = 1000 * 24 * 60 * 60;
+                long nh = 1000 * 60 * 60;
+                long nm = 1000 * 60;
+                long min = millisUntilFinished % nd % nh / nm;
+                long second = millisUntilFinished % nd % nh % nm / 1000;
+                groupHolder.timer.setText(min + "：" + second);
+            }
+
+            @Override
+            public void onFinish() {
+                groupHolder.timer_line.setVisibility(View.GONE);
+            }
+        };
+        groupHolder.CD.start();
+
+    }
+
+    //时间比较
+    public long compare_date(String CreateTime) {
+        SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String NowTime = sDateFormat.format(new Date());// new Date()为获取当前系统时间
+        long diff = 0;
+        try {
+            Date dt1 = sDateFormat.parse(CreateTime);
+            Date dt2 = sDateFormat.parse(NowTime);
+            diff = dt1.getTime() + 30 * 60 * 1000 - dt2.getTime();
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return diff;
+    }
 
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
@@ -243,6 +286,7 @@ public class ExpandListViewAdapter extends BaseExpandableListAdapter {
     }
 
     class GroupHolder {
+        public CountDownTimer CD;
         public TextView order_number;
         public TextView member;
         public TextView order_type;

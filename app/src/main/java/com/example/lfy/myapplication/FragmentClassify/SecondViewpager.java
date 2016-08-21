@@ -387,7 +387,7 @@ public class SecondViewpager extends AppCompatActivity implements View.OnClickLi
             spinnerAdapter.setText(type);
             recyclerView.setAdapter(spinnerAdapter);
             int a = type.size() * 90;
-            popupWindow = new PopupWindow(view, 1000, a > 500 ? 500 : a);
+            popupWindow = new PopupWindow(view, 1500, a > 500 ? 500 : a);
         }
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);

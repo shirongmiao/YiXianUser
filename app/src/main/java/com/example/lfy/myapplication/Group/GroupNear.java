@@ -1,6 +1,7 @@
 package com.example.lfy.myapplication.Group;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -315,7 +316,9 @@ public class GroupNear extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
                 @Override
                 public void onFinish() {
-                    removeItem(position);
+                    holder.groupnear_item_countdown.setText("拼团失败");
+                    holder.groupnear_item_countdown.setTextColor(Color.parseColor("#f95300"));
+//                    removeItem(position);
                 }
             };
             holder.cd.start();

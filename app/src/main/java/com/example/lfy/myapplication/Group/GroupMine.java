@@ -2,6 +2,7 @@ package com.example.lfy.myapplication.Group;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -267,7 +268,7 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
                     String nowday = sDateFormat.format(new Date());
                     final long time = compare_date(nowday, CreateTime);
-                    holder.cd = new CountDownTimer(time - 1000 * 60 * 60 * 22 - 1000 * 60 * 14, 1000) {
+                    holder.cd = new CountDownTimer(time - 1000 * 60 * 60 * 22 - 1000 * 60 * 4, 1000) {
                         @Override
                         public void onTick(long millisUntilFinished) {
                             setDate(millisUntilFinished, holder.groupmine_item_countdown);
@@ -277,7 +278,10 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
                         public void onFinish() {
 //                            holder.itemView.setVisibility(View.GONE);
                             Log.d("移除的position", position + "");
-                            removeItem(position);
+                            holder.groupmine_item_state.setText("拼团失败");
+                            holder.groupmine_item_state.setTextColor(Color.parseColor("#f95300"));
+                            holder.groupmine_item_countdown.setVisibility(View.INVISIBLE);
+//                            removeItem(position);
                         }
                     };
                     holder.cd.start();

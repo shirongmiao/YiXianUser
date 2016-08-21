@@ -267,7 +267,7 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
                     String nowday = sDateFormat.format(new Date());
                     final long time = compare_date(nowday, CreateTime);
-                    holder.cd = new CountDownTimer(time-1000*60*60, 1000) {
+                    holder.cd = new CountDownTimer(time - 1000 * 60 * 60 * 22 - 1000 * 60 * 14, 1000) {
                         @Override
                         public void onTick(long millisUntilFinished) {
                             setDate(millisUntilFinished, holder.groupmine_item_countdown);
@@ -275,6 +275,7 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
                         @Override
                         public void onFinish() {
+//                            holder.itemView.setVisibility(View.GONE);
                             Log.d("移除的position", position + "");
                             removeItem(position);
                         }
@@ -306,12 +307,18 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
         }
 
         public void removeItem(int position) {
-            groupOrders.remove(position);
-            notifyItemRemoved(position);
-            notifyDataSetChanged();
-//            if (position != groupOrders.size()) {      // 这个判断的意义就是如果移除的是最后一个，就不用管它了
-//                notifyItemRangeChanged(position, groupOrders.size() - position);
-//            }
+            if (rv.getScrollState() == RecyclerView.SCROLL_STATE_IDLE && !rv.isComputingLayout()) {
+                groupOrders.remove(position);
+                notifyItemRemoved(position);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        adapter.notifyDataSetChanged();
+
+                    }
+                }, 1000);
+            }
         }
 
         @Override

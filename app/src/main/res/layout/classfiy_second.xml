@@ -73,13 +73,14 @@
             android:gravity="center"
             android:textSize="12sp" />
 
-        <Spinner
+        <TextView
             android:id="@+id/orderby4"
             android:layout_width="0dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1.2"
-            android:scrollbars="none"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/actionsheet_single_selector"
+            android:gravity="center"
+            android:text="切换分类"
             android:textSize="12sp" />
     </LinearLayout>
 

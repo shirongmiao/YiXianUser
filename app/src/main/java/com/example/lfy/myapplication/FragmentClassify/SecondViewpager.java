@@ -1,22 +1,30 @@
 package com.example.lfy.myapplication.FragmentClassify;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +45,7 @@ import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
+import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.io.Serializable;
@@ -61,7 +70,7 @@ public class SecondViewpager extends AppCompatActivity implements View.OnClickLi
     TextView orderby1;
     TextView orderby2;
     TextView orderby3;
-    private Spinner spinner;
+    TextView orderby4;
 
     ImageView secondViewpager;
     ImageView second_return;
@@ -84,7 +93,6 @@ public class SecondViewpager extends AppCompatActivity implements View.OnClickLi
         }
 
         initView();
-        initmPopupWindowView(all_gridPhoto);
 
         OnRefresh(gridPhoto);
         setBadgeView();
@@ -160,13 +168,14 @@ public class SecondViewpager extends AppCompatActivity implements View.OnClickLi
         orderby1 = (TextView) findViewById(R.id.orderby1);
         orderby2 = (TextView) findViewById(R.id.orderby2);
         orderby3 = (TextView) findViewById(R.id.orderby3);
-        spinner = (Spinner) findViewById(R.id.orderby4);
+        orderby4 = (TextView) findViewById(R.id.orderby4);
         second_return.setOnClickListener(this);
         secondViewpager.setOnClickListener(this);
         shop_car.setOnClickListener(this);
         orderby1.setOnClickListener(this);
         orderby2.setOnClickListener(this);
         orderby3.setOnClickListener(this);
+        orderby4.setOnClickListener(this);
     }
 
 
@@ -344,6 +353,10 @@ public class SecondViewpager extends AppCompatActivity implements View.OnClickLi
             case R.id.orderby3:
                 fragment.setSort("3", orderby3);
                 break;
+            case R.id.orderby4:
+                initPopupWindowView(all_gridPhoto, orderby4);
+                Log.d("我是分类", all_gridPhoto.toString());
+                break;
             case R.id.shop_car:
                 if (Variables.my != null) {
                     Intent intent = new Intent(SecondViewpager.this, Shop_Car.class);
@@ -357,47 +370,31 @@ public class SecondViewpager extends AppCompatActivity implements View.OnClickLi
     }
 
     boolean spinner_flag = false;
+    PopupWindow popupWindow;
+    View view;
 
-    public void initmPopupWindowView(final List<GridPhoto> type) {
-        String[] str = new String[type.size() + 1];
-        for (int a = 0; a < type.size() + 1; a++) {
-            if (a == type.size()) {
-                str[a] = "切换分类";
-            } else {
-                str[a] = type.get(a).getTypeName1();
-            }
+    public void initPopupWindowView(final List<GridPhoto> type, TextView orderby4) {
+
+        if (popupWindow == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = layoutInflater.inflate(R.layout.spinner_view, null);
+            RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.spinner_rv);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(linearLayoutManager);
+
+            SpinnerAdapter spinnerAdapter = new SpinnerAdapter();
+            spinnerAdapter.setText(type);
+            recyclerView.setAdapter(spinnerAdapter);
+            int a = type.size() * 90;
+            popupWindow = new PopupWindow(view, 1000, a > 500 ? 500 : a);
         }
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, str);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(arrayAdapter);
-
-        spinner.setSelection(type.size());
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (spinner_flag) {
-                    if (position == type.size()) {
-                    } else {
-                        Intent intent = new Intent(SecondViewpager.this, SecondViewpager.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("one_classify", all_gridPhoto.get(position));
-                        bundle.putSerializable("all_classify", (Serializable) all_gridPhoto);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        finish();
-                    }
-                } else {
-                    spinner_flag = true;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        popupWindow.showAsDropDown(orderby4, 0, 10);
 
     }
 
@@ -408,5 +405,54 @@ public class SecondViewpager extends AppCompatActivity implements View.OnClickLi
         return true;
     }
 
+    class SpinnerAdapter extends RecyclerView.Adapter<SpinnerAdapter.ViewHolder> {
 
+        List<GridPhoto> text = null;
+
+        public void setText(List<GridPhoto> text) {
+            this.text = text;
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.spinner_item, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            holder.itemView.setTag(position);
+            holder.textView.setText(text.get(position).getTypeName1());
+        }
+
+        @Override
+        public int getItemCount() {
+
+            return text == null ? 0 : text.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+            TextView textView;
+
+            public ViewHolder(final View itemView) {
+                super(itemView);
+                textView = (TextView) itemView.findViewById(R.id.spinner_text);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(SecondViewpager.this, SecondViewpager.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("one_classify", all_gridPhoto.get((Integer) itemView.getTag()));
+                        bundle.putSerializable("all_classify", (Serializable) all_gridPhoto);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        finish();
+                        if (popupWindow != null)
+                            popupWindow.dismiss();
+
+                    }
+                });
+            }
+        }
+    }
 }

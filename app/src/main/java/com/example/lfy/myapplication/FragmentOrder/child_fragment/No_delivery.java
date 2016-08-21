@@ -187,6 +187,7 @@ public class No_delivery extends Fragment implements SwipeRefreshLayout.OnRefres
                     if (point.getString("OrderType").equals("1")) {
                         OrderBean order = new OrderBean();
                         order.setOrderNO(point.getString("OrderNO"));
+                        order.setOrderID(point.getString("OrderID"));
                         order.setOrderPrice(point.getString("OrderPrice"));
                         order.setDiscount(point.getString("Discount"));
                         order.setPayedPrice(point.getString("PayedPrice"));

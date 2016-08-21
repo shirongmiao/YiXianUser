@@ -197,6 +197,9 @@ public class Variables {
     public static String GetTuanOrder = www + "order/GetTuanOrder?" + com;
     //通过团ID查团购详情
     public static String GetTuanOrderInfo = www + "order/GetTuanOrderInfo?" + com;
+    //请求配送状态  orderId=
+    public static String SelectProcess = www + "order/SelectProcess?" + com;
+
 
     // 需要setContentView之前调用
     public static void setTranslucentStatus(Activity con) {

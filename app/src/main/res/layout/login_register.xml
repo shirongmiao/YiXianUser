@@ -40,7 +40,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="7dp"
                 android:background="@null"
-                android:drawableBottom="@drawable/white_line"
+                android:drawableBottom="@drawable/line_white"
                 android:ems="7"
                 android:hint="请输入手机号"
                 android:inputType="phone"
@@ -55,7 +55,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:drawableBottom="@drawable/white_line"
+                android:drawableBottom="@drawable/line_white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -66,7 +66,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:drawableBottom="@drawable/white_line"
+                    android:drawableBottom="@drawable/line_white"
                     android:hint="请输入短信验证码"
                     android:inputType="number"
                     android:maxLength="6"
@@ -87,14 +87,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:drawableBottom="@drawable/white_line"
+                android:drawableBottom="@drawable/line_white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/register_password"
                     style="@style/EditText"
-                    android:drawableBottom="@drawable/white_line"
+                    android:drawableBottom="@drawable/line_white"
                     android:ems="10"
                     android:hint="6-32位字母或数字"
                     android:inputType="textPassword"

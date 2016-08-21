@@ -20,7 +20,6 @@ import com.example.lfy.myapplication.Bean.CarDbBean;
 import com.example.lfy.myapplication.Bean.OrderBean;
 import com.example.lfy.myapplication.FragmentMine.balance.Balance;
 import com.example.lfy.myapplication.FragmentMine.balance.SetPassWord;
-import com.example.lfy.myapplication.FragmentOrder.FragmentOrder;
 import com.example.lfy.myapplication.FragmentOrder.Order_Particular;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.Send;
@@ -259,6 +258,7 @@ public class All extends Fragment implements SwipeRefreshLayout.OnRefreshListene
                     JSONObject point = data.getJSONObject(i);
                     OrderBean order = new OrderBean();
                     order.setOrderNO(point.getString("OrderNO"));
+                    order.setOrderID(point.getString("OrderID"));
                     order.setOrderPrice(point.getString("OrderPrice"));
                     order.setDiscount(point.getString("Discount"));
                     order.setPayedPrice(point.getString("PayedPrice"));

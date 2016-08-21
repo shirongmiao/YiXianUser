@@ -3,8 +3,6 @@ package com.example.lfy.myapplication.FragmentOrder.child_fragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.CountDownTimer;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import android.widget.Toast;
 
 import com.example.lfy.myapplication.Bean.CarDbBean;
 import com.example.lfy.myapplication.Bean.OrderBean;
-import com.example.lfy.myapplication.FragmentOrder.FragmentOrder;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Variables;
 
@@ -27,9 +24,6 @@ import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**

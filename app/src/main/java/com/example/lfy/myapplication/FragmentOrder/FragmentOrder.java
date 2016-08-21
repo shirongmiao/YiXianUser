@@ -1,16 +1,12 @@
 package com.example.lfy.myapplication.FragmentOrder;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +17,6 @@ import com.example.lfy.myapplication.FragmentOrder.child_fragment.No_delivery;
 import com.example.lfy.myapplication.FragmentOrder.child_fragment.Non_payment;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.ViewPagerIndicator;
-import com.pingplusplus.android.Pingpp;
 
 import java.util.ArrayList;
 import java.util.List;

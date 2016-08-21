@@ -23,11 +23,11 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.example.lfy.myapplication.Bean.HomePoint;
 import com.example.lfy.myapplication.Bean.MineBean;
 import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.Send;
-import com.example.lfy.myapplication.Util.SystemStatusManager;
 import com.example.lfy.myapplication.Util.UserInfo;
 import com.example.lfy.myapplication.Variables;
 
@@ -43,6 +43,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -80,7 +81,6 @@ public class SplashActivity extends AppCompatActivity {
 //            splash_logo = (CircleImageView) findViewById(R.id.splash_logo);
             open_logo = (ImageView) findViewById(R.id.open_logo);
             initView();
-            Login_xUtils();
         }
     }
 
@@ -104,6 +104,7 @@ public class SplashActivity extends AppCompatActivity {
         translate.setAnimationListener(new AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                point_xUtils();
             }
 
             @Override
@@ -112,24 +113,6 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        //execute the task
-                        if (wifi) {
-                            Intent intent = new Intent(SplashActivity.this, MainActivity.class); // 调用父类的intent方法
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                            finish(); //
-                        } else {
-                            Intent intent = new Intent(SplashActivity.this, Wifi.class);
-                            intent.putExtra("from", "second");
-                            startActivity(intent);
-                            finish();
-                        }
-                    }
-                }, 800);
-
             }
         });
         mSplashItem_iv.setAnimation(translate);
@@ -224,6 +207,99 @@ public class SplashActivity extends AppCompatActivity {
         });
     }
 
+    private void point_xUtils() {
+        UserInfo userInfo = new UserInfo(getApplicationContext());
+        String point = userInfo.getStringInfo("PARTID");
+        RequestParams params = new RequestParams(Variables.http_getPoint);
+        params.addBodyParameter("pointid", point);
+        params.setCacheMaxAge(10000 * 60);
+        x.http().get(params, new Callback.CacheCallback<String>() {
+            private boolean hasError = false;
+            private String result = null;
+
+            @Override
+            public boolean onCache(String result) {
+                this.result = result;
+                return false; // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
+                if (result != null) {
+                    this.result = result;
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                hasError = true;
+                Toast.makeText(x.app(), "请检查网络", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFinished() {
+                if (!hasError && result != null) {
+                    // 成功获取数据
+                    JSON(result);
+                    Login_xUtils();
+                    if (wifi) {
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class); // 调用父类的intent方法
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                        finish(); //
+                    } else {
+                        Intent intent = new Intent(SplashActivity.this, Wifi.class);
+                        intent.putExtra("from", "second");
+                        startActivity(intent);
+                        finish();
+                    };
+                } else {
+                    Intent intent = new Intent(SplashActivity.this, Wifi.class);
+                    intent.putExtra("from", "second");
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+
+    }
+
+    private void JSON(String json) {
+
+        HomePoint point = new HomePoint();
+        try {
+            JSONObject object = new JSONObject(json);
+            JSONArray data = object.getJSONArray("Data");
+            JSONObject everyone = data.getJSONObject(0);
+
+            point.setID(everyone.getString("id"));
+            String url = everyone.getString("img");
+            url = "http://www.baifenxian.com/" + java.net.URLEncoder.encode(url, "UTF-8");
+            point.setImages(url);
+            point.setName(everyone.getString("name"));
+            point.setDistrict(everyone.getString("district"));
+            point.setAddress(everyone.getString("address"));
+            point.setCity(everyone.getString("city"));
+            point.setPhone(everyone.getString("phone"));
+            point.setTime(everyone.getString("time"));
+            point.setState(everyone.getString("state"));
+            point.setPrompt(everyone.getString("prompt"));
+            point.setDeliveryPrice(everyone.getDouble("deliveryPrice"));
+            point.setSendPrice(everyone.getDouble("sendPrice"));
+            point.setFreePrice(everyone.getDouble("freePrice"));
+            Variables.point = point;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void Login_xUtils() {
         UserInfo userInfo = new UserInfo(getApplication());
@@ -353,10 +429,6 @@ public class SplashActivity extends AppCompatActivity {
             // 透明导航栏
             getWindow().addFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            SystemStatusManager tintManager = new SystemStatusManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            // 设置状态栏的颜色
-            tintManager.setStatusBarTintResource(R.color.kong);
             getWindow().getDecorView().setFitsSystemWindows(true);
         }
     }

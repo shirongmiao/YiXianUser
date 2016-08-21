@@ -34,7 +34,6 @@ import com.example.lfy.myapplication.FragmentHome.FragmentHome;
 import com.example.lfy.myapplication.FragmentMine.FragmentMine;
 import com.example.lfy.myapplication.FragmentOrder.FragmentOrder;
 import com.example.lfy.myapplication.Util.BadgeView;
-import com.example.lfy.myapplication.Util.SystemStatusManager;
 import com.example.lfy.myapplication.user_login.LoginBg;
 
 import org.json.JSONArray;
@@ -235,10 +234,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             // 透明导航栏
-            SystemStatusManager tintManager = new SystemStatusManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            // 设置状态栏的颜色
-            tintManager.setStatusBarTintResource(R.color.kong);
             getWindow().getDecorView().setFitsSystemWindows(true);
         }
 

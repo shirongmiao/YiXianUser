@@ -190,6 +190,7 @@ public class FragmentClassify extends Fragment implements SwipeRefreshLayout.OnR
                     ever.setShowType(everyone.getInt("ShowType"));
                     type.add(ever);
                 }
+                firstAdapter.lastPosition = -1;
                 if (firstAdapter.Type != null) {
                     firstAdapter.addDate(type);
                     firstAdapter.notifyDataSetChanged();

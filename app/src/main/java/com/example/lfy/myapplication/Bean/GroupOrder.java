@@ -19,24 +19,51 @@ public class GroupOrder implements Serializable {
     String TuanNumber;
     double Cost;
     String command;
-    String IsSingleBuy;
+    int IsSingleBuy;
     String CustomerID;
     String CustomerName;
     String PhoneNameber;
-    String timestamp;
+    String image;
+    long timestamp;
     String Payed;
     String tuanid;
     String title;
     String img;
     double tuanPrice;
     String marketPrice;
-    String singlePrice;
+    double singlePrice;
     String Standard;
     String Place;
     int personNum;
     String tuanCount;
     String ShelfState;
     String detail;
+    String address;
+    String CustomerOrderNo;
+
+    public String getCustomerOrderNo() {
+        return CustomerOrderNo;
+    }
+
+    public void setCustomerOrderNo(String customerOrderNo) {
+        CustomerOrderNo = customerOrderNo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getDetail() {
         return detail;
@@ -150,11 +177,11 @@ public class GroupOrder implements Serializable {
         this.command = command;
     }
 
-    public String getIsSingleBuy() {
+    public int getIsSingleBuy() {
         return IsSingleBuy;
     }
 
-    public void setIsSingleBuy(String isSingleBuy) {
+    public void setIsSingleBuy(int isSingleBuy) {
         IsSingleBuy = isSingleBuy;
     }
 
@@ -182,11 +209,11 @@ public class GroupOrder implements Serializable {
         PhoneNameber = phoneNameber;
     }
 
-    public String getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -238,11 +265,11 @@ public class GroupOrder implements Serializable {
         this.marketPrice = marketPrice;
     }
 
-    public String getSinglePrice() {
+    public double getSinglePrice() {
         return singlePrice;
     }
 
-    public void setSinglePrice(String singlePrice) {
+    public void setSinglePrice(double singlePrice) {
         this.singlePrice = singlePrice;
     }
 

@@ -10,7 +10,6 @@ import android.view.WindowManager;
 
 import com.example.lfy.myapplication.Bean.HomePoint;
 import com.example.lfy.myapplication.Bean.MineBean;
-import com.example.lfy.myapplication.Util.SystemStatusManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -194,6 +193,10 @@ public class Variables {
     public static String JoinTuan = www + "order/JoinTuan?" + com;
     //删除团购订单
     public static String DeleteTuanOrder = www + "order/DeleteTuanOrder?" + com;
+    //获取用户团购订单
+    public static String GetTuanOrder = www + "order/GetTuanOrder?" + com;
+    //通过团ID查团购详情
+    public static String GetTuanOrderInfo = www + "order/GetTuanOrderInfo?" + com;
 
     // 需要setContentView之前调用
     public static void setTranslucentStatus(Activity con) {
@@ -228,6 +231,13 @@ public class Variables {
             if (bitmap != null) {
                 baos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+                int options = 100;
+                while (baos.toByteArray().length / 1024 > 50) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+                    baos.reset();//重置baos即清空baos
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+                    options -= 10;//每次都减少10
+                }
 
                 baos.flush();
                 baos.close();

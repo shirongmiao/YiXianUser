@@ -10,7 +10,9 @@
         android:id="@+id/grouporder_top_bar"
         style="@style/FragmentTop">
 
-        <ImageView style="@style/Left" />
+        <ImageView
+            android:id="@+id/group_order_detail_return"
+            style="@style/Left" />
 
         <TextView
             android:id="@+id/grouporder_txt_topbar"
@@ -69,6 +71,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/group_order_image"
+                    android:ellipsize="end"
+                    android:lines="2"
                     android:text="【直降3元】泰国椰皇4个42.9元【感受泰国舌尖上的风情】"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -79,6 +83,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/group_order_title"
                     android:layout_toRightOf="@id/group_order_image"
+                    android:ellipsize="end"
+                    android:lines="2"
                     android:text="【直降3元】泰国椰皇4个42.9元【感受泰国舌尖上的风情】"
                     android:textSize="14sp" />
 
@@ -93,6 +99,7 @@
                     android:textColor="@color/actionsheet_red" />
 
                 <TextView
+                    android:id="@+id/group_order_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@id/grouporder_rmb"
@@ -138,10 +145,10 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/group_order_customernameandphone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
-                    android:text="荆先生 18268802188"
                     android:textColor="#1d1d1d"
                     android:textSize="16sp" />
             </RelativeLayout>
@@ -169,10 +176,10 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/group_order_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
-                    android:text="浙江省杭州市下沙金沙湖1号"
                     android:textColor="#1d1d1d"
                     android:textSize="16sp" />
             </RelativeLayout>
@@ -200,10 +207,10 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/group_order_point"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
-                    android:text="金沙湖1号服务站"
                     android:textColor="#1d1d1d"
                     android:textSize="16sp" />
             </RelativeLayout>
@@ -231,14 +238,15 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/group_order_point_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
-                    android:text="荆先生 18268802188"
                     android:textColor="#1d1d1d"
                     android:textSize="16sp" />
 
                 <ImageView
+                    android:id="@+id/group_order_detail_phoneimg"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentRight="true"
@@ -282,6 +290,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/group_order_orderno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
@@ -313,6 +322,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/group_order_createtime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"

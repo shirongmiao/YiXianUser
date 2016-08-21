@@ -141,6 +141,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
     public void setTopTitle() {
         if (Variables.point == null) {
             point_xUtils();
+            Log.d("我是point为空的时候", "============================");
         } else {
             Foot_xUtils();
             ALL_xUtils();
@@ -163,8 +164,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
-        Variables.point = null;
-        setTopTitle();
+        point_xUtils();
     }
 
 
@@ -873,7 +873,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                 .setIgnoreGif(false)//是否忽略gif图。false表示不忽略。不写这句，默认是true
                 .setImageScaleType(ImageView.ScaleType.FIT_XY)
                 .setFailureDrawableId(R.mipmap.all_longding)
-                        //设置使用缓存
+                //设置使用缓存
                 .setUseMemCache(true)
                 .setLoadingDrawableId(R.mipmap.all_longding)
                 .build();
@@ -926,6 +926,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         long time = jsonObject.getLong("Msg");
+                        Log.d("服务器时间戳", time + "");
                         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
                         String date = sdf.format(new Date(time * 1000));
                         String start = Variables.point.getTime().substring(0, Variables.point.getTime().indexOf("-"));

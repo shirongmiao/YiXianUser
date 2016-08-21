@@ -34,7 +34,7 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
     GroupOrder groupGoods;
     TextView group_submit_price, group_submit_Default, group_submit_name, group_submit_phone, group_submit_address;
     AddressBean Delivery = null;
-    LinearLayout group_submit_choose, group_submit_alipay;
+    LinearLayout group_submit_choose, group_submit_alipay, group_submit_wx;
     ImageView group_submit_return;
     //防止多次点击
     boolean flag = true;
@@ -62,7 +62,11 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
         group_submit_choose = (LinearLayout) findViewById(R.id.group_submit_choose);
         group_submit_choose.setOnClickListener(this);
         group_submit_price = (TextView) findViewById(R.id.group_submit_price);
-        group_submit_price.setText("￥" + groupGoods.getTuanPrice() + "元");
+        if (IsSingleBuy == 1) {
+            group_submit_price.setText("￥" + groupGoods.getSinglePrice() + "元");
+        } else {
+            group_submit_price.setText("￥" + groupGoods.getTuanPrice() + "元");
+        }
         group_submit_Default = (TextView) findViewById(R.id.group_submit_Default);
         group_submit_phone = (TextView) findViewById(R.id.group_submit_phone);
         group_submit_name = (TextView) findViewById(R.id.group_submit_name);
@@ -71,6 +75,8 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
         group_submit_return.setOnClickListener(this);
         group_submit_alipay = (LinearLayout) findViewById(R.id.group_submit_alipay);
         group_submit_alipay.setOnClickListener(this);
+        group_submit_wx = (LinearLayout) findViewById(R.id.group_submit_wx);
+        group_submit_wx.setOnClickListener(this);
     }
 
     private void address_xUtil() {
@@ -219,9 +225,24 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
                     if (submit_goods) {
                         if (Delivery != null) {
                             if (IsSingleBuy == 2) {
-                                joinTuan(groupGoods.getTuanPrice(), "alipay");
+                                joinTuan(groupGoods.getSinglePrice(), "alipay");
                             } else {
                                 sure(groupGoods.getTuanPrice(), "alipay");
+                            }
+
+                            flag = false;
+                        } else {
+                            Toast.makeText(GroupSubmitOrder.this, "请选择地址", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    break;
+                case R.id.group_submit_wx:
+                    if (submit_goods) {
+                        if (Delivery != null) {
+                            if (IsSingleBuy == 2) {
+                                joinTuan(groupGoods.getSinglePrice(), "wx");
+                            } else {
+                                sure(groupGoods.getTuanPrice(), "wx");
                             }
 
                             flag = false;
@@ -318,6 +339,7 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
             js_request.put("TuanID", groupGoods.getOrderID());
             js_request.put("CustomerID", Variables.my.getCustomerID());
             js_request.put("CustomerOrderNo", orderno);
+            Log.d("用户参团orderno", orderno);
             js_request.put("address", addressId);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -557,17 +579,28 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
         String str = "支付成功";
         if (null != msg1 && msg1.length() != 0) {
             str = "取消支付";
-            if (IsSingleBuy != 2) {
-                DeleteTuanOrder();
-            }
-        }
-        if (null != msg2 && msg2.length() != 0) {
+            DeleteTuanOrder();
+            Toast.makeText(GroupSubmitOrder.this, str, Toast.LENGTH_SHORT).show();
+        } else if (null != msg2 && msg2.length() != 0) {
             str = "支付失败";
-            if (IsSingleBuy != 2) {
-                DeleteTuanOrder();
+            DeleteTuanOrder();
+            Toast.makeText(GroupSubmitOrder.this, str, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(GroupSubmitOrder.this, str, Toast.LENGTH_SHORT).show();
+            if (IsSingleBuy != 1) {
+                Intent intent = new Intent(GroupSubmitOrder.this, GroupDetail.class);
+                if (IsSingleBuy == 0) {
+                    //开团的订单号是本地生成，所以要手动加入到groupGoods中，不然传过去的是null
+                    groupGoods.setOrderNO(orderno);
+                }
+                intent.putExtra("groupOrder", groupGoods);
+                intent.putExtra("IsSingleBuy", IsSingleBuy);
+                intent.putExtra("from", "GroupSubmitOrder");
+                GroupGoodParticular.groupGoodParticular.finish();
+                startActivity(intent);
             }
+
         }
-        Toast.makeText(GroupSubmitOrder.this, str, Toast.LENGTH_SHORT).show();
         finish();
     }
 }

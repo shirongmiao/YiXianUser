@@ -5,11 +5,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,29 +48,40 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
     public GroupFind() {
         // Required empty public constructor
+        groupGoodslist = new ArrayList<>();
+        adapter = new MyAdapter(groupGoodslist);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        groupGoodslist = new ArrayList<>();
-        Find_xUtils();
         view = inflater.inflate(R.layout.fragment_group_find, container, false);
         sw = (SwipeRefreshLayout) view.findViewById(R.id.groupfind_swipe_refresh);
         sw.setOnRefreshListener(this);
-//        tv = (TextView) view.findViewById(R.id.groupfind_tv);
         rv = (RecyclerView) view.findViewById(R.id.groupfind_recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new MyAdapter(groupGoodslist);
         rv.setAdapter(adapter);
-
         return view;
+    }
+
+    private void update() {
+        groupGoodslist.clear();
+        adapter.notifyDataSetChanged();
+        adapter.lastPosition = -1;
+        Find_xUtils();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        groupGoodslist.clear();
+        Find_xUtils();
     }
 
     @Override
     public void onRefresh() {
-        Find_xUtils();
+        update();
     }
 
     private void Find_xUtils() {
@@ -127,9 +143,6 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
             JSONObject object = new JSONObject(json);
             String Ret = object.getString("Ret");
             if (Ret.equals("1")) {
-                if (groupGoodslist != null) {
-                    groupGoodslist.clear();
-                }
                 JSONArray data = object.getJSONArray("Data");
                 for (int i = 0; i < data.length(); i++) {
                     JSONObject everyone = data.getJSONObject(i);
@@ -142,7 +155,7 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     good.setDetail(everyone.getString("detail"));
                     good.setTuanPrice(everyone.getDouble("tuanPrice"));
                     good.setMarketPrice(everyone.getString("marketPrice"));
-                    good.setSinglePrice(everyone.getString("singlePrice"));
+                    good.setSinglePrice(everyone.getDouble("singlePrice"));
                     good.setCost(everyone.getDouble("cost"));
                     good.setStandard(everyone.getString("Standard"));
                     good.setPlace(everyone.getString("Place"));
@@ -162,6 +175,7 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         List<GroupOrder> goodslist;
+        public int lastPosition = -1;
 
         MyAdapter(List<GroupOrder> goodslist) {
             this.goodslist = goodslist;
@@ -173,8 +187,24 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
             return viewHolder;
         }
 
+        protected void setAnimation(View viewToAnimate, int position) {
+
+            if (position > lastPosition) {
+                Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.item_slide_bottom_up);
+                viewToAnimate.startAnimation(animation);
+                lastPosition = position;
+            }
+        }
+
+        @Override
+        public void onViewDetachedFromWindow(MyViewHolder holder) {
+            super.onViewDetachedFromWindow(holder);
+            holder.itemView.clearAnimation();
+        }
+
         @Override
         public void onBindViewHolder(MyViewHolder holder, final int position) {
+            setAnimation(holder.itemView, position);
             holder.price.setText(goodslist.get(position).getTuanPrice() + "");
             holder.title.setText(goodslist.get(position).getTitle());
             holder.btn.setText(goodslist.get(position).getPersonNum() + "人团|去开团");

@@ -10,7 +10,9 @@
         android:id="@+id/grouporder_top_bar"
         style="@style/FragmentTop">
 
-        <ImageView style="@style/Left" />
+        <ImageView
+            android:id="@+id/group_detail_return"
+            style="@style/Left" />
 
         <TextView
             android:id="@+id/grouporder_txt_topbar"
@@ -18,6 +20,7 @@
             android:text="团购详情" />
 
         <TextView
+            android:id="@+id/group_detail_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
@@ -32,7 +35,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/group_order_image"
+            android:id="@+id/group_detail_image"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_alignParentStart="true"
@@ -41,102 +44,136 @@
             android:src="@drawable/testa" />
 
         <TextView
-            android:id="@+id/group_order_title"
+            android:id="@+id/group_detail_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@id/group_order_image"
+            android:layout_toRightOf="@id/group_detail_image"
             android:text="【直降3元】泰国椰皇4个42.9元【感受泰国舌尖上的风情】"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/group_order_content"
+            android:id="@+id/group_detail_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/group_order_title"
-            android:layout_toRightOf="@id/group_order_image"
+            android:layout_below="@id/group_detail_title"
+            android:layout_toRightOf="@id/group_detail_image"
             android:text="【直降3元】泰国椰皇4个42.9元【感受泰国舌尖上的风情】"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/group_order_price"
+            android:id="@+id/group_detail_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/group_detail_view"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/group_order_content"
             android:layout_margin="5dp"
             android:text="42.00"
             android:textColor="@color/actionsheet_red"
             android:textSize="25sp" />
 
         <TextView
-            android:id="@+id/grouporder_rmb"
+            android:id="@+id/groupdetail_rmb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/group_order_price"
-            android:layout_toLeftOf="@id/group_order_price"
+            android:layout_alignBaseline="@id/group_detail_price"
+            android:layout_toLeftOf="@id/group_detail_price"
             android:text="￥"
             android:textColor="@color/actionsheet_red" />
 
         <ImageView
+            android:id="@+id/group_detail_groupingimg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/group_order_price"
+            android:layout_below="@id/group_detail_price"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="-40dp"
+            android:layout_marginTop="-65dp"
             android:src="@mipmap/grouping" />
 
         <View
-            android:id="@+id/group_order_view"
+            android:id="@+id/group_detail_view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/group_order_image"
+            android:layout_below="@id/group_detail_image"
             android:background="#e4e4e4"></View>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/group_order_view"
+            android:layout_below="@id/group_detail_view"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/group_detail_personnum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
                 android:text="3人团"
                 android:textSize="18sp" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:orientation="horizontal"></LinearLayout>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="79dp"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/group_detail_photorv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/group_order_image"
+                android:layout_below="@id/group_detail_image"
                 android:background="#e4e4e4"></View>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
                 android:text="团长信息"
                 android:textSize="18sp" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp">
+
+                <com.example.lfy.myapplication.Util.CircleImageView
+                    android:id="@+id/group_Detail_photo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"></com.example.lfy.myapplication.Util.CircleImageView>
+
+                <TextView
+                    android:id="@+id/group_detail_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/group_detail_createtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp" />
 
 
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/group_order_image"
+                android:layout_below="@id/group_detail_image"
                 android:background="#e4e4e4"></View>
         </LinearLayout>
     </RelativeLayout>

@@ -37,11 +37,12 @@ public class GroupGoodParticular extends AppCompatActivity {
     GroupOrder groupGoods;
     //从哪个页面跳转而来
     String from = "";
-
+    public static GroupGoodParticular groupGoodParticular;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Variables.setTranslucentStatus(this);
+        groupGoodParticular=this;
         setContentView(R.layout.activity_group_good_particular);
         Intent intent = getIntent();
         from = intent.getStringExtra("from");
@@ -96,7 +97,7 @@ public class GroupGoodParticular extends AppCompatActivity {
                 }
             });
             group_gp_singlebuy = (TextView) findViewById(R.id.group_gp_singlebuy);
-            group_gp_singlebuy.setText(groupGoods.getSinglePrice());
+            group_gp_singlebuy.setText(groupGoods.getSinglePrice()+"");
             group_gp_singlebuy_btn = (RelativeLayout) findViewById(R.id.group_gp_singlebuy_btn);
             group_gp_singlebuy_btn.setOnClickListener(new View.OnClickListener() {
                 @Override

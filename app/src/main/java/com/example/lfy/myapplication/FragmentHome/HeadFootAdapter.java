@@ -1,7 +1,12 @@
 package com.example.lfy.myapplication.FragmentHome;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
+import com.example.lfy.myapplication.R;
 
 /**
  * Created by lfy on 2016/4/24.
@@ -12,6 +17,7 @@ public abstract class HeadFootAdapter<HeadViewHolder extends RecyclerView.ViewHo
     static int TYPE_ITEM = 1;
     static int TYPE_FOOT = 2;
     static int TYPE_GRID = 3;
+    int lastPosition = -1;
 
     /**
      * 头部ViewHolder
@@ -66,16 +72,38 @@ public abstract class HeadFootAdapter<HeadViewHolder extends RecyclerView.ViewHo
                 onBindHeaderViewHolder((HeadViewHolder) viewHolder, i);
                 break;
             case 1:
+                setAnimation(viewHolder.itemView, i);
                 onBindItemViewHolder((ItemViewHolder) viewHolder, i - headCount - gridViewCount);
                 break;
             case 2:
+                setAnimation(viewHolder.itemView, i);
                 onBindFooterViewHolder((FootViewHolder) viewHolder, i - itemViewCount - headCount - gridViewCount);
                 break;
             case 3:
+                setAnimation(viewHolder.itemView, i);
                 onBindGridViewHolder((GridViewHolder) viewHolder, i - headCount);
                 break;
 
         }
+    }
+
+    protected void setAnimation(View viewToAnimate, int position) {
+
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.item_slide_bottom_up);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        } else {
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.item_slide_bottom_down);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
     }
 
 

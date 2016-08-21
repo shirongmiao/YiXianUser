@@ -301,7 +301,10 @@ public class GroupDetail extends AppCompatActivity {
                     }
                     //设置团长信息
                     setPhoneNumber(group_detail_phone, groupOrders.get(0).getPhoneNameber());
-                    group_detail_createtime.setText(groupOrders.get(0).getCreateTime().replace("T", " ") + "开团");
+                    String str = groupOrders.get(0).getCreateTime();
+                    str = str.replace("T","");
+                    str = str.substring(0,str.lastIndexOf("."));
+                    group_detail_createtime.setText(str + "开团");
                     String liu = groupOrders.get(0).getImage();
                     if (liu.equals("none")) {
                         group_Detail_photo.setImageResource(R.mipmap.mine_default_photo);

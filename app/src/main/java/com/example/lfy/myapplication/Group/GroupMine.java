@@ -109,7 +109,7 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     Log.d("newState", newState + "");
                     Log.d("SCROLL_STATE_IDLE", RecyclerView.SCROLL_STATE_IDLE + "");
                     Log.d("adapter.getItemCount()", adapter.getItemCount() + "");
-                    if (lastVisibleItem >= 3) {
+                    if (lastVisibleItem >= 9) {
                         if (lastVisibleItem == -1) {
                             update();
                         } else {
@@ -267,7 +267,7 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
                     String nowday = sDateFormat.format(new Date());
                     final long time = compare_date(nowday, CreateTime);
-                    holder.cd = new CountDownTimer(time, 1000) {
+                    holder.cd = new CountDownTimer(time-1000*60*60, 1000) {
                         @Override
                         public void onTick(long millisUntilFinished) {
                             setDate(millisUntilFinished, holder.groupmine_item_countdown);
@@ -475,6 +475,8 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     sw.setRefreshing(false);
                     Toast.makeText(getContext(), "没有更多数据了", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                sw.setRefreshing(false);
             }
 
         } catch (JSONException e) {

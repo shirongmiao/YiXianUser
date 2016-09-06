@@ -318,6 +318,7 @@
         <activity android:name=".Group.GroupSubmitOrder" />
         <activity android:name=".Group.GroupOrderDetail" />
         <activity android:name=".Group.GroupDetail"></activity>
+        <activity android:name=".FragmentOrder.PingLun"></activity>
     </application>
 
 </manifest>

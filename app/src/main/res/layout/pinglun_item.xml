@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/pinglun_item_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="20dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/testa" />
+
+    <TextView
+        android:id="@+id/pinglun_item_describe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/pinglun_item_image"
+        android:layout_marginRight="20dp"
+        android:layout_toRightOf="@id/pinglun_item_image"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="越南红心火龙果，8元两个" />
+
+    <TextView
+        android:id="@+id/pinglun_item_pinglunstr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/pinglun_item_image"
+        android:layout_toRightOf="@id/pinglun_item_image"
+        android:text="亲，请留下您宝贵的评价吧~"
+        android:textColor="@color/car_grey" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/pinglun_item_image"
+        android:background="@color/car_grey"></View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="描述相符" />
+
+        <RatingBar
+            android:id="@+id/pinglun_item_rating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:isIndicator="false"
+            android:rating="3"
+            android:stepSize="1" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="#888888"></View>
+</RelativeLayout>

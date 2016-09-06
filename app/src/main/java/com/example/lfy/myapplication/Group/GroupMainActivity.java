@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.lfy.myapplication.FragmentOrder.PingLun;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Variables;
 import com.example.lfy.myapplication.user_login.LoginBg;
@@ -121,6 +122,13 @@ public class GroupMainActivity extends AppCompatActivity implements ViewPager.On
                     bottomNavigationBar.selectTab(1);
                     txt_topbar.setText(R.string.tab_menu_near);
                     search.setVisibility(View.VISIBLE);
+                    search.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(GroupMainActivity.this, PingLun.class);
+                            startActivity(intent);
+                        }
+                    });
                     break;
                 case PAGE_THREE:
                     bottomNavigationBar.selectTab(2);

@@ -23,7 +23,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:gravity="center_horizontal"
-        android:text="为你推荐"
+        android:text="更多推荐"
         android:textColor="@color/cardview_dark_background"
         android:textSize="14dp" />
 

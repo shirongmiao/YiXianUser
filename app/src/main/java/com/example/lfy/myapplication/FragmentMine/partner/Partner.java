@@ -2,6 +2,8 @@ package com.example.lfy.myapplication.FragmentMine.partner;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,13 @@ import android.widget.TextView;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Variables;
 import com.example.lfy.myapplication.user_login.LoginBg;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import java.io.ByteArrayOutputStream;
 
 
 /**
@@ -23,7 +32,7 @@ public class Partner extends AppCompatActivity {
     WebView webView;
     ImageView all_return;
     TextView bout;
-    ImageView one_fenxiang;
+    ImageView one_fenxiang, all_share;
     public static Partner instance = null;
 
     @Override
@@ -65,7 +74,6 @@ public class Partner extends AppCompatActivity {
                 }
 
 
-
             }
         });
         all_return = (ImageView) findViewById(R.id.all_return);
@@ -88,9 +96,43 @@ public class Partner extends AppCompatActivity {
                 return true;
             }
         });
+        all_share = (ImageView) findViewById(R.id.all_share);
+        all_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(Intent.ACTION_SEND);
+//                intent.setType("text/plain");
+//                intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
+//                intent.putExtra(Intent.EXTRA_TEXT, "http://www.baifenxian.com/user/partner.html");
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(Intent.createChooser(intent, getTitle()));
+                IWXAPI api;
+                WXWebpageObject webpage = new WXWebpageObject();
+                webpage.webpageUrl = "http://www.baifenxian.com/user/partner.html";
+
+                WXMediaMessage msg = new WXMediaMessage(webpage);
+                msg.title = "申请开店";
+                msg.description = "申请开店";
+                Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.all_logo);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                thumb.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                msg.thumbData = baos.toByteArray();
+
+                SendMessageToWX.Req req = new SendMessageToWX.Req();
+                req.transaction = buildTransaction("webpage");
+                req.message = msg;
+                api = WXAPIFactory.createWXAPI(getApplicationContext(), "wxf4d91338ae39b676", false);
+                api.sendReq(req);
+            }
+        });
     }
 
-    private void login(){
+    private String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis())
+                : type + System.currentTimeMillis();
+    }
+
+    private void login() {
         new android.support.v7.app.AlertDialog.Builder(Partner.this)
                 .setMessage("登陆后才能申请开店，是否去登陆？")
                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {

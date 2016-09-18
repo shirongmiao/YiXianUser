@@ -199,7 +199,16 @@ public class Variables {
     public static String GetTuanOrderInfo = www + "order/GetTuanOrderInfo?" + com;
     //请求配送状态  orderId=
     public static String SelectProcess = www + "order/SelectProcess?" + com;
-
+    //查看订单评论
+    public static String GetEvaluate = www + "order/GetEvaluate?" + com;
+    //上传评价
+    public static String SendEvaluate = www + "order/SendEvaluate?" + com;
+    //获取商品评价列表
+    public static String ProductEvaluate = www + "product/ProductEvaluate?" + com;
+    //显示评价数量和平均值
+    public static String EvaluateCount = www + "product/EvaluateCount?" + com;
+    //获取推荐商品
+    public static String RecommendProduct = www + "product/RecommendProduct?" + com;
 
     // 需要setContentView之前调用
     public static void setTranslucentStatus(Activity con) {

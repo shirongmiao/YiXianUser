@@ -22,6 +22,7 @@ import com.example.lfy.myapplication.FragmentMine.feedback.Feedback;
 import com.example.lfy.myapplication.FragmentMine.help.Help;
 import com.example.lfy.myapplication.FragmentMine.partner.Partner;
 import com.example.lfy.myapplication.FragmentMine.set_up.Set_up;
+import com.example.lfy.myapplication.Group.GroupMainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.CircleImageView;
 import com.example.lfy.myapplication.Variables;
@@ -109,9 +110,9 @@ public class FragmentMine extends Fragment implements View.OnClickListener {
             my_money.setVisibility(View.VISIBLE);
             select_money();
             String liu = Variables.my.getImage();
-            if (liu.equals("none")){
+            if (liu.equals("none")) {
                 user_photo.setImageResource(R.mipmap.mine_default_photo);
-            }else {
+            } else {
                 try {
                     liu = liu.substring(liu.indexOf(",") + 1);
                     Bitmap bitmap = Variables.base64ToBitmap(liu);
@@ -204,8 +205,11 @@ public class FragmentMine extends Fragment implements View.OnClickListener {
                 break;
             case R.id.fragment_group:
 
-                Toast.makeText(getContext(), "团购尚未开启", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "团购尚未开启", Toast.LENGTH_SHORT).show();
 
+                Intent intent2 = new Intent(getActivity(), GroupMainActivity.class);
+                intent2.putExtra("Selected", 2);
+                startActivity(intent2);
                 break;
             case R.id.fragment_balance:
                 if (Variables.my != null) {

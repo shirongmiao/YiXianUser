@@ -1,8 +1,11 @@
 package com.example.lfy.myapplication.FragmentHome.scan;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +14,17 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ashokvarma.bottomnavigation.utils.Utils;
 import com.example.lfy.myapplication.GoodsParticular.Goods_Particular;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Variables;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import java.io.ByteArrayOutputStream;
 
 
 /**
@@ -22,6 +33,10 @@ import com.example.lfy.myapplication.Variables;
 public class WEB extends AppCompatActivity {
     WebView webView;
 
+    ImageView web_share;
+    String title;
+    String urlstr;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,11 +44,12 @@ public class WEB extends AppCompatActivity {
         setContentView(R.layout.web);
         TextView textView = (TextView) findViewById(R.id.web_title);
         ImageView imageView = (ImageView) findViewById(R.id.web_left);
+        web_share = (ImageView) findViewById(R.id.web_share);
 
 
         Intent intent = getIntent();
-        String url = intent.getStringExtra("url");
-        String title = intent.getStringExtra("title");
+        urlstr = intent.getStringExtra("url");
+        title = intent.getStringExtra("title");
         textView.setText(title);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,9 +57,9 @@ public class WEB extends AppCompatActivity {
                 finish();
             }
         });
-
-        init(url);
+        init(urlstr);
     }
+
 
     private void init(String url) {
         webView = (WebView) findViewById(R.id.webView);
@@ -68,5 +84,39 @@ public class WEB extends AppCompatActivity {
             }
         });
 
+        web_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IWXAPI api;
+                WXWebpageObject webpage = new WXWebpageObject();
+                webpage.webpageUrl = urlstr;
+
+                WXMediaMessage msg = new WXMediaMessage(webpage);
+                msg.title = title;
+                msg.description = title;
+                Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.all_logo);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                thumb.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                msg.thumbData = baos.toByteArray();
+
+                SendMessageToWX.Req req = new SendMessageToWX.Req();
+                req.transaction = buildTransaction("webpage");
+                req.message = msg;
+                api = WXAPIFactory.createWXAPI(getApplicationContext(), "wxf4d91338ae39b676", false);
+                api.sendReq(req);
+
+//                Intent intent = new Intent(Intent.ACTION_SEND);
+//                intent.setType("text/plain");
+//                intent.putExtra(Intent.EXTRA_SUBJECT, title);
+//                intent.putExtra(Intent.EXTRA_TEXT, urlstr);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(Intent.createChooser(intent, getTitle()));
+            }
+        });
+    }
+
+    private String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis())
+                : type + System.currentTimeMillis();
     }
 }

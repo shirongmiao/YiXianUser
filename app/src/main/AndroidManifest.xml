@@ -317,8 +317,12 @@
         <activity android:name=".Group.GroupGoodParticular" />
         <activity android:name=".Group.GroupSubmitOrder" />
         <activity android:name=".Group.GroupOrderDetail" />
-        <activity android:name=".Group.GroupDetail"></activity>
-        <activity android:name=".FragmentOrder.PingLun"></activity>
+        <activity android:name=".Group.GroupDetail" />
+        <activity
+            android:name=".FragmentOrder.PingLun"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".GoodsParticular.EvaluateList"></activity>
+
     </application>
 
 </manifest>

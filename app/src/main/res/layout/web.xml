@@ -2,11 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <FrameLayout style="@style/FragmentTop">
 
         <ImageView
             android:id="@+id/web_left"
             style="@style/Left" />
+
+        <ImageView
+            android:id="@+id/web_share"
+            style="@style/Right"
+            android:src="@mipmap/share3" />
 
         <TextView
             android:id="@+id/web_title"
@@ -15,9 +21,9 @@
 
     <WebView
         android:id="@+id/webView"
-        android:layout_marginTop="64dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></WebView>
+        android:layout_height="match_parent"
+        android:layout_marginTop="64dp"></WebView>
 
 
 </FrameLayout>

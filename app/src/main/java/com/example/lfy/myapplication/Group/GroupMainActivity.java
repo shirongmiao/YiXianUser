@@ -62,10 +62,12 @@ public class GroupMainActivity extends AppCompatActivity implements ViewPager.On
         bottomNavigationBar
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC
                 );
+        Intent intent = getIntent();
+        int Selected = intent.getIntExtra("Selected", 0);
         bottomNavigationBar.addItem(find)
                 .addItem(near)
                 .addItem(mine)
-                .setFirstSelectedPosition(0)
+                .setFirstSelectedPosition(Selected)
                 .initialise();
 
         bottomNavigationBar.setTabSelectedListener(this);
@@ -81,7 +83,8 @@ public class GroupMainActivity extends AppCompatActivity implements ViewPager.On
         vpager = (ViewPager) findViewById(R.id.vpager);
         vpager.setAdapter(mAdapter);
         vpager.setOffscreenPageLimit(2);
-        vpager.setCurrentItem(0);
+        vpager.setCurrentItem(Selected);
+        onPageScrollStateChanged(Selected);
         vpager.addOnPageChangeListener(this);
     }
 
@@ -125,8 +128,7 @@ public class GroupMainActivity extends AppCompatActivity implements ViewPager.On
                     search.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(GroupMainActivity.this, PingLun.class);
-                            startActivity(intent);
+
                         }
                     });
                     break;

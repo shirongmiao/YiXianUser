@@ -24,5 +24,6 @@
         android:layout_height="40dp"
         android:background="@color/green"
         android:text="立即评论"
+        android:textColor="@color/white"
         android:visibility="gone" />
 </LinearLayout>

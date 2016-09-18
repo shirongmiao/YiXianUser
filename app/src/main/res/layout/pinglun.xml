@@ -37,7 +37,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -53,16 +56,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:text="配送服务" />
 
                     <RatingBar
-                        android:id="@+id/pinglun_ratingbar_peisongfuwu"
-                        style="?android:attr/ratingBarStyleSmall"
+                        android:id="@+id/pinglun_distributionStar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:rating="4"
+                        android:layout_marginLeft="100dp"
                         android:isIndicator="false"
+                        android:minHeight="0dp"
+                        android:progressDrawable="@drawable/ratingbar_back"
+                        android:rating="5"
                         android:stepSize="1" />
 
                 </RelativeLayout>
@@ -76,19 +81,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
                         android:text="服务态度" />
 
                     <RatingBar
-                        android:id="@+id/serviceStar"
-                        style="?android:attr/ratingBarStyleSmall"
+                        android:id="@+id/pinglun_serviceStar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                       android:isIndicator="false"
-                        android:rating="4"
+                        android:layout_marginLeft="100dp"
+                        android:isIndicator="false"
+                        android:minHeight="0dp"
+                        android:progressDrawable="@drawable/ratingbar_back"
+                        android:rating="5"
                         android:stepSize="1" />
 
                 </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/pinglun_evaluateText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext"
+                    android:hint="东西很不错，购买方便，好评"
+                    android:padding="5dp"
+                    android:textSize="12dp" />
             </LinearLayout>
 
             <View
@@ -108,6 +125,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/pinglun_bottom_linear"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_width"
         android:orientation="horizontal">
@@ -121,6 +139,7 @@
             android:textColor="@color/white" />
 
         <TextView
+            android:id="@+id/sendEvaluate_tv_btn"
             android:layout_width="0dp"
             android:layout_height="@dimen/bottom_width"
             android:layout_weight="1"

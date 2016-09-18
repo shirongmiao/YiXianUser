@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lfy.myapplication.Bean.CarDbBean;
+import com.example.lfy.myapplication.Bean.GridPhoto;
 import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.SubmitOrder.SubmitOrder;
@@ -60,6 +62,7 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
 
         initView();
         getCar_xUtils();
+        getRecommendProduct_xUtils();
     }
 
     private void initView() {
@@ -77,11 +80,9 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
         car_left = (ImageView) findViewById(R.id.car_left);
         car_left.setVisibility(View.VISIBLE);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Shop_Car.this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        car_recyclerView.setLayoutManager(linearLayoutManager);
+
         car_recyclerView.setItemAnimator(new DefaultItemAnimator());
-        car_recyclerView.setAdapter(carAdapter);
+
 
 
         carAdapter.SetOnClickListen(new CarAdapter.OnClickListen() {
@@ -106,6 +107,16 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
                 Intent intent = new Intent(Shop_Car.this, MainActivity.class);
                 startActivity(intent);
             }
+
+            @Override
+            public void SetOnItemClick(String productId) {
+
+            }
+
+            @Override
+            public void SerOnClick(String productId) {
+
+            }
         });
         car_sendPrice.setText("含配送费:￥" + Variables.point.getDeliveryPrice() + "元");
         car_submit.setOnClickListener(this);
@@ -117,6 +128,7 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
 
     public void setUpdate() {
         getCar_xUtils();
+        getRecommendProduct_xUtils();
     }
 
     @Override
@@ -212,7 +224,7 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
 
     private void Get_JSON(String json) {
 
-        List<CarDbBean> list = new ArrayList<>();
+        final List<CarDbBean> list = new ArrayList<>();
         try {
             JSONObject object = new JSONObject(json);
             String Ret = object.getString("Ret");
@@ -238,14 +250,24 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
                     carDbBean.setPoint(everyone.getString("point"));
                     carDbBean.setCost(everyone.getDouble("Cost"));
                     Variables.count = Variables.count + everyone.getInt("ProductCount");
-
                     list.add(carDbBean);
                 }
                 carAdapter.addDate(list);
                 Money(list);
+                MainActivity.bv.setBadgeCount(Variables.count);
                 car_none.setVisibility(View.GONE);
                 car_recyclerView.setVisibility(View.VISIBLE);
                 car_bottom_line.setVisibility(View.VISIBLE);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+                car_recyclerView.setLayoutManager(gridLayoutManager);
+                gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int position) {
+                        return position <=list.size()+1 ? 2 : 1;
+                    }
+                });
+                car_recyclerView.setItemAnimator(new DefaultItemAnimator());
+                car_recyclerView.setAdapter(carAdapter);
             } else {
                 carAdapter.addDate(null);
                 car_none.setVisibility(View.VISIBLE);
@@ -308,6 +330,7 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
                 if (!hasError && result != null) {
                     // 成功删除购物车数据
                     carAdapter.addDate(null);
+                    carAdapter.addMore(null);
                     car_submit.setEnabled(false);
                     car_none.setVisibility(View.VISIBLE);
                     car_money.setText("合计:￥0元");
@@ -473,5 +496,97 @@ public class Shop_Car extends AppCompatActivity implements View.OnClickListener 
             }
         });
 
+    }
+
+
+    //获取推荐商品
+    private void getRecommendProduct_xUtils() {
+        RequestParams params = new RequestParams(Variables.RecommendProduct);
+        params.addBodyParameter("customerId", Variables.my.getCustomerID());
+        params.setCacheMaxAge(1000 * 60);
+        x.http().get(params, new Callback.CacheCallback<String>() {
+            private boolean hasError = false;
+            private String result = null;
+
+            @Override
+            public boolean onCache(String result) {
+                this.result = result;
+                return false; // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
+                if (result != null) {
+                    this.result = result;
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                hasError = true;
+                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                if (ex instanceof HttpException) { // 网络错误
+                    HttpException httpEx = (HttpException) ex;
+                    int responseCode = httpEx.getCode();
+                    String responseMsg = httpEx.getMessage();
+                    String errorResult = httpEx.getResult();
+                    // ...
+                } else { // 其他错误
+                    // ...
+                }
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFinished() {
+                if (!hasError && result != null) {
+                    // 成功获取数据
+                    RecommendProduct_JSON(result);
+                }
+            }
+        });
+
+    }
+
+    private void RecommendProduct_JSON(String json) {
+
+        List<GridPhoto> list = new ArrayList<>();
+        try {
+            JSONObject object = new JSONObject(json);
+            String Ret = object.getString("Ret");
+            if (Ret.equals("1")) {
+                JSONArray data = object.getJSONArray("Data");
+                for (int i = 0; i < data.length(); i++) {
+                    GridPhoto carDbBean = new GridPhoto();
+                    JSONObject everyone = data.getJSONObject(i);
+                    String url = everyone.getString("Image1");
+                    url = "http://www.baifenxian.com/" + java.net.URLEncoder.encode(url, "UTF-8");
+                    carDbBean.setProductID(everyone.getString("ProductID"));
+                    carDbBean.setImage(url);
+                    carDbBean.setPrice(everyone.getDouble("Price"));
+                    carDbBean.setPromotionName(everyone.getString("PromotionName"));
+                    carDbBean.setPromotionPrice(everyone.getDouble("PromotionPrice"));
+                    carDbBean.setStandard(everyone.getString("Standard"));
+                    carDbBean.setTitle(everyone.getString("Title"));
+                    carDbBean.setType1(everyone.getString("Type1"));
+                    carDbBean.setTypeName1(everyone.getString("TypeName1"));
+                    carDbBean.setPoint(everyone.getString("point"));
+                    carDbBean.setCost(everyone.getDouble("Cost"));
+                    list.add(carDbBean);
+                }
+                carAdapter.addMore(list);
+            } else {
+                carAdapter.addMore(null);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }

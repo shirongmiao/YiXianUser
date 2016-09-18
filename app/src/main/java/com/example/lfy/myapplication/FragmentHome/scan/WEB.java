@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.ashokvarma.bottomnavigation.utils.Utils;
 import com.example.lfy.myapplication.GoodsParticular.Goods_Particular;
 import com.example.lfy.myapplication.R;
+import com.example.lfy.myapplication.Util.dialog_widget.ActionSheetDialog;
 import com.example.lfy.myapplication.Variables;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
@@ -36,6 +37,7 @@ public class WEB extends AppCompatActivity {
     ImageView web_share;
     String title;
     String urlstr;
+    String description;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,23 +89,7 @@ public class WEB extends AppCompatActivity {
         web_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IWXAPI api;
-                WXWebpageObject webpage = new WXWebpageObject();
-                webpage.webpageUrl = urlstr;
-
-                WXMediaMessage msg = new WXMediaMessage(webpage);
-                msg.title = title;
-                msg.description = title;
-                Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.all_logo);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                thumb.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                msg.thumbData = baos.toByteArray();
-
-                SendMessageToWX.Req req = new SendMessageToWX.Req();
-                req.transaction = buildTransaction("webpage");
-                req.message = msg;
-                api = WXAPIFactory.createWXAPI(getApplicationContext(), "wxf4d91338ae39b676", false);
-                api.sendReq(req);
+                showDialog();
 
 //                Intent intent = new Intent(Intent.ACTION_SEND);
 //                intent.setType("text/plain");
@@ -115,8 +101,41 @@ public class WEB extends AppCompatActivity {
         });
     }
 
-    private String buildTransaction(final String type) {
-        return (type == null) ? String.valueOf(System.currentTimeMillis())
-                : type + System.currentTimeMillis();
+    public void showDialog() {
+        description = "开启社区式购物之旅！";
+        new ActionSheetDialog(this)
+                .builder()
+                .setTitle("分享到")
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .addSheetItem("微信好友", ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                Variables.WXshare(getApplicationContext(),
+                                        SendMessageToWX.Req.WXSceneSession, title, description,
+                                        urlstr, R.mipmap.all_logo);
+                            }
+                        })
+                .addSheetItem("微信朋友圈", ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                Variables.WXshare(getApplicationContext(),
+                                        SendMessageToWX.Req.WXSceneTimeline, title, description,
+                                        urlstr, R.mipmap.all_logo);
+                            }
+                        })
+                .addSheetItem("其他", ActionSheetDialog.SheetItemColor.Red, new ActionSheetDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_SUBJECT, title);
+                        intent.putExtra(Intent.EXTRA_TEXT, urlstr);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(Intent.createChooser(intent, getTitle()));
+                    }
+                }).show();
     }
 }

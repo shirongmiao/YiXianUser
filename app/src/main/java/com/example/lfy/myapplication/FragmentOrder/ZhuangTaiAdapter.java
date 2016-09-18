@@ -69,7 +69,7 @@ public class ZhuangTaiAdapter extends RecyclerView.Adapter<ZhuangTaiAdapter.View
         } else {
             holder.zhuangtai_bottom.setVisibility(View.VISIBLE);
         }
-        if (Type.get(position).getType() == 0) {
+        if (position == 0) {
             holder.zhangtai_item_title.setText("订单已提交");
         } else if (Type.get(position).getType() == 1) {
             holder.zhangtai_item_title.setText("支付成功");
@@ -79,9 +79,13 @@ public class ZhuangTaiAdapter extends RecyclerView.Adapter<ZhuangTaiAdapter.View
             holder.zhangtai_item_content.setText("将于次日完成配送，请保持电话通畅");
         } else if (Type.get(position).getType() == 3) {
             holder.zhangtai_item_title.setText("商品已送达");
-            holder.zhangtai_item_content.setText("待评价");
+            holder.zhangtai_item_content.setText("等待用户确认收货");
         } else if (Type.get(position).getType() == 4) {
             holder.zhangtai_item_title.setText("订单完成");
+            holder.zhangtai_item_content.setText("待评价");
+        } else if (Type.get(position).getType() == 5) {
+            holder.zhangtai_item_title.setText("订单完成");
+            holder.zhangtai_item_content.setText("已评价");
         }
         String str = Type.get(position).getTime();
         str = str.substring(str.indexOf("T") + 1, str.indexOf("."));

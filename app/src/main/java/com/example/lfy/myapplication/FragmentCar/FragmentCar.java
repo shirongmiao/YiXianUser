@@ -112,62 +112,7 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
 
             @Override
             public void SerOnClick(String productId) {
-                RequestParams params = new RequestParams(Variables.http_InsertCar);
-                params.addBodyParameter("CustomerID", Variables.my.getCustomerID());
-                params.addBodyParameter("ProductID", productId);
-                params.addBodyParameter("point", Variables.point.getID());
-                params.addBodyParameter("type", "1");
-                params.addBodyParameter("num", "1");
-
-                x.http().get(params, new Callback.CacheCallback<String>() {
-                    private boolean hasError = false;
-                    private String result = null;
-
-                    @Override
-                    public boolean onCache(String result) {
-                        this.result = result;
-                        return false; // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
-                    }
-
-                    @Override
-                    public void onSuccess(String result) {
-                        // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
-                        if (result != null) {
-                            this.result = result;
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
-                        hasError = true;
-                        Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
-                        if (ex instanceof HttpException) { // 网络错误
-                            HttpException httpEx = (HttpException) ex;
-                            int responseCode = httpEx.getCode();
-                            String responseMsg = httpEx.getMessage();
-                            String errorResult = httpEx.getResult();
-                            // ...
-                        } else { // 其他错误
-                            // ...
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(CancelledException cex) {
-                        Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onFinished() {
-                        if (!hasError && result != null) {
-                            // 成功获取数据
-                            Variables.count = Variables.count + 1;
-
-                            Toast.makeText(x.app(), "加入成功", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-
+                addRecommendProduct_xUtils(productId);
             }
         });
         car_sendPrice.setText("含配送费:￥" + Variables.point.getDeliveryPrice() + "元");
@@ -316,7 +261,7 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
                 gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        return position <=list.size()+1 ? 2 : 1;
+                        return position <= list.size() + 1 ? 2 : 1;
                     }
                 });
                 car_recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -603,6 +548,63 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
             }
         });
 
+    }
+
+    //购物车加入推荐商品
+    private void addRecommendProduct_xUtils(String productId) {
+        RequestParams params = new RequestParams(Variables.http_InsertCar);
+        params.addBodyParameter("CustomerID", Variables.my.getCustomerID());
+        params.addBodyParameter("ProductID", productId);
+        params.addBodyParameter("point", Variables.point.getID());
+        params.addBodyParameter("type", "1");
+        params.addBodyParameter("num", "1");
+        x.http().get(params, new Callback.CacheCallback<String>() {
+            private boolean hasError = false;
+            private String result = null;
+
+            @Override
+            public boolean onCache(String result) {
+                this.result = result;
+                return false; // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
+                if (result != null) {
+                    this.result = result;
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                hasError = true;
+                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                if (ex instanceof HttpException) { // 网络错误
+                    HttpException httpEx = (HttpException) ex;
+                    int responseCode = httpEx.getCode();
+                    String responseMsg = httpEx.getMessage();
+                    String errorResult = httpEx.getResult();
+                    // ...
+                } else { // 其他错误
+                    // ...
+                }
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFinished() {
+                if (!hasError && result != null) {
+                    // 成功获取数据
+                    Toast.makeText(x.app(), "加入成功", Toast.LENGTH_LONG).show();
+                    setUpdate();
+                }
+            }
+        });
     }
 
     private void RecommendProduct_JSON(String json) {

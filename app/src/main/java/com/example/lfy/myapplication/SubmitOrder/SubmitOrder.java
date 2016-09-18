@@ -511,7 +511,13 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
             js_request.put("CouponID", CouponID);//优惠券ID
             js_request.put("Cost", keep(AllCost));
             js_request.put("productStr", productStr);
-            js_request.put("Delivery", Variables.point.getDeliveryPrice() + "");
+
+            if (OrderPrice >= Variables.point.getFreePrice()) {
+                js_request.put("Delivery", "0");
+            } else {
+                js_request.put("Delivery", Variables.point.getDeliveryPrice() + "");
+            }
+
             js_request.put("Address", addressId);
 
             if (pay.equals("money")) {

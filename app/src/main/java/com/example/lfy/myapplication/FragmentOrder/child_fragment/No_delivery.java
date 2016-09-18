@@ -228,7 +228,7 @@ public class No_delivery extends Fragment implements SwipeRefreshLayout.OnRefres
             for (int j = 0; j < jsonArr.length(); j++) {
                 CarDbBean carDbBean = new CarDbBean();
                 JSONObject everyone = jsonArr.getJSONObject(j);
-                String url = everyone.getString("Image");
+                String url = everyone.getString("Image1");
                 url = "http://www.baifenxian.com/" + java.net.URLEncoder.encode(url, "UTF-8");
                 carDbBean.setProductID(everyone.getString("ProductID"));
 //                carDbBean.setCustomerID(everyone.getString("CustomerID"));

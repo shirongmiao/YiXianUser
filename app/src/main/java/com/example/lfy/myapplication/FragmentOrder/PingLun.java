@@ -392,7 +392,7 @@ public class PingLun extends AppCompatActivity implements View.OnClickListener {
                 holder.pinglun_item_describe.setText(evaluateItems.get(position).getProductName());
                 holder.pinglun_item_rating.setRating(evaluateItems.get(position).getStar());
                 holder.pinglun_item_rating.setIsIndicator(true);
-                x.image().bind(holder.pinglun_item_image, goods.get(position).getImage());
+                x.image().bind(holder.pinglun_item_image, evaluateItems.get(position).getImage());
                 holder.pinglun_item_pinglunstr.setText("评价:" + evaluateItems.get(position).getEvaluateText());
                 holder.pinglun_item_pinglunstr.setBackground(null);
                 //判断第一个字符是否是【，是的话设置padding使评价与标题对齐

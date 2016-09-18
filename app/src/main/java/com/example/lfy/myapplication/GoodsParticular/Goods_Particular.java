@@ -26,6 +26,7 @@ import com.example.lfy.myapplication.Bean.GoodsBean;
 import com.example.lfy.myapplication.FragmentCar.Shop_Car;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.BadgeView;
+import com.example.lfy.myapplication.Util.dialog_widget.ActionSheetDialog;
 import com.example.lfy.myapplication.Variables;
 import com.example.lfy.myapplication.user_login.Login;
 import com.example.lfy.myapplication.user_login.LoginBg;
@@ -83,6 +84,10 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
     RelativeLayout goods_particular_evaluate;
     TextView goods_particular_evaluate_num;
     RatingBar goods_particular_rating;
+
+    String title;
+    String description;
+    String url;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -242,29 +247,7 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
                 }
                 break;
             case R.id.share:
-                Intent intent = new Intent(Intent.ACTION_SEND);
-//                intent.setType("text/plain");
-//                intent.putExtra(Intent.EXTRA_SUBJECT, "下载一鲜");
-//                intent.putExtra(Intent.EXTRA_TEXT, "http://www.baifenxian.com/share/share.html");
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(Intent.createChooser(intent, getTitle()));
-                IWXAPI api;
-                WXWebpageObject webpage = new WXWebpageObject();
-                webpage.webpageUrl = "http://www.baifenxian.com/share/share.html";
-
-                WXMediaMessage msg = new WXMediaMessage(webpage);
-                msg.title = "下载一鲜";
-                msg.description = "下载一鲜";
-                Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.all_logo);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                thumb.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                msg.thumbData = baos.toByteArray();
-
-                SendMessageToWX.Req req = new SendMessageToWX.Req();
-                req.transaction = buildTransaction("webpage");
-                req.message = msg;
-                api = WXAPIFactory.createWXAPI(getApplicationContext(), "wxf4d91338ae39b676", false);
-                api.sendReq(req);
+                showDialog();
                 break;
             case R.id.goods_particular_evaluate:
                 Intent intent2 = new Intent(this, EvaluateList.class);
@@ -274,9 +257,44 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private String buildTransaction(final String type) {
-        return (type == null) ? String.valueOf(System.currentTimeMillis())
-                : type + System.currentTimeMillis();
+    public void showDialog() {
+        title = "下载一鲜APP";
+        description = "开启社区式购物之旅！";
+        url = "http://www.baifenxian.com/share/share.html";
+        new ActionSheetDialog(this)
+                .builder()
+                .setTitle("分享到")
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .addSheetItem("微信好友", ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                Variables.WXshare(getApplicationContext(),
+                                        SendMessageToWX.Req.WXSceneSession, title, description,
+                                        url, R.mipmap.all_logo);
+                            }
+                        })
+                .addSheetItem("微信朋友圈", ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                Variables.WXshare(getApplicationContext(),
+                                        SendMessageToWX.Req.WXSceneTimeline, title, description,
+                                        url, R.mipmap.all_logo);
+                            }
+                        })
+                .addSheetItem("其他", ActionSheetDialog.SheetItemColor.Red, new ActionSheetDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_SUBJECT, title);
+                        intent.putExtra(Intent.EXTRA_TEXT, url);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(Intent.createChooser(intent, getTitle()));
+                    }
+                }).show();
     }
 
     private void login() {

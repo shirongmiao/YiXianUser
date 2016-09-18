@@ -1,15 +1,22 @@
 package com.example.lfy.myapplication;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.util.Base64;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.lfy.myapplication.Bean.HomePoint;
 import com.example.lfy.myapplication.Bean.MineBean;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -198,6 +205,8 @@ public class Variables {
     //通过团ID查团购详情
     public static String GetTuanOrderInfo = www + "order/GetTuanOrderInfo?" + com;
     //请求配送状态  orderId=
+    public static String UpdateOrderType2 = www + "order/UpdateOrderType2?" + com;
+    //商家版更新订单状态
     public static String SelectProcess = www + "order/SelectProcess?" + com;
     //查看订单评论
     public static String GetEvaluate = www + "order/GetEvaluate?" + com;
@@ -313,6 +322,37 @@ public class Variables {
         }
 
         return flag;
+    }
+
+    //微信分享
+    public static void WXshare(Context context, int type, String title, String description, String url, int imgId) {
+        IWXAPI api = WXAPIFactory.createWXAPI(context, "wxf4d91338ae39b676", false);
+        if (!api.isWXAppInstalled()) {
+            Toast.makeText(context, "您还未安装微信客户端",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        WXWebpageObject webpage = new WXWebpageObject();
+        //"http://www.baifenxian.com/user/partner.html";
+        webpage.webpageUrl = url;
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = title;
+        msg.description = description;
+        //R.mipmap.all_logo
+        Bitmap thumb = BitmapFactory.decodeResource(context.getResources(), imgId);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        thumb.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        msg.thumbData = baos.toByteArray();
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        req.scene = type;
+        api.sendReq(req);
+    }
+
+    private static String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis())
+                : type + System.currentTimeMillis();
     }
 
 }

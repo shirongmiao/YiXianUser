@@ -34,7 +34,7 @@ import java.util.List;
  * Created by lfy on 2016/3/16.
  */
 public class No_delivery extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-//    private ProgressDialog progressDialog = null;
+    //    private ProgressDialog progressDialog = null;
     ExpandListViewAdapter order_adapter;
     ExpandableListView order_View;
     SwipeRefreshLayout swipe_refresh;
@@ -184,7 +184,7 @@ public class No_delivery extends Fragment implements SwipeRefreshLayout.OnRefres
                 JSONArray data = object.getJSONArray("Data");
                 for (int i = 0; i < data.length(); i++) {
                     JSONObject point = data.getJSONObject(i);
-                    if (point.getString("OrderType").equals("1")) {
+                    if (0 < point.getInt("OrderType") && point.getInt("OrderType") < 4) {
                         OrderBean order = new OrderBean();
                         order.setOrderNO(point.getString("OrderNO"));
                         order.setOrderID(point.getString("OrderID"));

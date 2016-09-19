@@ -78,7 +78,7 @@ public class PingLun extends AppCompatActivity implements View.OnClickListener {
         evaluateItems = new ArrayList<>();
         initView();
         setListener();
-        if (orderType) {
+        if (orderType) {   //true为评价，false为查看评价
             SetEvaluate();
         } else {
             GetEvaluate();
@@ -358,7 +358,7 @@ public class PingLun extends AppCompatActivity implements View.OnClickListener {
 
         @Override
         public void onBindViewHolder(final MyViewHolder holder, final int position) {
-            if (orderType) {
+            if (orderType) {   //true为填写评价，false为查看评价
                 holder.pinglun_item_describe.setText(evaluateItems.get(position).getProductName());
                 holder.pinglun_item_rating.setRating(evaluateItems.get(position).getStar());
                 holder.pinglun_item_rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -371,7 +371,7 @@ public class PingLun extends AppCompatActivity implements View.OnClickListener {
                         evaluateItems.get(position).setStar(rating);
                     }
                 });
-                x.image().bind(holder.pinglun_item_image, goods.get(position).getImage());
+                x.image().bind(holder.pinglun_item_image, evaluateItems.get(position).getImage());
                 holder.pinglun_item_pinglunstr.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {

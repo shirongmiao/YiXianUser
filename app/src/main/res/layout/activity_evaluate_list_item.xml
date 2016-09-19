@@ -44,11 +44,15 @@
 
         <RatingBar
             android:id="@+id/evaluate_item_star"
-            style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:rating="5" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:isIndicator="true"
+            android:minHeight="0dp"
+            android:progressDrawable="@drawable/ratingbar_back"
+            android:stepSize="1" />
 
         <TextView
             android:id="@+id/evaluate_item_evaluateText"

@@ -498,7 +498,7 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
 
     private void charge_xUtil(String orderno, String pay, double PayPrice) {
 
-        double payprice = PayPrice * 100;
+        double payprice = PayPrice *100;
 
         RequestParams params = new RequestParams(Variables.hava_change);
         params.addBodyParameter("orderno", orderno);

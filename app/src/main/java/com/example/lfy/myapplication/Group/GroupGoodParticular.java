@@ -32,17 +32,18 @@ public class GroupGoodParticular extends AppCompatActivity {
     TextView group_good_personnum, group_gp_singlebuy, group_gp_num, group_gp_buy, group_goods_price, group_goods_originalprice, group_goods_title, group_good_Standard, group_goods_content;
     WebView wbv;
     TextView group_good_playexplain;
-    RelativeLayout group_gp_buy_btn, group_gp_singlebuy_btn, group_gp_buy_join;
+    RelativeLayout group_gp_buy_btn, group_gp_singlebuy_btn, group_gp_buy_join, group_good_fornear2;
     LinearLayout group_good_help, group_good_forfind, group_good_fornear;
     GroupOrder groupGoods;
     //从哪个页面跳转而来
     String from = "";
     public static GroupGoodParticular groupGoodParticular;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Variables.setTranslucentStatus(this);
-        groupGoodParticular=this;
+        groupGoodParticular = this;
         setContentView(R.layout.activity_group_good_particular);
         Intent intent = getIntent();
         from = intent.getStringExtra("from");
@@ -54,8 +55,10 @@ public class GroupGoodParticular extends AppCompatActivity {
         //根据跳转过来的页面，设置下方的按钮
         group_good_forfind = (LinearLayout) findViewById(R.id.group_good_forfind);
         group_good_fornear = (LinearLayout) findViewById(R.id.group_good_fornear);
+        group_good_fornear2= (RelativeLayout) findViewById(R.id.group_good_fornear2);
         if (from.equals("GroupNear")) {
             group_good_fornear.setVisibility(View.VISIBLE);
+            group_good_fornear2.setVisibility(View.VISIBLE);
             group_good_forfind.setVisibility(View.GONE);
             group_good_personnum = (TextView) findViewById(R.id.group_good_personnum);
             group_good_personnum.setText("差" + (groupGoods.getPersonNum() - groupGoods.getCustomerNum()) + "人成团");
@@ -77,6 +80,7 @@ public class GroupGoodParticular extends AppCompatActivity {
             });
         } else {
             group_good_fornear.setVisibility(View.GONE);
+            group_good_fornear2.setVisibility(View.GONE);
             group_good_forfind.setVisibility(View.VISIBLE);
             group_gp_buy = (TextView) findViewById(R.id.group_gp_buy);
             group_gp_buy.setText(groupGoods.getTuanPrice() + "");
@@ -97,7 +101,7 @@ public class GroupGoodParticular extends AppCompatActivity {
                 }
             });
             group_gp_singlebuy = (TextView) findViewById(R.id.group_gp_singlebuy);
-            group_gp_singlebuy.setText(groupGoods.getSinglePrice()+"");
+            group_gp_singlebuy.setText(groupGoods.getSinglePrice() + "");
             group_gp_singlebuy_btn = (RelativeLayout) findViewById(R.id.group_gp_singlebuy_btn);
             group_gp_singlebuy_btn.setOnClickListener(new View.OnClickListener() {
                 @Override

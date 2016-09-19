@@ -151,7 +151,8 @@ public class ExpandListViewAdapter extends BaseExpandableListAdapter {
                 long nm = 1000 * 60;
                 long min = millisUntilFinished % nd % nh / nm;
                 long second = millisUntilFinished % nd % nh % nm / 1000;
-                groupHolder.timer.setText(min + "：" + second);
+                String str = (min < 10 ? "0" : "") + min + ":" + (second < 10 ? "0" : "") + second;
+                groupHolder.timer.setText(str);
             }
 
             @Override

@@ -671,7 +671,7 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
                     // 成功获取数据
                     JSON_EvaluateCount(result);
                 } else {
-                    goods_particular_evaluate.setClickable(false);
+                    Toast.makeText(Goods_Particular.this, "获取评价信息失败", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -168,6 +168,7 @@ public class Order_Particular_fragment2 extends Fragment implements SwipeRefresh
     private void Order_xUtils() {
         RequestParams params = new RequestParams(Variables.SelectProcess);
         params.addBodyParameter("orderId", orderId);
+        params.setCacheMaxAge(3*1000);
         x.http().get(params, new Callback.CacheCallback<String>() {
             private boolean hasError = false;
             private String result = null;
@@ -218,7 +219,7 @@ public class Order_Particular_fragment2 extends Fragment implements SwipeRefresh
 
     private void JSON(String result) {
         try {
-            Log.d("我是领取point", result);
+            Log.d("订单详情", result);
             JSONObject jsonObject = new JSONObject(result);
             String Ret = jsonObject.getString("Ret");
             if (Ret.equals("1")) {
@@ -244,7 +245,6 @@ public class Order_Particular_fragment2 extends Fragment implements SwipeRefresh
                     all.add(zhuangTaiBean);
                 }
                 zhuangTaiAdapter.addDate(all);
-                zhuangTaiAdapter.notifyDataSetChanged();
             } else {
                 Toast.makeText(getActivity(), "未查到状态", Toast.LENGTH_SHORT).show();
             }

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class EvaluateList extends AppCompatActivity {
     RecyclerView evaluate_rv;
     EvaluateListAdapter adapter;
     List<Evaluate> list;
+    ImageView evaluate_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,13 @@ public class EvaluateList extends AppCompatActivity {
         evaluate_rv.setAdapter(adapter);
         evaluate_rv.setLayoutManager(new LinearLayoutManager(this));
         evaluate_rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        evaluate_back = (ImageView) findViewById(R.id.evaluate_back);
+        evaluate_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 

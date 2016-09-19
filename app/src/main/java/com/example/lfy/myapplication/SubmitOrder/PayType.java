@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.lfy.myapplication.Bean.AddressBean;
 import com.example.lfy.myapplication.Bean.GridPhoto;
+import com.example.lfy.myapplication.GoodsParticular.Goods_Particular;
 import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Variables;
@@ -49,12 +50,37 @@ public class PayType extends AppCompatActivity {
         intent = getIntent();
         adapter = new PayTypeAdapter();
         adapter.addDate(intent);
+        adapter.setOnItemClickListen(new PayTypeAdapter.OnItemClickListen() {
+            @Override
+            public void SetOnItemClick() {
+                if (intent.getStringExtra("payType").equals("支付成功")) {
+                    MainActivity.jump(0);
+                } else {
+                    MainActivity.jump(1);
+                }
+                Intent intent = new Intent(PayType.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void SetOnItemClick(String productId) {
+                Intent intent = new Intent(PayType.this, Goods_Particular.class);
+                intent.putExtra("productId", productId);
+                startActivity(intent);
+            }
+
+            @Override
+            public void SerOnClick(String productId) {
+                addRecommendProduct_xUtils(productId);
+            }
+        });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         rv.setLayoutManager(gridLayoutManager);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return position <= 0 ? 2 : 1;
+                return position <= 1 ? 2 : 1;
             }
         });
         rv.setAdapter(adapter);
@@ -239,6 +265,7 @@ public class PayType extends AppCompatActivity {
                     // 成功获取数据
                     Toast.makeText(x.app(), "加入成功", Toast.LENGTH_LONG).show();
 //                    setUpdate();
+                    Variables.count++;
                 }
             }
         });

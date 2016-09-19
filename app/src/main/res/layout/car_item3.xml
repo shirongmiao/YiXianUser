@@ -2,35 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:layout_marginBottom="1dp"
-    android:background="@color/line_grey"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <View
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:layout_weight="2"
-        android:layout_marginLeft="20dp"
-        android:background="@color/car_grey"></View>
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/line_grey"
+        ></View>
 
-    <TextView
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:gravity="center_horizontal"
-        android:text="更多推荐"
-        android:textColor="@color/cardview_dark_background"
-        android:textSize="14dp" />
+        android:layout_marginBottom="1dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:layout_weight="2"
-        android:layout_marginRight="20dp"
-        android:background="@color/car_grey"></View>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="2"
+            android:background="@color/car_grey"></View>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="更多推荐"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="14dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="2"
+            android:background="@color/car_grey"></View>
+    </LinearLayout>
+
 </LinearLayout>

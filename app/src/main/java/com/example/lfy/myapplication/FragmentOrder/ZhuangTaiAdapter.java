@@ -1,6 +1,7 @@
 package com.example.lfy.myapplication.FragmentOrder;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class ZhuangTaiAdapter extends RecyclerView.Adapter<ZhuangTaiAdapter.View
 
     public void addDate(List<ZhuangTaiBean> Type) {
         this.Type = Type;
+        notifyDataSetChanged();
     }
 
     private OnItemClickListen Listen;
@@ -56,21 +58,26 @@ public class ZhuangTaiAdapter extends RecyclerView.Adapter<ZhuangTaiAdapter.View
         } else {
             holder.zhuangtai_top.setVisibility(View.VISIBLE);
         }
-
         if (position + 1 == Type.size()) {
             holder.zhuangtai_bottom.setVisibility(View.INVISIBLE);
-
             LinearLayout.LayoutParams para;
             para = (LinearLayout.LayoutParams) holder.zhuangtai_round.getLayoutParams();
-            para.height = Variables.PhoneWidth / 20;
-            para.width = Variables.PhoneWidth / 20;
+            para.height = Variables.PhoneWidth / 15;
+            para.width = Variables.PhoneWidth / 15;
             holder.zhuangtai_round.setLayoutParams(para);
             holder.zhuangtai_round.setImageResource(R.mipmap.all_logo);
         } else {
+            LinearLayout.LayoutParams para;
+            para = (LinearLayout.LayoutParams) holder.zhuangtai_round.getLayoutParams();
+            para.height = Variables.PhoneWidth / 25;
+            para.width = Variables.PhoneWidth / 25;
+            holder.zhuangtai_round.setLayoutParams(para);
+            holder.zhuangtai_round.setImageResource(R.mipmap.all_call);
             holder.zhuangtai_bottom.setVisibility(View.VISIBLE);
         }
         if (position == 0) {
             holder.zhangtai_item_title.setText("订单已提交");
+            holder.zhangtai_item_content.setText("订单已提交");
         } else if (Type.get(position).getType() == 1) {
             holder.zhangtai_item_title.setText("支付成功");
             holder.zhangtai_item_content.setText("请耐心等待商家确认");

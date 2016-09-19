@@ -28,6 +28,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 
+import com.example.lfy.myapplication.Bean.MineBean;
 import com.example.lfy.myapplication.FragmentCar.FragmentCar;
 import com.example.lfy.myapplication.FragmentClassify.FragmentClassify;
 import com.example.lfy.myapplication.FragmentHome.FragmentHome;
@@ -253,6 +254,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (Variables.my != null) {
             getCar_xUtils();
         }
+
     }
 
 
@@ -262,6 +264,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         params.addBodyParameter("CustomerID", Variables.my.getCustomerID());
         params.addBodyParameter("point", Variables.point.getID());
         params.setCacheMaxAge(1000 * 60);
+        Log.d("获取购物车数据", params.toString());
         x.http().get(params, new Callback.CacheCallback<String>() {
             private boolean hasError = false;
             private String result = null;
@@ -494,16 +497,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-        public static void installApp(Context context,String filePath) {
-            File _file = new File(filePath);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setDataAndType(Uri.fromFile(_file),
-                    "application/vnd.android.package-archive");
-            context.startActivity(intent);
-        }
 
-
+    public static void installApp(Context context, String filePath) {
+        File _file = new File(filePath);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(Uri.fromFile(_file),
+                "application/vnd.android.package-archive");
+        context.startActivity(intent);
+    }
 
 
     public void update() {

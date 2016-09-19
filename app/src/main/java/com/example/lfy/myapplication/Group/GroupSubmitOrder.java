@@ -43,7 +43,7 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
     DialogWidget mDialogWidget;
     //获取change
     String charge;
-    ////IsSingleBuy 2:用户参团 1：单独购  0:开团
+    //IsSingleBuy 2:用户参团 1：单独购  0:开团
     int IsSingleBuy = 0;
 
     @Override
@@ -224,12 +224,14 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
                 case R.id.group_submit_alipay:
                     if (submit_goods) {
                         if (Delivery != null) {
+                            //IsSingleBuy 2:用户参团 1：单独购  0:开团
                             if (IsSingleBuy == 2) {
-                                joinTuan(groupGoods.getSinglePrice(), "alipay");
+                                joinTuan(groupGoods.getTuanPrice(), "alipay");
+                            } else if (IsSingleBuy == 1) {
+                                sure(groupGoods.getSinglePrice(), "alipay");
                             } else {
                                 sure(groupGoods.getTuanPrice(), "alipay");
                             }
-
                             flag = false;
                         } else {
                             Toast.makeText(GroupSubmitOrder.this, "请选择地址", Toast.LENGTH_SHORT).show();
@@ -240,9 +242,11 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
                     if (submit_goods) {
                         if (Delivery != null) {
                             if (IsSingleBuy == 2) {
-                                joinTuan(groupGoods.getSinglePrice(), "wx");
+                                joinTuan(groupGoods.getSinglePrice(), "alipay");
+                            } else if (IsSingleBuy == 1) {
+                                sure(groupGoods.getSinglePrice(), "alipay");
                             } else {
-                                sure(groupGoods.getTuanPrice(), "wx");
+                                sure(groupGoods.getTuanPrice(), "alipay");
                             }
 
                             flag = false;
@@ -482,7 +486,6 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
                         JSONObject jsonObject = new JSONObject(result);
                         String Ret = jsonObject.getString("Ret");
                         if (Ret.equals("1")) {
-                            Variables.count = 0;
                             charge_xUtil(orderno, pay, price);
                         }
                     } catch (JSONException e) {
@@ -500,7 +503,7 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
         RequestParams params = new RequestParams(Variables.hava_change);
         params.addBodyParameter("orderno", orderno);
         params.addBodyParameter("paytype", pay);
-        params.addBodyParameter("amount", keep(1));
+        params.addBodyParameter("amount", keep(payprice));
         x.http().get(params, new Callback.CacheCallback<String>() {
             private boolean hasError = false;
             private String result = null;
@@ -599,7 +602,6 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
                 GroupGoodParticular.groupGoodParticular.finish();
                 startActivity(intent);
             }
-
         }
         finish();
     }

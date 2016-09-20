@@ -115,7 +115,7 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
                 addRecommendProduct_xUtils(productId);
             }
         });
-        car_sendPrice.setText("含配送费:￥" + Variables.point.getDeliveryPrice() + "元");
+        car_sendPrice.setText("配送费:￥" + Variables.point.getDeliveryPrice() + "元");
         car_submit.setOnClickListener(this);
         car_delete.setOnClickListener(this);
         car_shopping.setOnClickListener(this);
@@ -353,11 +353,11 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
         }
         double free = Variables.point.getFreePrice() - price;
         carAdapter.FreedPrice(free);
-        car_sendPrice.setText("含配送费:￥" + Variables.point.getDeliveryPrice() + "元");
+        car_sendPrice.setText("配送费:￥" + Variables.point.getDeliveryPrice() + "元");
         if (free > 0) {
 //            price = price + Variables.point.sendPrice;
 //            PromotionPrice = PromotionPrice + Variables.point.sendPrice;
-            car_sendPrice.setText("含配送费:￥" + Variables.point.getDeliveryPrice() + "元");
+            car_sendPrice.setText("配送费:￥" + Variables.point.getDeliveryPrice() + "元");
         } else {
             car_sendPrice.setText("配送费：￥0.0元");
         }

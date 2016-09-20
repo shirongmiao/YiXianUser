@@ -104,7 +104,14 @@ public class SplashActivity extends AppCompatActivity {
         translate.setAnimationListener(new AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                point_xUtils();
+                if (wifi) {
+                    point_xUtils();
+                } else {
+                    Intent intent = new Intent(SplashActivity.this, Wifi.class);
+                    intent.putExtra("from", "second");
+                    startActivity(intent);
+                    finish();
+                };
             }
 
             @Override

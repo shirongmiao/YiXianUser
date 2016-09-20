@@ -1,5 +1,6 @@
 package com.example.lfy.myapplication.FragmentHome.scan;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -26,6 +27,9 @@ import com.example.lfy.myapplication.FragmentHome.scan.zxing.decoding.Inactivity
 import com.example.lfy.myapplication.FragmentHome.scan.zxing.view.ViewfinderView;
 import com.example.lfy.myapplication.FragmentMine.help.Help;
 import com.example.lfy.myapplication.R;
+import com.example.lfy.myapplication.Util.permission.PermissionAction;
+import com.example.lfy.myapplication.Util.permission.PermissionHandler;
+import com.example.lfy.myapplication.Util.permission.PermissionManager;
 import com.example.lfy.myapplication.Variables;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
@@ -67,6 +71,7 @@ public class MipcaActivityCapture extends AppCompatActivity implements SurfaceHo
         super.onCreate(savedInstanceState);
         Variables.setTranslucentStatus(this);
         setContentView(R.layout.home_scan);
+        getPermission();
         //ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
         CameraManager.init(getApplication());
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
@@ -82,6 +87,35 @@ public class MipcaActivityCapture extends AppCompatActivity implements SurfaceHo
         });
         hasSurface = false;
         inactivityTimer = new InactivityTimer(this);
+    }
+
+    public void getPermission() {
+        PermissionHandler permissionHandler = PermissionManager.getInstance().getPermissionHandler(this);
+        permissionHandler.requestPermission(new PermissionAction() {
+            @Override
+            public void onGrated(String permission) {
+                //权限拥有
+                if (Manifest.permission.CAMERA.equals(permission)) {
+
+                }
+            }
+
+            @Override
+            public void onDenied(String permission) {
+                //权限拒绝
+                if (Manifest.permission.CAMERA.equals(permission)) {
+
+
+                }
+            }
+        }, new String[]{Manifest.permission.CAMERA});
+        //权限拒绝不显示对话框的回调
+        permissionHandler.setOnRationaleListener(new PermissionHandler.OnRationaleListener() {
+            @Override
+            public void onRationale(String[] permission) {
+                Toast.makeText(MipcaActivityCapture.this, "请在权限管理中允许一鲜使用相机", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

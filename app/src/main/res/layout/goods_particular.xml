@@ -92,7 +92,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="5dp"
                                     android:textColor="@color/actionsheet_red"
-                                    android:textSize="17dp" />
+                                    android:textSize="19dp" />
 
                                 <TextView
                                     android:id="@+id/goods_vip"

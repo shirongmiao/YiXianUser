@@ -519,6 +519,9 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void FootJSON(String json) {
+        if (activityPhoto != null) {
+            activityPhoto.clear();
+        }
         try {
             JSONObject object = new JSONObject(json);
             String Ret = object.getString("Ret");
@@ -556,12 +559,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                         small.add(ever);
                     }
                     all.setProducts(small);
-                    if (activityPhoto != null) {
-                        activityPhoto.clear();
-                        activityPhoto.add(all);
-                    } else {
-                        activityPhoto.add(all);
-                    }
+                    activityPhoto.add(all);
                 }
                 success();
             } else {

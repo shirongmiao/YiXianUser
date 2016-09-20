@@ -1,5 +1,6 @@
 package com.example.lfy.myapplication;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
@@ -35,6 +36,9 @@ import com.example.lfy.myapplication.FragmentHome.FragmentHome;
 import com.example.lfy.myapplication.FragmentMine.FragmentMine;
 import com.example.lfy.myapplication.FragmentOrder.FragmentOrder;
 import com.example.lfy.myapplication.Util.BadgeView;
+import com.example.lfy.myapplication.Util.permission.PermissionAction;
+import com.example.lfy.myapplication.Util.permission.PermissionHandler;
+import com.example.lfy.myapplication.Util.permission.PermissionManager;
 import com.example.lfy.myapplication.user_login.LoginBg;
 
 import org.json.JSONArray;
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setBadgeView();
         version_xUtils();
     }
+
 
 
     private void initView() {
@@ -248,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bv = new BadgeView(this);
         bv.setTargetView(home_car_red);
         bv.setTextColor(Color.WHITE);
+
         bv.setGravity(Gravity.TOP | Gravity.RIGHT);
         bv.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.ITALIC));
 

@@ -11,6 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="8dp"
+        android:visibility="gone"
         android:src="@mipmap/mine_default_photo"></com.example.lfy.myapplication.Util.CircleImageView>
 
     <LinearLayout
@@ -50,9 +51,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:isIndicator="true"
-            android:minHeight="0dp"
+            android:minHeight="16dp"
             android:progressDrawable="@drawable/ratingbar_back"
-            android:stepSize="1" />
+          />
 
         <TextView
             android:id="@+id/evaluate_item_evaluateText"

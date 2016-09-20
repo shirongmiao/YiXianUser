@@ -136,9 +136,9 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:isIndicator="true"
-                            android:minHeight="0dp"
+                            android:minHeight="16dp"
                             android:progressDrawable="@drawable/ratingbar_back"
-                            android:stepSize="1" />
+                           />
 
                     </RelativeLayout>
 

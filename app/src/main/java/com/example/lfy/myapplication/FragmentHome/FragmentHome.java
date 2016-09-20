@@ -300,8 +300,9 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                     @Override
                     public void onClick(View v) {
                         if (position == 0) {
-                            Intent intent = new Intent(getActivity(), GroupMainActivity.class);
-                            startActivity(intent);
+//                            Intent intent = new Intent(getActivity(), GroupMainActivity.class);
+//                            startActivity(intent);
+                            Toast.makeText(getActivity(), "团购正在升级中", Toast.LENGTH_SHORT).show();
                         } else if (position == 1) {
                             if (Variables.my != null) {
                                 new_user();

@@ -205,11 +205,11 @@ public class FragmentMine extends Fragment implements View.OnClickListener {
                 break;
             case R.id.fragment_group:
 
-//                Toast.makeText(getContext(), "团购尚未开启", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "团购正在升级中", Toast.LENGTH_SHORT).show();
 
-                Intent intent2 = new Intent(getActivity(), GroupMainActivity.class);
-                intent2.putExtra("Selected", 2);
-                startActivity(intent2);
+//                Intent intent2 = new Intent(getActivity(), GroupMainActivity.class);
+//                intent2.putExtra("Selected", 2);
+//                startActivity(intent2);
                 break;
             case R.id.fragment_balance:
                 if (Variables.my != null) {

@@ -353,20 +353,32 @@ public class SplashActivity extends AppCompatActivity {
                     if (!hasError && result != null) {
                         // 成功获取数据
                         Login_JSON(result);
-                        if (wifi) {
-                            Intent intent = new Intent(SplashActivity.this, MainActivity.class); // 调用父类的intent方法
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                            finish(); //
-                        } else {
-                            Intent intent = new Intent(SplashActivity.this, Wifi.class);
-                            intent.putExtra("from", "second");
-                            startActivity(intent);
-                            finish();
-                        };
                     }
+                    if (wifi) {
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class); // 调用父类的intent方法
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                        finish(); //
+                    } else {
+                        Intent intent = new Intent(SplashActivity.this, Wifi.class);
+                        intent.putExtra("from", "second");
+                        startActivity(intent);
+                        finish();
+                    };
                 }
             });
+        }else {
+            if (wifi) {
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class); // 调用父类的intent方法
+                startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                finish(); //
+            } else {
+                Intent intent = new Intent(SplashActivity.this, Wifi.class);
+                intent.putExtra("from", "second");
+                startActivity(intent);
+                finish();
+            };
         }
     }
 

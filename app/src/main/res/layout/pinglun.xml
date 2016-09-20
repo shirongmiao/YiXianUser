@@ -65,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="100dp"
                         android:isIndicator="false"
-                        android:minHeight="0dp"
+                        android:minHeight="16dp"
                         android:progressDrawable="@drawable/ratingbar_back"
                         android:rating="5"
                         android:stepSize="1" />
@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="100dp"
                         android:isIndicator="false"
-                        android:minHeight="0dp"
+                        android:minHeight="16dp"
                         android:progressDrawable="@drawable/ratingbar_back"
                         android:rating="5"
                         android:stepSize="1" />

@@ -9,21 +9,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@mipmap/register_coupon">
+        android:background="@mipmap/register_success1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/register_success2" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:background="@mipmap/register_success3" />
+
 
         <ImageButton
             android:id="@+id/register_dialog_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:background="@mipmap/register_close" />
+            android:layout_marginRight="57dp"
+            android:layout_marginTop="25dp"
+            android:background="@mipmap/register_success5" />
 
-        <View
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="18dp"
+            android:text="恭喜你!\n您已成为一鲜用户\n优惠卷已发至您的账户"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+
+        <Button
             android:id="@+id/register_dialog_look"
             android:layout_width="100dp"
-            android:layout_height="35dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="10dp"></View>
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/edittext"
+            android:text="立即查看"></Button>
     </FrameLayout>
 
 </FrameLayout>

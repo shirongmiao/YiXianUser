@@ -130,7 +130,7 @@ public class Variables {
     public static String http_select_huoqu = www + "home/CheckCoupon?" + com;
     //获取优惠券
     public static String http_huoqu = www + "home/GetCoupon?" + com;
-    //获取服务器时间戳
+    //获取服务器时间戳 http://api.baifenxian.com/home/GetTime?token=9c565b08-7428-47f5-bd18-0cc2a80949db
     public static String http_time = www + "home/GetTime?" + com;
     //地图定位http请求方式: longitude=120.33387&latitude=30.314652
     public static String http_baidu = www + "point/SelectLocation?" + com;

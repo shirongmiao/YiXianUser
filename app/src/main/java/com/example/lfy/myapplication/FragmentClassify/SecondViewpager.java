@@ -369,7 +369,6 @@ public class SecondViewpager extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    boolean spinner_flag = false;
     PopupWindow popupWindow;
     View view;
 

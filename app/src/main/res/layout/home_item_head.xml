@@ -3,21 +3,22 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="wrap_content">
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="232dp">
 
-    <com.daimajia.slider.library.SliderLayout
-        android:id="@+id/slider"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.daimajia.slider.library.SliderLayout>
+        android:layout_height="232dp">
 
-    <com.daimajia.slider.library.Indicators.PagerIndicator
-        android:id="@+id/custom_indicator"
-        style="@style/AndroidImageSlider_Corner_Oval_Orange"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_margin="5dp" />
-</FrameLayout>
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.daimajia.slider.library.SliderLayout>
+
+        <com.daimajia.slider.library.Indicators.PagerIndicator
+            android:id="@+id/custom_indicator"
+            style="@style/AndroidImageSlider_Corner_Oval_Orange"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_margin="5dp" />
+    </FrameLayout>
 <LinearLayout
     android:layout_width="match_parent"
     android:orientation="horizontal"

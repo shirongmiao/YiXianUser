@@ -686,6 +686,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
         m = m + 1;
         if (m == 2) {
             m = 0;
+
             gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {

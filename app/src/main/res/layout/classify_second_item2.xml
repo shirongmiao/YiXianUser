@@ -86,11 +86,13 @@
 
     <TextView
         android:id="@+id/second_PromotionName"
-        android:layout_width="33dp"
-        android:layout_height="33dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@color/orange"
         android:gravity="center"
-        android:text="买一\n送一"
+        android:lines="2"
+        android:maxEms="2"
+        android:text="买一送一"
         android:textColor="@color/white"
         android:textSize="12sp" />
 

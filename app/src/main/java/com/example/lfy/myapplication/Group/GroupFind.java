@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -217,7 +218,7 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     .setLoadingDrawableId(R.mipmap.all_longding)
                     .build();
             x.image().bind(holder.image, goodslist.get(position).getImg(), imageOptions);
-            holder.cv.setOnClickListener(new View.OnClickListener() {
+            holder.lv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                    Toast.makeText(getContext(), groupGoodslist.get(position).getTuanid()+"", Toast.LENGTH_SHORT).show();
@@ -248,12 +249,12 @@ public class GroupFind extends Fragment implements SwipeRefreshLayout.OnRefreshL
             Button btn;
             TextView price, title;
             ImageView image;
-            CardView cv;
+            LinearLayout lv;
 
 
             public MyViewHolder(View itemView) {
                 super(itemView);
-                cv = (CardView) itemView.findViewById(R.id.groupfind_item_cardview);
+                lv = (LinearLayout) itemView.findViewById(R.id.groupfind_item_layoutroot);
                 btn = (Button) itemView.findViewById(R.id.groupfind_item_buybutton);
                 price = (TextView) itemView.findViewById(R.id.groupfind_item_price);
                 title = (TextView) itemView.findViewById(R.id.groupfind_item_title);

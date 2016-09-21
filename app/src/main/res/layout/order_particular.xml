@@ -34,13 +34,18 @@
             android:gravity="center"
             android:text="订单状态" />
 
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/line_grey"></View>
+
         <RadioButton
             android:id="@+id/particular_xiangqing"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableBottom="@drawable/bottom_line_select"
             android:button="@null"
+            android:drawableBottom="@drawable/bottom_line_select"
             android:gravity="center"
             android:text="订单详情" />
     </RadioGroup>

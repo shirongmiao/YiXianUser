@@ -3,6 +3,6 @@
 
     <solid android:color="@color/green" />
 
-    <size  android:height="26dp" android:width="1000dp" />
+    <size  android:height="5dp" android:width="1000dp" />
 
 </shape>

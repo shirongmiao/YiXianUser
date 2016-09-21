@@ -36,7 +36,7 @@ import java.util.List;
 public class Already extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     ExpandListViewAdapter order_adapter;
     ExpandableListView order_View;
-//    private ProgressDialog progressDialog = null;
+    //    private ProgressDialog progressDialog = null;
     SwipeRefreshLayout swipe_refresh;
 
     @Nullable
@@ -186,8 +186,7 @@ public class Already extends Fragment implements SwipeRefreshLayout.OnRefreshLis
                 JSONArray data = object.getJSONArray("Data");
                 for (int i = 0; i < data.length(); i++) {
                     JSONObject point = data.getJSONObject(i);
-
-                    if (point.getString("OrderType").equals("2")) {
+                    if (point.getInt("OrderType") > 3) {
                         OrderBean order = new OrderBean();
                         order.setOrderNO(point.getString("OrderNO"));
                         order.setOrderID(point.getString("OrderID"));
@@ -231,7 +230,7 @@ public class Already extends Fragment implements SwipeRefreshLayout.OnRefreshLis
             for (int j = 0; j < jsonArr.length(); j++) {
                 CarDbBean carDbBean = new CarDbBean();
                 JSONObject everyone = jsonArr.getJSONObject(j);
-                String url = everyone.getString("Image");
+                String url = everyone.getString("Image1");
                 url = "http://www.baifenxian.com/" + java.net.URLEncoder.encode(url, "UTF-8");
                 carDbBean.setProductID(everyone.getString("ProductID"));
 //                carDbBean.setCustomerID(everyone.getString("CustomerID"));

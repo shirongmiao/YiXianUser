@@ -268,7 +268,7 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
                     String nowday = sDateFormat.format(new Date());
                     final long time = compare_date(nowday, CreateTime);
-                    holder.cd = new CountDownTimer(time - 1000 * 60 * 60 * 22 - 1000 * 60 * 4, 1000) {
+                    holder.cd = new CountDownTimer(time, 1000) {
                         @Override
                         public void onTick(long millisUntilFinished) {
                             setDate(millisUntilFinished, holder.groupmine_item_countdown);
@@ -359,6 +359,7 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
         params.addBodyParameter("payed", payed + "");
         params.addBodyParameter("ordertype", ordertype + "");
         params.addBodyParameter("search", Variables.my.getCustomerID());
+        params.setCacheMaxAge(1000 * 60);
         Log.d("获取用户团购订单", params.toString());
         x.http().get(params, new Callback.CacheCallback<String>() {
             private boolean hasError = false;

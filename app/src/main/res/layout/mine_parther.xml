@@ -25,6 +25,11 @@
             android:id="@+id/all_return"
             style="@style/Left" />
 
+        <ImageView
+            android:id="@+id/all_share"
+            style="@style/Right"
+            android:src="@mipmap/share3" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

@@ -57,6 +57,7 @@ public class Order_Particular_fragment1 extends Fragment {
     TextView order_particular_price;
 
     TextView order_particular_payprice;
+    TextView order_particular_delivery;
     Listview order_particular_listview;
 
 
@@ -104,6 +105,7 @@ public class Order_Particular_fragment1 extends Fragment {
         order_particular_payprice = (TextView) view.findViewById(R.id.order_particular_payprice);
         order_particular_price = (TextView) view.findViewById(R.id.order_particular_price);
         order_particular_dis_all = (TextView) view.findViewById(R.id.order_particular_dis_all);
+        order_particular_delivery = (TextView) view.findViewById(R.id.order_particular_delivery);
         order_particular_listview = (Listview) view.findViewById(R.id.order_particular_listview);
 
     }
@@ -159,6 +161,7 @@ public class Order_Particular_fragment1 extends Fragment {
         order_particular_price.setText("￥" + orders.getOrderPrice());
         order_particular_payprice.setText("实付:￥" + orders.getPayedPrice());
         order_particular_dis_all.setText("￥" + (Math.round((discoupon + AllNextDay()) * 10000) / 10000.00) + "");
+        order_particular_delivery.setText("￥" + orders.getDelivery());
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.lfy.myapplication.FragmentHome.ChoosePoint;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -55,6 +56,9 @@ import com.example.lfy.myapplication.FragmentMine.partner.Partner;
 import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.UserInfo;
+import com.example.lfy.myapplication.Util.permission.PermissionAction;
+import com.example.lfy.myapplication.Util.permission.PermissionHandler;
+import com.example.lfy.myapplication.Util.permission.PermissionManager;
 import com.example.lfy.myapplication.Variables;
 
 import org.json.JSONArray;
@@ -102,6 +106,7 @@ public class MyLocation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Variables.setTranslucentStatus(this);
+        getPermission();
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.location);
         instant = this;
@@ -209,6 +214,41 @@ public class MyLocation extends AppCompatActivity {
 
     }
 
+    public void getPermission() {
+        PermissionHandler permissionHandler = PermissionManager.getInstance().getPermissionHandler(this);
+        permissionHandler.requestPermission(new PermissionAction() {
+            @Override
+            public void onGrated(String permission) {
+                //权限拥有
+                if (Manifest.permission.ACCESS_FINE_LOCATION.equals(permission)) {
+
+                } else if (Manifest.permission.ACCESS_COARSE_LOCATION.equals(permission)) {
+
+                } else if (Manifest.permission.WAKE_LOCK.equals(permission)) {
+
+                }
+            }
+
+            @Override
+            public void onDenied(String permission) {
+                //权限拒绝
+                if (Manifest.permission.ACCESS_FINE_LOCATION.equals(permission)) {
+
+
+                } else if (Manifest.permission.ACCESS_COARSE_LOCATION.equals(permission)) {
+
+                } else if (Manifest.permission.WAKE_LOCK.equals(permission)) {
+
+                }
+            }
+        }, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WAKE_LOCK});
+        //权限拒绝不显示对话框的回调
+        permissionHandler.setOnRationaleListener(new PermissionHandler.OnRationaleListener() {
+            @Override
+            public void onRationale(String[] permission) {
+            }
+        });
+    }
 
     OnGetPoiSearchResultListener poiListener = new OnGetPoiSearchResultListener() {
         @Override
@@ -329,7 +369,7 @@ public class MyLocation extends AppCompatActivity {
             }
             MyLocationData locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
-                            // 此处设置开发者获取到的方向信息，顺时针0-360
+                    // 此处设置开发者获取到的方向信息，顺时针0-360
                     .direction(100).latitude(location.getLatitude())
                     .longitude(location.getLongitude()).build();
             mBaiduMap.setMyLocationData(locData);

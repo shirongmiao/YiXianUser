@@ -64,6 +64,8 @@ public class Order_Particular extends AppCompatActivity {
             if (fg2 == null) {
                 fg2 = new Order_Particular_fragment2();// 如果fg1为空，则创建一个并添加到界面上
                 fg2.setOrderId(orders.getOrderID());
+                fg2.setGoods(goods);
+                fg2.setOrders(orders);
                 ft1.add(R.id.particular_fragment, fg2);
             } else {
                 ft1.show(fg2);// 如果MessageFragment不为空，则直接将它显示出来

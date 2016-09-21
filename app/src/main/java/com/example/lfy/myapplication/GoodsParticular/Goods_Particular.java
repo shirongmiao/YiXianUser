@@ -1,8 +1,11 @@
 package com.example.lfy.myapplication.GoodsParticular;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,16 +16,28 @@ import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lfy.myapplication.Bean.Evaluate;
 import com.example.lfy.myapplication.Bean.GoodsBean;
 import com.example.lfy.myapplication.FragmentCar.Shop_Car;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.BadgeView;
+import com.example.lfy.myapplication.Util.dialog_widget.ActionSheetDialog;
 import com.example.lfy.myapplication.Variables;
 import com.example.lfy.myapplication.user_login.Login;
 import com.example.lfy.myapplication.user_login.LoginBg;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +48,9 @@ import org.xutils.http.RequestParams;
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * Created by lfy on 2016/7/7.
@@ -49,6 +66,7 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
     TextView goods_price;
     TextView goods_vip;
     ImageView more_image;
+    ImageView share;
     WebView scroll_webview;
 
     ImageView add;
@@ -63,6 +81,19 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
     public static BadgeView bv;
     View home_car_red;
 
+    RelativeLayout goods_particular_evaluate;
+    TextView goods_particular_evaluate_num;
+    RatingBar goods_particular_rating;
+
+    String title;
+    String description;
+    String url;
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+//    private GoogleApiClient client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,9 +106,13 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
         GetGoods();
         SetLiner();
         setBadgeView();
+        EvaluateCount_xUtils();
         if (Variables.my != null) {
             favorite_xUtils();
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+//        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -137,6 +172,14 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
             intent_car.setEnabled(false);
             intent_car.setBackgroundResource(R.color.huiseziti);
         }
+        share = (ImageView) findViewById(R.id.share);
+        share.setOnClickListener(this);
+
+        goods_particular_evaluate = (RelativeLayout) findViewById(R.id.goods_particular_evaluate);
+        goods_particular_evaluate.setOnClickListener(this);
+
+        goods_particular_evaluate_num = (TextView) findViewById(R.id.goods_particular_evaluate_num);
+        goods_particular_rating = (RatingBar) findViewById(R.id.goods_particular_rating);
     }
 
     @Override
@@ -203,7 +246,55 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
                     }
                 }
                 break;
+            case R.id.share:
+                showDialog();
+                break;
+            case R.id.goods_particular_evaluate:
+                Intent intent2 = new Intent(this, EvaluateList.class);
+                intent2.putExtra("productId", productId);
+                startActivity(intent2);
+                break;
         }
+    }
+
+    public void showDialog() {
+        title = "下载一鲜APP";
+        description = "开启社区式购物之旅！";
+        url = "http://www.baifenxian.com/share/share.html";
+        new ActionSheetDialog(this)
+                .builder()
+                .setTitle("分享到")
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .addSheetItem("微信好友", ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                Variables.WXshare(getApplicationContext(),
+                                        SendMessageToWX.Req.WXSceneSession, title, description,
+                                        url, R.mipmap.all_logo);
+                            }
+                        })
+                .addSheetItem("微信朋友圈", ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                Variables.WXshare(getApplicationContext(),
+                                        SendMessageToWX.Req.WXSceneTimeline, title, description,
+                                        url, R.mipmap.all_logo);
+                            }
+                        })
+                .addSheetItem("其他", ActionSheetDialog.SheetItemColor.Red, new ActionSheetDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_SUBJECT, title);
+                        intent.putExtra(Intent.EXTRA_TEXT, url);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(Intent.createChooser(intent, getTitle()));
+                    }
+                }).show();
     }
 
     private void login() {
@@ -264,7 +355,7 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
                 GoodsBean goodsBean = new GoodsBean();
 
                 String url = Customer.getString("Image1");
-                url = "http://www.baifenxian.com/" + java.net.URLEncoder.encode(url, "UTF-8");
+                url = "http://www.baifenxian.com/" + URLEncoder.encode(url, "UTF-8");
                 goodsBean.setImage1(url);
                 goodsBean.setTitle(Customer.getString("Title"));
                 goodsBean.setPlace(Customer.getString("Place"));
@@ -387,7 +478,7 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(Goods_Particular.this, "加入成功", Toast.LENGTH_SHORT).show();
                     Variables.count = Variables.count + a;
                     bv.setBadgeCount(Variables.count);
-                    if (type.equals("into")){
+                    if (type.equals("into")) {
                         Intent intent = new Intent(Goods_Particular.this, Shop_Car.class);
                         startActivity(intent);
                     }
@@ -530,5 +621,75 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
             }
         });
 
+    }
+
+    private void EvaluateCount_xUtils() {
+
+        RequestParams params = new RequestParams(Variables.EvaluateCount);
+        params.addBodyParameter("productId", productId);
+        x.http().post(params, new Callback.CacheCallback<String>() {
+            private boolean hasError = false;
+            private String result = null;
+
+            @Override
+            public boolean onCache(String result) {
+                this.result = result;
+                return false; // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
+                if (result != null) {
+                    this.result = result;
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                hasError = true;
+//                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                if (ex instanceof HttpException) { // 网络错误
+                    HttpException httpEx = (HttpException) ex;
+                    int responseCode = httpEx.getCode();
+                    String responseMsg = httpEx.getMessage();
+                    String errorResult = httpEx.getResult();
+                    // ...
+                } else { // 其他错误
+                    // ...
+                }
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFinished() {
+                if (!hasError && result != null) {
+                    // 成功获取数据
+                    JSON_EvaluateCount(result);
+                } else {
+                    Toast.makeText(Goods_Particular.this, "获取评价信息失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    private void JSON_EvaluateCount(String result) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            String Ret = jsonObject.getString("Ret");
+            if (Ret.equals("1")) {
+                JSONArray jsonArray = jsonObject.getJSONArray("Data");
+                JSONObject object = jsonArray.getJSONObject(0);
+                goods_particular_evaluate_num.setText("评价(" + object.getInt("count") + ")");
+                goods_particular_rating.setRating(object.getInt("avg"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

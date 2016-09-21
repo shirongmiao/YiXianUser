@@ -1,5 +1,6 @@
 package com.example.lfy.myapplication;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
@@ -28,12 +29,16 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 
+import com.example.lfy.myapplication.Bean.MineBean;
 import com.example.lfy.myapplication.FragmentCar.FragmentCar;
 import com.example.lfy.myapplication.FragmentClassify.FragmentClassify;
 import com.example.lfy.myapplication.FragmentHome.FragmentHome;
 import com.example.lfy.myapplication.FragmentMine.FragmentMine;
 import com.example.lfy.myapplication.FragmentOrder.FragmentOrder;
 import com.example.lfy.myapplication.Util.BadgeView;
+import com.example.lfy.myapplication.Util.permission.PermissionAction;
+import com.example.lfy.myapplication.Util.permission.PermissionHandler;
+import com.example.lfy.myapplication.Util.permission.PermissionManager;
 import com.example.lfy.myapplication.user_login.LoginBg;
 
 import org.json.JSONArray;
@@ -80,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setBadgeView();
         version_xUtils();
     }
+
 
 
     private void initView() {
@@ -247,12 +253,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bv = new BadgeView(this);
         bv.setTargetView(home_car_red);
         bv.setTextColor(Color.WHITE);
+
         bv.setGravity(Gravity.TOP | Gravity.RIGHT);
         bv.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.ITALIC));
 
         if (Variables.my != null) {
             getCar_xUtils();
         }
+
     }
 
 
@@ -262,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         params.addBodyParameter("CustomerID", Variables.my.getCustomerID());
         params.addBodyParameter("point", Variables.point.getID());
         params.setCacheMaxAge(1000 * 60);
+        Log.d("获取购物车数据", params.toString());
         x.http().get(params, new Callback.CacheCallback<String>() {
             private boolean hasError = false;
             private String result = null;
@@ -494,16 +503,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-        public static void installApp(Context context,String filePath) {
-            File _file = new File(filePath);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setDataAndType(Uri.fromFile(_file),
-                    "application/vnd.android.package-archive");
-            context.startActivity(intent);
-        }
 
-
+    public static void installApp(Context context, String filePath) {
+        File _file = new File(filePath);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(Uri.fromFile(_file),
+                "application/vnd.android.package-archive");
+        context.startActivity(intent);
+    }
 
 
     public void update() {

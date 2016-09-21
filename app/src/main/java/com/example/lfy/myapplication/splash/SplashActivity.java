@@ -104,7 +104,14 @@ public class SplashActivity extends AppCompatActivity {
         translate.setAnimationListener(new AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                point_xUtils();
+                if (wifi) {
+                    point_xUtils();
+                } else {
+                    Intent intent = new Intent(SplashActivity.this, Wifi.class);
+                    intent.putExtra("from", "second");
+                    startActivity(intent);
+                    finish();
+                };
             }
 
             @Override
@@ -248,17 +255,7 @@ public class SplashActivity extends AppCompatActivity {
                     // 成功获取数据
                     JSON(result);
                     Login_xUtils();
-                    if (wifi) {
-                        Intent intent = new Intent(SplashActivity.this, MainActivity.class); // 调用父类的intent方法
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                        finish(); //
-                    } else {
-                        Intent intent = new Intent(SplashActivity.this, Wifi.class);
-                        intent.putExtra("from", "second");
-                        startActivity(intent);
-                        finish();
-                    };
+
                 } else {
                     Intent intent = new Intent(SplashActivity.this, Wifi.class);
                     intent.putExtra("from", "second");
@@ -364,8 +361,31 @@ public class SplashActivity extends AppCompatActivity {
                         // 成功获取数据
                         Login_JSON(result);
                     }
+                    if (wifi) {
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class); // 调用父类的intent方法
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                        finish(); //
+                    } else {
+                        Intent intent = new Intent(SplashActivity.this, Wifi.class);
+                        intent.putExtra("from", "second");
+                        startActivity(intent);
+                        finish();
+                    };
                 }
             });
+        }else {
+            if (wifi) {
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class); // 调用父类的intent方法
+                startActivity(intent);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                finish(); //
+            } else {
+                Intent intent = new Intent(SplashActivity.this, Wifi.class);
+                intent.putExtra("from", "second");
+                startActivity(intent);
+                finish();
+            };
         }
     }
 

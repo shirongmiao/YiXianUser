@@ -33,7 +33,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class EvaluateList extends AppCompatActivity {
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
+public class EvaluateList extends SwipeBackActivity {
     RecyclerView evaluate_rv;
     EvaluateListAdapter adapter;
     List<Evaluate> list;

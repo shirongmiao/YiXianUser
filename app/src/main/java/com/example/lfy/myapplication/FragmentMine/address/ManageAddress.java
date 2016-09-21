@@ -26,11 +26,13 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 
 /**
  * Created by lfy on 2016/3/31.
  */
-public class ManageAddress extends AppCompatActivity {
+public class ManageAddress extends SwipeBackActivity {
     Manage_Adapter adapter;
     RecyclerView recyclerView;
     Button add_address;

@@ -36,10 +36,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 /**
  * Created by lfy on 2016/6/30.
  */
-public class Shop_Car extends AppCompatActivity implements View.OnClickListener {
+public class Shop_Car extends SwipeBackActivity implements View.OnClickListener {
 
     //    DbManager db;
     CarAdapter carAdapter;

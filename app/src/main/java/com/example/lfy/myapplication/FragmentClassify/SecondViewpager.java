@@ -52,10 +52,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 /**
  * Created by lfy on 2016/6/6.
  */
-public class SecondViewpager extends AppCompatActivity implements View.OnClickListener {
+public class SecondViewpager extends SwipeBackActivity implements View.OnClickListener {
 
     private ViewPager mViewPager;
     VpSimpleFragment fragment;

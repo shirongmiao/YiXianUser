@@ -126,7 +126,7 @@ public class FragmentMine extends Fragment implements View.OnClickListener {
             para.width = Variables.PhoneWidth * 1 / 2;
             login_text.setLayoutParams(para);
             user_photo.setImageResource(R.mipmap.mine_default_photo);
-            my_money.setVisibility(View.GONE);
+            my_money.setVisibility(View.INVISIBLE);
         }
 
     }

@@ -133,7 +133,7 @@
             android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.SwapBack" />
 
         <!-- 活动 -->
         <activity
@@ -147,7 +147,7 @@
             android:name=".FragmentClassify.SecondViewpager"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.SwapBack" />
         <!-- 登录 -->
         <activity
             android:name=".user_login.LoginBg"
@@ -188,18 +188,18 @@
             android:name=".FragmentOrder.Order_Particular"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.SwapBack" />
         <!-- 我的页面 -->
         <activity
             android:name=".FragmentMine.discount.Coupon"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.SwapBack" />
         <activity
             android:name=".FragmentMine.balance.Balance"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.SwapBack" />
         <activity
             android:name=".FragmentMine.balance.SetPassWord"
             android:label="@string/app_name"
@@ -214,7 +214,7 @@
             android:name=".FragmentMine.address.ManageAddress"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.SwapBack" />
         <activity
             android:name=".FragmentMine.address.InsertAddress"
             android:label="@string/app_name"
@@ -276,7 +276,7 @@
             android:name=".SubmitOrder.SubmitOrder"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.SwapBack" />
         <activity
             android:name=".SubmitOrder.PayType"
             android:label="@string/app_name"
@@ -287,7 +287,7 @@
             android:name=".GoodsParticular.Goods_Particular"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.SwapBack" />
 
         <!-- Ping++ SDK -->
         <activity
@@ -321,8 +321,9 @@
         <activity
             android:name=".FragmentOrder.PingLun"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".GoodsParticular.EvaluateList"></activity>
-
+        <activity
+            android:name=".GoodsParticular.EvaluateList"
+            android:theme="@style/AppTheme.NoActionBar.SwapBack" />
     </application>
 
 </manifest>

@@ -34,10 +34,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 /**
  * Created by lfy on 2016/4/11.
  */
-public class Balance extends AppCompatActivity {
+public class Balance extends SwipeBackActivity {
 
     ImageView new_break;
     ImageView history;

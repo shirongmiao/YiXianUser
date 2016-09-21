@@ -52,10 +52,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import me.imid.swipebacklayout.lib.SwipeBackLayout;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 /**
  * Created by lfy on 2016/7/7.
  */
-public class Goods_Particular extends AppCompatActivity implements View.OnClickListener {
+public class Goods_Particular extends SwipeBackActivity implements View.OnClickListener {
 
     ImageView return_all;
     ImageView car;
@@ -99,7 +102,6 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         Variables.setTranslucentStatus(this);
         setContentView(R.layout.goods_particular);
-
         Intent intent = getIntent();
         productId = intent.getStringExtra("productId");
         initView();
@@ -114,6 +116,7 @@ public class Goods_Particular extends AppCompatActivity implements View.OnClickL
         // See https://g.co/AppIndexing/AndroidStudio for more information.
 //        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+
 
     @Override
     protected void onResume() {

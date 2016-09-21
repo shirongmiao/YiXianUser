@@ -39,4 +39,5 @@ dependencies {
     compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.2.0'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile 'me.imid.swipebacklayout.lib:library:1.0.0'
 }

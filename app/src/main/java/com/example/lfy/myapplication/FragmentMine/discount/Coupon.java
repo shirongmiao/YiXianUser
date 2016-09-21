@@ -29,10 +29,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 /**
  * Created by lfy on 2016/3/21.
  */
-public class Coupon extends AppCompatActivity {
+public class Coupon extends SwipeBackActivity {
 
     ListView discount;
     List<CouponBean> coupon_beans = null;

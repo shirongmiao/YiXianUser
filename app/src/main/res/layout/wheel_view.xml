@@ -25,23 +25,6 @@
             android:textColor="#ffaa33"
             android:textSize="26sp"
             android:textStyle="bold" />
-
-        <com.example.lfy.myapplication.SubmitOrder.PickerView
-            android:id="@+id/second_pv"
-            android:layout_width="80dp"
-            android:layout_height="160dp"
-            android:layout_toRightOf="@id/minute_tv" />
-
-        <TextView
-            android:id="@+id/second_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/second_pv"
-            android:text="分"
-            android:textColor="#ffaa33"
-            android:textSize="26sp"
-            android:textStyle="bold" />
     </RelativeLayout>
 
 </RelativeLayout>

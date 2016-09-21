@@ -486,6 +486,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
         a = a + 1;
         if (a == 2) {
             a = 0;
+            homeAdapter.lastPosition=-1;
             homeAdapter.notifyDataSetChanged();
         }
     }

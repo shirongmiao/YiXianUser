@@ -27,10 +27,12 @@ import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 /**
  * Created by lfy on 2016/1/7.
  */
-public class Search_edit extends AppCompatActivity {
+public class Search_edit extends SwipeBackActivity {
 
     UserInfo userInfo;
 

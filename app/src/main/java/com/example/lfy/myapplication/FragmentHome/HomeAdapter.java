@@ -128,7 +128,6 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         holder.itemView.setTag(position);
         setAnimation(holder.itemView, position);
-
         if (holder instanceof Item1ViewHolder) {
             binding1(holder);
         } else if (holder instanceof Item2ViewHolder) {

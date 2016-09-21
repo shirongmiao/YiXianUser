@@ -3,6 +3,7 @@ package com.example.lfy.myapplication.FragmentHome;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     interface OnItemClickListen {
         void SetOnBannerClick(HomePhoto banner);
 
-        void SetOnGridClick(HomePhoto grid,int position);
+        void SetOnGridClick(HomePhoto grid, int position);
 
         void SetOnItemClick(HomePhoto item);
 
@@ -113,7 +114,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return new Item4ViewHolder(mLayoutInflater.inflate(R.layout.home_item_foot, parent, false));
         } else {
             //底部查看更多等会做
-            return new Item5ViewHolder(mLayoutInflater.inflate(R.layout.home_item, parent, false));
+            TextView textView = new TextView(context);
+            textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            textView.setPadding(20, 20, 20, 20);//left, top, right, bottom
+            textView.setGravity(Gravity.CENTER);
+            textView.setText("查看更多");
+            return new Item5ViewHolder(textView);
         }
     }
 
@@ -173,14 +179,14 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         SliderLayout slider;
         PagerIndicator custom_indicator;
-        TextView home_notification;
+        MarqueeTextView home_notification;
 
 
         public Item1ViewHolder(View itemView) {
             super(itemView);
             slider = (SliderLayout) itemView.findViewById(R.id.slider);
             custom_indicator = (PagerIndicator) itemView.findViewById(R.id.custom_indicator);
-            home_notification = (TextView) itemView.findViewById(R.id.home_notification);
+            home_notification = (MarqueeTextView) itemView.findViewById(R.id.home_notification);
         }
     }
 
@@ -231,8 +237,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private boolean flag = true;
 
     private void binding1(RecyclerView.ViewHolder holder) {
-//        ((Item1ViewHolder) holder).slider.removeAllSliders();
         if (flag) {
+            ((Item1ViewHolder) holder).home_notification.setText(Variables.point.getPrompt());
             initSlider(((Item1ViewHolder) holder).slider, viewpagerPhoto);
             ((Item1ViewHolder) holder).slider.setCustomIndicator(((Item1ViewHolder) holder).custom_indicator);
             ((Item1ViewHolder) holder).slider.getIndicatorVisibility();
@@ -257,7 +263,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             @Override
             public void onClick(View v) {
                 if (Listen != null) {
-                    Listen.SetOnGridClick(gridPhoto.get(position),position);
+                    Listen.SetOnGridClick(gridPhoto.get(position), position);
                 }
             }
         });
@@ -310,7 +316,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void binding5(RecyclerView.ViewHolder holder) {
-        ((Item5ViewHolder) holder).Image.setImageResource(R.mipmap.login_bg);
+//        ((Item5ViewHolder) holder).Image.setImageResource(R.mipmap.login_bg);
         ((Item5ViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

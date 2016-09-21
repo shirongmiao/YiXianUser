@@ -37,7 +37,7 @@
                 android:id="@+id/top_title"
                 style="@style/Center"
                 android:text="@string/bottom_home"
-                android:textColor="@color/black" />
+                android:textColor="@color/huiseziti" />
 
             <ImageView
                 android:id="@+id/top_title_down"

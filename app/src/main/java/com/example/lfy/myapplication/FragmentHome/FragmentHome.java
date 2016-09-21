@@ -65,11 +65,8 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
     LinearLayout into_point;
     SwipeRefreshLayout swipe_refresh;
     ImageView scan, search, top_title_down;
-
     GridLayoutManager gridLayoutManager;
-
     View view;
-
     int totalDy;
     @Nullable
     @Override

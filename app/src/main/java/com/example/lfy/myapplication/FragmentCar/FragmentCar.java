@@ -25,6 +25,7 @@ import com.example.lfy.myapplication.GoodsParticular.Goods_Particular;
 import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.SubmitOrder.SubmitOrder;
+import com.example.lfy.myapplication.Util.EmptyRecyclerView;
 import com.example.lfy.myapplication.Variables;
 import com.example.lfy.myapplication.user_login.LoginBg;
 
@@ -46,41 +47,51 @@ import java.util.List;
  */
 public class FragmentCar extends Fragment implements View.OnClickListener {
 
-    //    DbManager db;
+    GridLayoutManager gridLayoutManager;
     CarAdapter carAdapter;
-    RecyclerView car_recyclerView;
+    EmptyRecyclerView car_recyclerView;
+    View car_none;
+
     ImageView car_delete;
     TextView car_submit;
     TextView car_money;
     TextView vip_money;
     TextView car_sendPrice;
-    LinearLayout car_none;
+
     LinearLayout car_bottom_line;//低栏
-    TextView car_shopping;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragmentcar, container, false);
-        car_recyclerView = (RecyclerView) view.findViewById(R.id.car_recyclerView);
-        car_delete = (ImageView) view.findViewById(R.id.car_delete);
-        car_submit = (TextView) view.findViewById(R.id.car_submit);
-        car_money = (TextView) view.findViewById(R.id.car_money);
-        vip_money = (TextView) view.findViewById(R.id.vip_money);
-        car_sendPrice = (TextView) view.findViewById(R.id.car_sendPrice);
 
-        car_none = (LinearLayout) view.findViewById(R.id.car_none);
-        car_bottom_line = (LinearLayout) view.findViewById(R.id.car_bottom_line);
-        car_shopping = (TextView) view.findViewById(R.id.car_shopping);
-
+        FindView(view);
         initView();
         getCar_xUtils();
         getRecommendProduct_xUtils();
         return view;
     }
 
+    private void FindView(View view) {
+        car_recyclerView = (EmptyRecyclerView) view.findViewById(R.id.car_recyclerView);
+        car_delete = (ImageView) view.findViewById(R.id.car_delete);
+        car_submit = (TextView) view.findViewById(R.id.car_submit);
+        car_money = (TextView) view.findViewById(R.id.car_money);
+        vip_money = (TextView) view.findViewById(R.id.vip_money);
+        car_sendPrice = (TextView) view.findViewById(R.id.car_sendPrice);
+
+        car_none = view.findViewById(R.id.car_none);
+        car_bottom_line = (LinearLayout) view.findViewById(R.id.car_bottom_line);
+    }
+
     private void initView() {
         carAdapter = new CarAdapter();
+        gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        car_recyclerView.setLayoutManager(gridLayoutManager);
+        car_recyclerView.setAdapter(carAdapter);
+        car_recyclerView.setEmptyView(car_none);
+
         carAdapter.SetOnClickListen(new CarAdapter.OnClickListen() {
             @Override
             public void setOnClick(int position, CarDbBean carDbBean, String type) {
@@ -118,7 +129,7 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
         car_sendPrice.setText("配送费:￥" + Variables.point.getDeliveryPrice() + "元");
         car_submit.setOnClickListener(this);
         car_delete.setOnClickListener(this);
-        car_shopping.setOnClickListener(this);
+        car_none.setOnClickListener(this);
     }
 
     public void setUpdate() {
@@ -159,7 +170,7 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
                         .setNegativeButton("取消", null).create();
                 dialog.show();
                 break;
-            case R.id.car_shopping:
+            case R.id.car_none:
                 MainActivity.classify.performClick();
                 break;
         }
@@ -250,26 +261,21 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
                     Variables.count = Variables.count + everyone.getInt("ProductCount");
                     list.add(carDbBean);
                 }
-                carAdapter.addDate(list);
-                Money(list);
-                MainActivity.bv.setBadgeCount(Variables.count);
-                car_none.setVisibility(View.GONE);
-                car_recyclerView.setVisibility(View.VISIBLE);
-                car_bottom_line.setVisibility(View.VISIBLE);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-                car_recyclerView.setLayoutManager(gridLayoutManager);
+
                 gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
                         return position <= list.size() + 1 ? 2 : 1;
                     }
                 });
-                car_recyclerView.setItemAnimator(new DefaultItemAnimator());
-                car_recyclerView.setAdapter(carAdapter);
+                carAdapter.addDate(list);
+                carAdapter.notifyDataSetChanged();
+                Money(list);
+                MainActivity.bv.setBadgeCount(Variables.count);
+                car_bottom_line.setVisibility(View.VISIBLE);
             } else {
                 carAdapter.addDate(null);
-                car_none.setVisibility(View.VISIBLE);
-                car_recyclerView.setVisibility(View.GONE);
+                carAdapter.notifyDataSetChanged();
                 car_submit.setEnabled(false);
                 car_bottom_line.setVisibility(View.INVISIBLE);
             }
@@ -328,10 +334,10 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
                 if (!hasError && result != null) {
                     // 成功删除购物车数据
                     carAdapter.addDate(null);
+                    carAdapter.notifyDataSetChanged();
                     carAdapter.addMore(null);
                     car_submit.setEnabled(false);
                     car_submit.setBackgroundResource(R.color.line_grey);
-                    car_none.setVisibility(View.VISIBLE);
                     car_money.setText("合计:￥0元");
                     car_bottom_line.setVisibility(View.INVISIBLE);
                     Variables.count = 0;
@@ -634,8 +640,10 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
                     list.add(carDbBean);
                 }
                 carAdapter.addMore(list);
+                carAdapter.notifyDataSetChanged();
             } else {
                 carAdapter.addMore(null);
+                carAdapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {
             e.printStackTrace();

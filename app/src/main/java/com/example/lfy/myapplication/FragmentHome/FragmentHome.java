@@ -67,13 +67,14 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
     ImageView scan, search, top_title_down;
     GridLayoutManager gridLayoutManager;
     View view;
+
     int totalDy;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragmenthome, container, false);
         homeAdapter = new HomeAdapter(getContext());
-
         FindView();
         SetView();
         setTopTitle();
@@ -137,8 +138,9 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                     getActivity().startActivity(intent);
                 }
             }
+
             @Override
-            public void SetOnGridClick(HomePhoto grid,int position) {
+            public void SetOnGridClick(HomePhoto grid, int position) {
                 if (position == 0) {
 //                            Intent intent = new Intent(getActivity(), GroupMainActivity.class);
 //                            startActivity(intent);
@@ -173,15 +175,15 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             public void SetOnItemClick(HomePhoto item) {
                 if (item.getJumpType().equals("1")) {
                     Intent intent = new Intent(getActivity(), Search.class);
-                    intent.putExtra("content",item.getName());
-                    intent.putExtra("title",item.getName());
+                    intent.putExtra("content", item.getName());
+                    intent.putExtra("title", item.getName());
                     intent.putExtra("point", Variables.point.getID());
                     startActivity(intent);
                 } else if (item.getJumpType().equals("2")) {
                     //跳转到web
                     Intent intent = new Intent(getActivity(), WEB.class);
                     intent.putExtra("title", item.getName());
-                    intent.putExtra("url",item.getUrl());
+                    intent.putExtra("url", item.getUrl());
                     startActivity(intent);
                 } else {
                     //跳转到商品详情
@@ -195,7 +197,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             public void SetOnFootClick(FootPhoto foot) {
                 Intent intent = new Intent(getActivity(), Campaign.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("campaign",foot);
+                bundle.putSerializable("campaign", foot);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -357,7 +359,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                     activityPhoto.add(all);
                 }
                 homeAdapter.addFoot(activityPhoto);
-                homeAdapter.notifyDataSetChanged();
+                success();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -469,12 +471,22 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                 homeAdapter.addBanner(viewpagerPhoto);
                 homeAdapter.addGrid(gridPhoto);
                 homeAdapter.addItem(itemPhoto);
-                homeAdapter.notifyDataSetChanged();
+                success();
             }
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+        }
+    }
+
+    int a = 0;
+
+    private void success() {
+        a = a + 1;
+        if (a == 2) {
+            a = 0;
+            homeAdapter.notifyDataSetChanged();
         }
     }
 

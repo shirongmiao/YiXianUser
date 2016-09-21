@@ -22,6 +22,7 @@ import com.example.lfy.myapplication.GoodsParticular.Goods_Particular;
 import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.SubmitOrder.SubmitOrder;
+import com.example.lfy.myapplication.Util.EmptyRecyclerView;
 import com.example.lfy.myapplication.Variables;
 
 import org.json.JSONArray;
@@ -43,17 +44,17 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
  */
 public class Shop_Car extends SwipeBackActivity implements View.OnClickListener {
 
-    //    DbManager db;
+    GridLayoutManager gridLayoutManager;
     CarAdapter carAdapter;
-    RecyclerView car_recyclerView;
+    EmptyRecyclerView car_recyclerView;
     ImageView car_delete;
     TextView car_submit;
     TextView car_money;
     TextView vip_money;
     TextView car_sendPrice;
-    LinearLayout car_none;
+    View car_none;
     LinearLayout car_bottom_line;
-    TextView car_shopping;
+
     ImageView car_left;
 
     @Override
@@ -63,30 +64,33 @@ public class Shop_Car extends SwipeBackActivity implements View.OnClickListener 
         setContentView(R.layout.fragmentcar);
         carAdapter = new CarAdapter();
 
+        FindView();
         initView();
         getCar_xUtils();
         getRecommendProduct_xUtils();
     }
 
-    private void initView() {
-
-        car_recyclerView = (RecyclerView) findViewById(R.id.car_recyclerView);
+    private void FindView() {
+        car_recyclerView = (EmptyRecyclerView) findViewById(R.id.car_recyclerView);
         car_delete = (ImageView) findViewById(R.id.car_delete);
         car_submit = (TextView) findViewById(R.id.car_submit);
         car_money = (TextView) findViewById(R.id.car_money);
         vip_money = (TextView) findViewById(R.id.vip_money);
         car_sendPrice = (TextView) findViewById(R.id.car_sendPrice);
 
-        car_none = (LinearLayout) findViewById(R.id.car_none);
+        car_none = findViewById(R.id.car_none);
         car_bottom_line = (LinearLayout) findViewById(R.id.car_bottom_line);
-        car_shopping = (TextView) findViewById(R.id.car_shopping);
+
         car_left = (ImageView) findViewById(R.id.car_left);
         car_left.setVisibility(View.VISIBLE);
+    }
 
+    private void initView() {
 
+        gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        car_recyclerView.setLayoutManager(gridLayoutManager);
         car_recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-
+        car_recyclerView.setAdapter(carAdapter);
 
         carAdapter.SetOnClickListen(new CarAdapter.OnClickListen() {
             @Override
@@ -126,7 +130,7 @@ public class Shop_Car extends SwipeBackActivity implements View.OnClickListener 
         car_sendPrice.setText("含配送费:￥" + Variables.point.getDeliveryPrice() + "元");
         car_submit.setOnClickListener(this);
         car_delete.setOnClickListener(this);
-        car_shopping.setOnClickListener(this);
+        car_none.setOnClickListener(this);
         car_left.setOnClickListener(this);
 
     }
@@ -161,7 +165,7 @@ public class Shop_Car extends SwipeBackActivity implements View.OnClickListener 
                         .setNegativeButton("取消", null).create();
                 dialog.show();
                 break;
-            case R.id.car_shopping:
+            case R.id.car_none:
                 MainActivity.classify.performClick();
                 Intent intent1 = new Intent(Shop_Car.this, MainActivity.class);
                 startActivity(intent1);
@@ -171,6 +175,7 @@ public class Shop_Car extends SwipeBackActivity implements View.OnClickListener 
                 break;
         }
     }
+
     //购物车加入推荐商品
     private void addRecommendProduct_xUtils(String productId) {
         RequestParams params = new RequestParams(Variables.http_InsertCar);
@@ -227,6 +232,7 @@ public class Shop_Car extends SwipeBackActivity implements View.OnClickListener 
             }
         });
     }
+
     //获取购物车数据
     private void getCar_xUtils() {
         RequestParams params = new RequestParams(Variables.http_getCar);
@@ -312,28 +318,22 @@ public class Shop_Car extends SwipeBackActivity implements View.OnClickListener 
                     Variables.count = Variables.count + everyone.getInt("ProductCount");
                     list.add(carDbBean);
                 }
-                carAdapter.addDate(list);
                 Money(list);
                 MainActivity.bv.setBadgeCount(Variables.count);
-                car_none.setVisibility(View.GONE);
-                car_recyclerView.setVisibility(View.VISIBLE);
                 car_bottom_line.setVisibility(View.VISIBLE);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
-                car_recyclerView.setLayoutManager(gridLayoutManager);
                 gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        return position <=list.size()+1 ? 2 : 1;
+                        return position <= list.size() + 1 ? 2 : 1;
                     }
                 });
-                car_recyclerView.setItemAnimator(new DefaultItemAnimator());
-                car_recyclerView.setAdapter(carAdapter);
+                carAdapter.addDate(list);
+                carAdapter.notifyDataSetChanged();
             } else {
-                carAdapter.addDate(null);
-                car_none.setVisibility(View.VISIBLE);
-                car_recyclerView.setVisibility(View.GONE);
                 car_submit.setEnabled(false);
                 car_bottom_line.setVisibility(View.INVISIBLE);
+                carAdapter.addDate(null);
+                carAdapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -640,8 +640,10 @@ public class Shop_Car extends SwipeBackActivity implements View.OnClickListener 
                     list.add(carDbBean);
                 }
                 carAdapter.addMore(list);
+                carAdapter.notifyDataSetChanged();
             } else {
                 carAdapter.addMore(null);
+                carAdapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {
             e.printStackTrace();

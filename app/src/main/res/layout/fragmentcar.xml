@@ -4,6 +4,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/car_none"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/car_none" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:text="购物车是空的" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/round_car_shop"
+            android:padding="10dp"
+            android:text="再去逛逛"
+            android:textColor="@color/green" />
+    </LinearLayout>
+
+
     <FrameLayout style="@style/FragmentTop">
 
         <TextView
@@ -30,44 +62,13 @@
     </FrameLayout>
 
 
-    <android.support.v7.widget.RecyclerView
+    <com.example.lfy.myapplication.Util.EmptyRecyclerView
         android:id="@+id/car_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/bottom_width"
-        android:layout_marginTop="63.5dp"></android.support.v7.widget.RecyclerView>
-
-    <LinearLayout
-        android:id="@+id/car_none"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:visibility="invisible">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:src="@mipmap/car_none" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp"
-            android:text="购物车是空的" />
-
-        <TextView
-            android:id="@+id/car_shopping"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/round_car_shop"
-            android:padding="10dp"
-            android:text="再去逛逛"
-            android:textColor="@color/green" />
-    </LinearLayout>
+        android:layout_marginTop="63.5dp"
+        android:background="@color/white"></com.example.lfy.myapplication.Util.EmptyRecyclerView>
 
     <LinearLayout
         android:id="@+id/car_bottom_line"

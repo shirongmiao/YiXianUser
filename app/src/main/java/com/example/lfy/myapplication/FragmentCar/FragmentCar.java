@@ -89,6 +89,7 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
         carAdapter = new CarAdapter();
         gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         car_recyclerView.setLayoutManager(gridLayoutManager);
+        car_recyclerView.setItemAnimator(new DefaultItemAnimator());
         car_recyclerView.setAdapter(carAdapter);
         car_recyclerView.setEmptyView(car_none);
 

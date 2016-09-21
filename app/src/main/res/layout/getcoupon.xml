@@ -34,7 +34,7 @@
         android:id="@+id/coupon_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_gravity="center">
 
         <ImageView
@@ -47,9 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginRight="105dp"
+            android:layout_marginRight="110dp"
             android:layout_marginTop="125dp"
-            android:text="￥20"
             android:textColor="@color/white"
             android:textSize="25sp" />
 
@@ -64,7 +63,7 @@
             android:maxLines="2"
             android:text="20元现金已经存入到您的账户中，可在我的优惠券中查看"
             android:textColor="@color/orange"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <View

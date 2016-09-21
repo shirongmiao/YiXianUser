@@ -37,28 +37,19 @@
 
 
     <FrameLayout style="@style/FragmentTop">
-
         <TextView
             android:id="@+id/top_title"
             style="@style/Center"
             android:text="@string/title_car" />
-
         <ImageView
             android:id="@+id/car_left"
             style="@style/Left"
             android:src="@mipmap/all_left"
             android:visibility="gone"></ImageView>
-
         <ImageView
             android:id="@+id/car_delete"
             style="@style/Right"
             android:src="@mipmap/all_car_delete"></ImageView>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line_view"
-            android:layout_gravity="bottom"
-            android:background="@color/line_grey"></View>
     </FrameLayout>
 
 

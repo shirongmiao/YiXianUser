@@ -1,9 +1,7 @@
 package com.example.lfy.myapplication;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.app.NotificationManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,16 +27,12 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 
-import com.example.lfy.myapplication.Bean.MineBean;
 import com.example.lfy.myapplication.FragmentCar.FragmentCar;
 import com.example.lfy.myapplication.FragmentClassify.FragmentClassify;
 import com.example.lfy.myapplication.FragmentHome.FragmentHome;
 import com.example.lfy.myapplication.FragmentMine.FragmentMine;
 import com.example.lfy.myapplication.FragmentOrder.FragmentOrder;
 import com.example.lfy.myapplication.Util.BadgeView;
-import com.example.lfy.myapplication.Util.permission.PermissionAction;
-import com.example.lfy.myapplication.Util.permission.PermissionHandler;
-import com.example.lfy.myapplication.Util.permission.PermissionManager;
 import com.example.lfy.myapplication.user_login.LoginBg;
 
 import org.json.JSONArray;
@@ -51,8 +45,6 @@ import org.xutils.x;
 
 import java.io.File;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {

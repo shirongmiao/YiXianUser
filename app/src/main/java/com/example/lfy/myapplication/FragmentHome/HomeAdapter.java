@@ -21,6 +21,7 @@ import com.example.lfy.myapplication.Bean.FootPhoto;
 import com.example.lfy.myapplication.Bean.HomePhoto;
 import com.example.lfy.myapplication.FragmentHome.campaign.HorizontalAdapter;
 import com.example.lfy.myapplication.R;
+import com.example.lfy.myapplication.Util.OnClickEvent;
 import com.example.lfy.myapplication.Variables;
 
 import org.xutils.image.ImageOptions;
@@ -116,7 +117,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             //底部查看更多等会做
             TextView textView = new TextView(context);
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            textView.setPadding(20, 20, 20, 20);//left, top, right, bottom
+            textView.setPadding(40, 40, 40, 40);//left, top, right, bottom
             textView.setGravity(Gravity.CENTER);
             textView.setText("查看更多");
             return new Item5ViewHolder(textView);
@@ -259,9 +260,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         LongdingImage(((Item2ViewHolder) holder).home_tab_image, gridPhoto.get(position).getImg());
 
         ((Item2ViewHolder) holder).home_tab_text.setText(gridPhoto.get(position).getName());
-        ((Item2ViewHolder) holder).home_tab_image.setOnClickListener(new View.OnClickListener() {
+        ((Item2ViewHolder) holder).home_tab_image.setOnClickListener(new OnClickEvent() {
             @Override
-            public void onClick(View v) {
+            public void singleClick(View v) {
                 if (Listen != null) {
                     Listen.SetOnGridClick(gridPhoto.get(position), position);
                 }
@@ -277,13 +278,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         para.width = Variables.PhoneWidth;
         ((Item3ViewHolder) holder).Image.setLayoutParams(para);
         LongdingImage(((Item3ViewHolder) holder).Image, itemPhoto.get(position).getImg());
-        ((Item3ViewHolder) holder).Image.setOnClickListener(new View.OnClickListener() {
+        ((Item3ViewHolder) holder).Image.setOnClickListener(new OnClickEvent() {
             @Override
-            public void onClick(View v) {
+            public void singleClick(View v) {
                 if (Listen != null) {
                     Listen.SetOnItemClick(itemPhoto.get(position));
                 }
-
             }
         });
     }
@@ -305,9 +305,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ((Item4ViewHolder) holder).sales_grad.setLayoutManager(linearLayoutManager);
         ((Item4ViewHolder) holder).sales_grad.setAdapter(horizontal);
 
-        ((Item4ViewHolder) holder).sales_image.setOnClickListener(new View.OnClickListener() {
+        ((Item4ViewHolder) holder).sales_image.setOnClickListener(new OnClickEvent() {
             @Override
-            public void onClick(View v) {
+            public void singleClick(View v) {
                 if (Listen != null) {
                     Listen.SetOnFootClick(activityPhoto.get(position));
                 }
@@ -317,9 +317,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private void binding5(RecyclerView.ViewHolder holder) {
 //        ((Item5ViewHolder) holder).Image.setImageResource(R.mipmap.login_bg);
-        ((Item5ViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+        ((Item5ViewHolder) holder).itemView.setOnClickListener(new OnClickEvent() {
             @Override
-            public void onClick(View v) {
+            public void singleClick(View v) {
                 if (Listen != null) {
                     Listen.SetOnLookClick();
                 }

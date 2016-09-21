@@ -285,10 +285,10 @@ public class GetCoupon extends AppCompatActivity {
                         if (Ret.equals("1")) {
                             coupon_dialog.setVisibility(View.VISIBLE);
                             coupon_dialog.startAnimation(new MyScaler(1.0f, 1.0f, 0.0f, 1.0f, 700, coupon_dialog, false));
-                            money.setText("￥" + Msg);
+                            money.setText("￥" + Msg.substring(Msg.length() - 1, Msg.length()));
                             bottom_text.setText("领取成功");
                             liquan_button.setImageResource(R.mipmap.coupon_bottom_down);
-                            String str = "￥" + Msg + "元现金已经存入到您的账户中,可在我的优惠券中查看";
+                            String str = "￥" +  Msg.substring(Msg.length() - 1, Msg.length()) + "元现金已经存入到您的账户中,可在我的优惠券中查看";
                             SpannableStringBuilder builder = new SpannableStringBuilder(str);
                             ForegroundColorSpan redSpan = new ForegroundColorSpan(Color.RED);
                             AbsoluteSizeSpan bigSpan = new AbsoluteSizeSpan(23, true);

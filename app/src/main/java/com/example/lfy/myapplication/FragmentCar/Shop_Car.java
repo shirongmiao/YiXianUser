@@ -44,30 +44,31 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
  */
 public class Shop_Car extends SwipeBackActivity implements View.OnClickListener {
 
-    GridLayoutManager gridLayoutManager;
     CarAdapter carAdapter;
     EmptyRecyclerView car_recyclerView;
+    GridLayoutManager gridLayoutManager;
+    View car_none;
+
+    ImageView car_left;
     ImageView car_delete;
+
+    LinearLayout car_bottom_line;
     TextView car_submit;
     TextView car_money;
     TextView vip_money;
     TextView car_sendPrice;
-    View car_none;
-    LinearLayout car_bottom_line;
-
-    ImageView car_left;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Variables.setTranslucentStatus(this);
         setContentView(R.layout.fragmentcar);
-        carAdapter = new CarAdapter();
 
         FindView();
         initView();
         getCar_xUtils();
         getRecommendProduct_xUtils();
+
     }
 
     private void FindView() {
@@ -86,11 +87,12 @@ public class Shop_Car extends SwipeBackActivity implements View.OnClickListener 
     }
 
     private void initView() {
-
+        carAdapter = new CarAdapter();
         gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
         car_recyclerView.setLayoutManager(gridLayoutManager);
         car_recyclerView.setItemAnimator(new DefaultItemAnimator());
         car_recyclerView.setAdapter(carAdapter);
+        car_recyclerView.setEmptyView(car_none);
 
         carAdapter.SetOnClickListen(new CarAdapter.OnClickListen() {
             @Override

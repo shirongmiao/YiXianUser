@@ -103,7 +103,7 @@
             android:name=".FragmentHome.scan.WEB"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.SwapBack" />
         <activity
             android:name=".FragmentHome.scan.MipcaActivityCapture"
             android:exported="true"

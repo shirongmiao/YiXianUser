@@ -27,11 +27,13 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.io.ByteArrayOutputStream;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 
 /**
  * Created by lfy on 2016/1/8.
  */
-public class WEB extends AppCompatActivity {
+public class WEB extends SwipeBackActivity {
     WebView webView;
 
     ImageView web_share;

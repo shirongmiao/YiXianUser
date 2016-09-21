@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,26 +19,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.daimajia.slider.library.Indicators.PagerIndicator;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.example.lfy.myapplication.Bean.FootPhoto;
 import com.example.lfy.myapplication.Bean.GridPhoto;
 import com.example.lfy.myapplication.Bean.HomePhoto;
 import com.example.lfy.myapplication.Bean.HomePoint;
 import com.example.lfy.myapplication.FragmentHome.ChoosePoint.MyLocation;
 import com.example.lfy.myapplication.FragmentHome.campaign.Campaign;
-import com.example.lfy.myapplication.FragmentHome.campaign.HorizontalAdapter;
 import com.example.lfy.myapplication.FragmentHome.coupon.GetCoupon;
 import com.example.lfy.myapplication.FragmentHome.scan.MipcaActivityCapture;
 import com.example.lfy.myapplication.FragmentHome.scan.WEB;
 import com.example.lfy.myapplication.FragmentHome.search.Search;
 import com.example.lfy.myapplication.FragmentHome.search.Search_edit;
 import com.example.lfy.myapplication.FragmentMine.balance.Balance;
-import com.example.lfy.myapplication.FragmentMine.help.Help;
 import com.example.lfy.myapplication.GoodsParticular.Goods_Particular;
-import com.example.lfy.myapplication.Group.GroupMainActivity;
 import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.UserInfo;
@@ -66,41 +58,33 @@ import java.util.List;
  */
 public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    HomeAdapter homeAdapter;
     private RecyclerView rv;
     TextView top_title;
     FrameLayout activity_title;
     LinearLayout into_point;
     SwipeRefreshLayout swipe_refresh;
     ImageView scan, search, top_title_down;
-    HeadFootAdapter<HeadViewHolder, FootViewHolder, ItemViewHolder, GridViewHolder> homeAdaptr;
 
-    List<HomePhoto> viewpagerPhoto;
-    List<HomePhoto> gridPhoto;
-    List<HomePhoto> itemPhoto;
-    List<FootPhoto> activityPhoto;
-
-    int totalDy;
     GridLayoutManager gridLayoutManager;
 
     View view;
 
+    int totalDy;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragmenthome, container, false);
-        initView();
+        homeAdapter = new HomeAdapter(getContext());
 
-        activityPhoto = new ArrayList<FootPhoto>();
-        viewpagerPhoto = new ArrayList<HomePhoto>();
-        gridPhoto = new ArrayList<HomePhoto>();
-        itemPhoto = new ArrayList<HomePhoto>();
-
+        FindView();
+        SetView();
         setTopTitle();
 
         return view;
     }
 
-    private void initView() {
+    private void FindView() {
         swipe_refresh = (SwipeRefreshLayout) view.findViewById(R.id.home_swipe_refresh);
         swipe_refresh.setOnRefreshListener(this);
         rv = (RecyclerView) view.findViewById(R.id.rv);
@@ -110,8 +94,12 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
         scan = (ImageView) view.findViewById(R.id.scan);
         search = (ImageView) view.findViewById(R.id.search);
         top_title_down = (ImageView) view.findViewById(R.id.top_title_down);
+    }
+
+    private void SetView() {
         gridLayoutManager = new GridLayoutManager(getActivity(), 4);
         rv.setLayoutManager(gridLayoutManager);
+        rv.setAdapter(homeAdapter);
 
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,225 +124,90 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
-    }
-
-    public void setTopTitle() {
-        if (Variables.point == null) {
-            point_xUtils();
-            Log.d("我是point为空的时候", "============================");
-        } else {
-            Foot_xUtils();
-            ALL_xUtils();
-            TimeStamp();
-            top_title.setText(Variables.point.getName());
-            totalDy = 0;
-        }
-    }
-
-    public static boolean flag = false;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (flag) {
-            flag = false;
-            setTopTitle();
-        }
-    }
-
-    @Override
-    public void onRefresh() {
-        point_xUtils();
-    }
-
-
-    private void SetMyAdapter(final List<HomePhoto> viewpagerPhoto, final List<HomePhoto> gridPhoto, final List<HomePhoto> itemPhoto, final List<FootPhoto> activityPhoto) {
-        homeAdaptr = new HeadFootAdapter<HeadViewHolder, FootViewHolder, ItemViewHolder, GridViewHolder>() {
+        homeAdapter.setOnItemClickListen(new HomeAdapter.OnItemClickListen() {
             @Override
-            public HeadViewHolder onCreateHeaderViewHolder(ViewGroup parent, int position) {
-                View header = LayoutInflater.from(getActivity()).inflate(R.layout.home_item_head, parent, false);
-
-                return new HeadViewHolder(header);
+            public void SetOnBannerClick(HomePhoto banner) {
+                if (banner.getJumpType().equals("2")) {
+                    Intent intent = new Intent(getActivity(), WEB.class);
+                    intent.putExtra("title", banner.getName());
+                    intent.putExtra("url", banner.getUrl());
+                    getActivity().startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getActivity(), Search.class);
+                    intent.putExtra("content", banner.getName());
+                    intent.putExtra("title", banner.getName());
+                    intent.putExtra("point", Variables.point.getID());
+                    getActivity().startActivity(intent);
+                }
             }
-
             @Override
-            public ItemViewHolder onCreateItemViewHolder(ViewGroup parent, int position) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_item, parent, false);
-                return new ItemViewHolder(view);
-            }
-
-            @Override
-            public FootViewHolder onCreateFooterViewHolder(ViewGroup parent, int position) {
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_item_foot, parent, false);
-                return new FootViewHolder(view);
-            }
-
-            @Override
-            public GridViewHolder onCreateGridViewHolder(ViewGroup parent, int position) {
-                View gridview = LayoutInflater.from(getActivity()).inflate(R.layout.home_item_gradview, parent, false);
-                return new GridViewHolder(gridview);
-            }
-
-            @Override
-            public void onBindHeaderViewHolder(HeadViewHolder holder, int position) {
-                holder.home_notification.setText(Variables.point.getPrompt());
-                holder.slider.removeAllSliders();
-                initSlider(holder.slider, viewpagerPhoto);
-                holder.slider.setCustomIndicator(holder.custom_indicator);
-                holder.slider.getIndicatorVisibility();
-                holder.slider.setPresetTransformer(SliderLayout.Transformer.Default);
-                holder.slider.setDuration(3000);
-            }
-
-            @Override
-            public void onBindItemViewHolder(ItemViewHolder holder, final int position) {
-                LinearLayout.LayoutParams para;
-                para = (LinearLayout.LayoutParams) holder.Image.getLayoutParams();
-                para.height = Variables.PhoneWidth * 2 / 5;
-                para.width = Variables.PhoneWidth;
-                holder.Image.setLayoutParams(para);
-
-                LongdingImage(holder.Image, itemPhoto.get(position).getImg());
-
-                holder.Image.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (itemPhoto.get(position).getJumpType().equals("1")) {
-                            Intent intent = new Intent(getActivity(), Search.class);
-                            intent.putExtra("content", itemPhoto.get(position).getName());
-                            intent.putExtra("title", itemPhoto.get(position).getName());
-                            intent.putExtra("point", Variables.point.getID());
-                            startActivity(intent);
-                        } else if (itemPhoto.get(position).getJumpType().equals("2")) {
-                            //跳转到web
-                            Intent intent = new Intent(getActivity(), WEB.class);
-                            intent.putExtra("title", itemPhoto.get(position).getName());
-                            intent.putExtra("url", itemPhoto.get(position).getUrl());
-                            startActivity(intent);
-                        } else {
-                            //跳转到商品详情
-                            Intent intent = new Intent(getActivity(), Goods_Particular.class);
-                            intent.putExtra("productId", itemPhoto.get(position).getProductid());
-                            startActivity(intent);
-                        }
-                    }
-                });
-
-            }
-
-            @Override
-            public void onBindFooterViewHolder(FootViewHolder holder, final int position) {
-
-                LinearLayout.LayoutParams para;
-                para = (LinearLayout.LayoutParams) holder.sales_image.getLayoutParams();
-                para.height = Variables.PhoneWidth * 5 / 6;
-                para.width = Variables.PhoneWidth;
-                holder.sales_image.setLayoutParams(para);
-
-                LongdingImage(holder.sales_image, activityPhoto.get(position).getActivityImg());
-
-                HorizontalAdapter horizontal = new HorizontalAdapter();
-                horizontal.addDate(activityPhoto.get(position).getProducts(), activityPhoto.get(position));
-
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                holder.sales_grad.setLayoutManager(linearLayoutManager);
-                holder.sales_grad.setAdapter(horizontal);
-                holder.sales_image.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), Campaign.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("campaign", activityPhoto.get(position));
-                        intent.putExtras(bundle);
+            public void SetOnGridClick(HomePhoto grid,int position) {
+                if (position == 0) {
+//                            Intent intent = new Intent(getActivity(), GroupMainActivity.class);
+//                            startActivity(intent);
+                    Toast.makeText(getActivity(), "团购正在升级中", Toast.LENGTH_SHORT).show();
+                } else if (position == 1) {
+                    if (Variables.my != null) {
+                        new_user();
+                    } else {
+                        Intent intent = new Intent(getActivity(), LoginBg.class);
                         startActivity(intent);
                     }
-                });
-
-                if (position == activityPhoto.size() - 1) {
-                    holder.sales_more.setVisibility(View.VISIBLE);
-                    holder.sales_more.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            MainActivity.classify.performClick();
-                        }
-                    });
+                } else if (position == 2) {
+                    if (Variables.my != null) {
+                        Intent intent = new Intent(getActivity(), GetCoupon.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(getActivity(), LoginBg.class);
+                        startActivity(intent);
+                    }
                 } else {
-                    holder.sales_more.setVisibility(View.GONE);
+                    if (Variables.my != null) {
+                        Intent intent = new Intent(getActivity(), Balance.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(getActivity(), LoginBg.class);
+                        startActivity(intent);
+                    }
                 }
             }
 
             @Override
-            public void onBindGridViewHolder(GridViewHolder holder, final int position) {
-
-                LinearLayout.LayoutParams para;
-                para = (LinearLayout.LayoutParams) holder.home_tab_image.getLayoutParams();
-                para.height = Variables.PhoneWidth / 12;
-                para.width = Variables.PhoneWidth / 12;
-                holder.home_tab_image.setLayoutParams(para);
-
-                LongdingImage(holder.home_tab_image, gridPhoto.get(position).getImg());
-
-                holder.home_tab_text.setText(gridPhoto.get(position).getName());
-                holder.home_tab_image.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (position == 0) {
-//                            Intent intent = new Intent(getActivity(), GroupMainActivity.class);
-//                            startActivity(intent);
-                            Toast.makeText(getActivity(), "团购正在升级中", Toast.LENGTH_SHORT).show();
-                        } else if (position == 1) {
-                            if (Variables.my != null) {
-                                new_user();
-                            } else {
-                                Intent intent = new Intent(getActivity(), LoginBg.class);
-                                startActivity(intent);
-                            }
-                        } else if (position == 2) {
-                            if (Variables.my != null) {
-                                Intent intent = new Intent(getActivity(), GetCoupon.class);
-                                startActivity(intent);
-                            } else {
-                                Intent intent = new Intent(getActivity(), LoginBg.class);
-                                startActivity(intent);
-                            }
-                        } else {
-                            if (Variables.my != null) {
-                                Intent intent = new Intent(getActivity(), Balance.class);
-                                startActivity(intent);
-                            } else {
-                                Intent intent = new Intent(getActivity(), LoginBg.class);
-                                startActivity(intent);
-                            }
-                        }
-                    }
-                });
-
+            public void SetOnItemClick(HomePhoto item) {
+                if (item.getJumpType().equals("1")) {
+                    Intent intent = new Intent(getActivity(), Search.class);
+                    intent.putExtra("content",item.getName());
+                    intent.putExtra("title",item.getName());
+                    intent.putExtra("point", Variables.point.getID());
+                    startActivity(intent);
+                } else if (item.getJumpType().equals("2")) {
+                    //跳转到web
+                    Intent intent = new Intent(getActivity(), WEB.class);
+                    intent.putExtra("title", item.getName());
+                    intent.putExtra("url",item.getUrl());
+                    startActivity(intent);
+                } else {
+                    //跳转到商品详情
+                    Intent intent = new Intent(getActivity(), Goods_Particular.class);
+                    intent.putExtra("productId", item.getProductid());
+                    startActivity(intent);
+                }
             }
 
             @Override
-            public int getHeadViewCount() {
-                return 1;
+            public void SetOnFootClick(FootPhoto foot) {
+                Intent intent = new Intent(getActivity(), Campaign.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("campaign",foot);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
 
             @Override
-            public int getGridViewCount() {
-                return gridPhoto.size();
+            public void SetOnLookClick() {
+                MainActivity.classify.performClick();
             }
-
-            @Override
-            public int getItemViewCount() {
-                return itemPhoto.size();
-            }
-
-            @Override
-            public int getFootViewCount() {
-                return activityPhoto.size();
-            }
-
-        };
-        homeAdaptr.notifyDataSetChanged();
-        rv.setAdapter(homeAdaptr);
+        });
 
         //滚动监听
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -383,84 +236,33 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
-
     }
 
-
-    class HeadViewHolder extends RecyclerView.ViewHolder {
-        SliderLayout slider;
-        PagerIndicator custom_indicator;
-        TextView home_notification;
-
-        public HeadViewHolder(View itemView) {
-            super(itemView);
-            slider = (SliderLayout) itemView.findViewById(R.id.slider);
-            custom_indicator = (PagerIndicator) itemView.findViewById(R.id.custom_indicator);
-            home_notification = (TextView) itemView.findViewById(R.id.home_notification);
+    public void setTopTitle() {
+        if (Variables.point == null) {
+            point_xUtils();
+        } else {
+            TimeStamp();
+            ALL_xUtils();
+            Foot_xUtils();
+            top_title.setText(Variables.point.getName());
         }
     }
 
-    class GridViewHolder extends RecyclerView.ViewHolder {
-        public ImageView home_tab_image;
-        public TextView home_tab_text;
+    public static boolean flag = false;
 
-        public GridViewHolder(View itemView) {
-            super(itemView);
-            home_tab_image = (ImageView) itemView.findViewById(R.id.home_tab_image);
-            home_tab_text = (TextView) itemView.findViewById(R.id.home_tab_text);
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (flag) {
+            flag = false;
+            setTopTitle();
         }
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-        public ImageView Image;
-
-        public ItemViewHolder(View itemView) {
-            super(itemView);
-            Image = (ImageView) itemView.findViewById(R.id.item_image);
-        }
-    }
-
-    class FootViewHolder extends RecyclerView.ViewHolder {
-        //        public TextView sales_title;
-        public ImageView sales_image;
-        public RecyclerView sales_grad;
-        public TextView sales_more;
-
-        public FootViewHolder(View itemView) {
-            super(itemView);
-//            sales_title = (TextView) itemView.findViewById(R.id.sales_title);
-            sales_image = (ImageView) itemView.findViewById(R.id.sales_image);
-            sales_grad = (RecyclerView) itemView.findViewById(R.id.sales_grad);
-            sales_more = (TextView) itemView.findViewById(R.id.sales_more);
-        }
-    }
-
-    //轮播图
-    private void initSlider(SliderLayout sliderShow, final List<HomePhoto> images) {
-
-        for (int i = 0; i < images.size(); i++) {
-            DefaultSliderView textSliderView = new DefaultSliderView(getActivity());
-            textSliderView.image(images.get(i).getImg());
-            final int finalI = i;
-            textSliderView.setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
-                @Override
-                public void onSliderClick(BaseSliderView slider) {
-                    if (images.get(finalI).getJumpType().equals("2")) {
-                        Intent intent = new Intent(getActivity(), WEB.class);
-                        intent.putExtra("title", images.get(finalI).getName());
-                        intent.putExtra("url", images.get(finalI).getUrl());
-                        startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(getActivity(), Search.class);
-                        intent.putExtra("content", images.get(finalI).getName());
-                        intent.putExtra("title", images.get(finalI).getName());
-                        intent.putExtra("point", Variables.point.getID());
-                        startActivity(intent);
-                    }
-                }
-            });
-            sliderShow.addSlider(textSliderView);
-        }
+    @Override
+    public void onRefresh() {
+        point_xUtils();
     }
 
 
@@ -510,8 +312,6 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                 if (!hasError && result != null) {
                     // 成功获取数据
                     FootJSON(result);
-                } else {
-                    success();
                 }
             }
         });
@@ -519,13 +319,11 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void FootJSON(String json) {
-        if (activityPhoto != null) {
-            activityPhoto.clear();
-        }
         try {
             JSONObject object = new JSONObject(json);
             String Ret = object.getString("Ret");
             if (Ret.equals("1")) {
+                List<FootPhoto> activityPhoto = new ArrayList<FootPhoto>();
                 JSONArray data = object.getJSONArray("Data");
                 for (int i = 0; i < data.length(); i++) {
                     JSONObject everyone = data.getJSONObject(i);
@@ -561,9 +359,8 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                     all.setProducts(small);
                     activityPhoto.add(all);
                 }
-                success();
-            } else {
-                success();
+                homeAdapter.addFoot(activityPhoto);
+                homeAdapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -588,6 +385,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void onSuccess(String result) {
                 // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
+                swipe_refresh.setRefreshing(false);
                 if (result != null) {
                     this.result = result;
                 }
@@ -619,8 +417,6 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                 if (!hasError && result != null) {
                     // 成功获取数据
                     ALL_JSON(result);
-                } else {
-                    success();
                 }
             }
         });
@@ -632,15 +428,9 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             String Ret = object.getString("Ret");
             if (Ret.equals("1")) {
 
-                if (viewpagerPhoto != null) {
-                    viewpagerPhoto.clear();
-                }
-                if (gridPhoto != null) {
-                    gridPhoto.clear();
-                }
-                if (itemPhoto != null) {
-                    itemPhoto.clear();
-                }
+                List<HomePhoto> viewpagerPhoto = new ArrayList<HomePhoto>();
+                final List<HomePhoto> gridPhoto = new ArrayList<HomePhoto>();
+                final List<HomePhoto> itemPhoto = new ArrayList<HomePhoto>();
 
                 JSONArray data = object.getJSONArray("Data");
                 for (int i = 0; i < data.length(); i++) {
@@ -668,35 +458,26 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                         itemPhoto.add(ever);
                     }
                 }
-                success();
-            } else {
-                success();
+
+                gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int position) {
+                        if (1 <= position && position <= gridPhoto.size()) {
+                            return 1;
+                        }
+                        return 4;
+                    }
+                });
+
+                homeAdapter.addBanner(viewpagerPhoto);
+                homeAdapter.addGrid(gridPhoto);
+                homeAdapter.addItem(itemPhoto);
+                homeAdapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-        }
-    }
-
-    int m;
-
-    private void success() {
-        m = m + 1;
-        if (m == 2) {
-            m = 0;
-
-            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                @Override
-                public int getSpanSize(int position) {
-                    if (1 <= position && position <= gridPhoto.size()) {
-                        return 1;
-                    }
-                    return 4;
-                }
-            });
-            swipe_refresh.setRefreshing(false);
-            SetMyAdapter(viewpagerPhoto, gridPhoto, itemPhoto, activityPhoto);
         }
     }
 
@@ -778,12 +559,8 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             point.setDeliveryPrice(everyone.getDouble("deliveryPrice"));
             point.setSendPrice(everyone.getDouble("sendPrice"));
             point.setFreePrice(everyone.getDouble("freePrice"));
-
             Variables.point = point;
-            Foot_xUtils();
-            ALL_xUtils();
-            TimeStamp();
-            top_title.setText(Variables.point.getName());
+            setTopTitle();
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -793,7 +570,6 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void new_user() {
-
         RequestParams params = new RequestParams(Variables.http_new_user);
         params.addBodyParameter("userid", Variables.my.getCustomerID());
         params.addBodyParameter("search", "新用户");
@@ -868,17 +644,6 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
         });
     }
 
-    private void LongdingImage(ImageView view, String http) {
-        ImageOptions imageOptions = new ImageOptions.Builder()
-                .setIgnoreGif(false)//是否忽略gif图。false表示不忽略。不写这句，默认是true
-                .setImageScaleType(ImageView.ScaleType.FIT_XY)
-                .setFailureDrawableId(R.mipmap.all_longding)
-                //设置使用缓存
-                .setUseMemCache(true)
-                .setLoadingDrawableId(R.mipmap.all_longding)
-                .build();
-        x.image().bind(view, http, imageOptions);
-    }
 
     private void TimeStamp() {
         RequestParams params = new RequestParams(Variables.http_time);

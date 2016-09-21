@@ -3,6 +3,7 @@ package com.example.lfy.myapplication.SubmitOrder;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +11,12 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,10 +48,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 /**
  * Created by lfy on 2016/6/14.
  */
-public class SubmitOrder extends AppCompatActivity implements View.OnClickListener {
+public class SubmitOrder extends SwipeBackActivity implements View.OnClickListener {
 
     ImageView submit_return;
     //地址
@@ -73,7 +78,6 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
     EditText submit_say;
 
     String time1 = null;
-    String time2 = null;
     String time_all = null;
 
     AddressBean Delivery = null;
@@ -100,11 +104,12 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
 
     boolean submit_goods = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Variables.setTranslucentStatus(this);
         setContentView(R.layout.submit_order);
+        Variables.setTranslucentStatus(this);
         initView();
         getCar_xUtils();
         address_xUtil();//请求地址
@@ -153,6 +158,21 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
         time_all = a + ":00";
         Log.d("我是截取的时间", a + "时-" + b + "时");
         submit_time_text.setText("期望明天" + time_all + "送达");
+        //透明状态栏下，让输入法不遮挡edittext控件
+        final ScrollView submit_order_scrollview = (ScrollView) findViewById(R.id.submit_order_scrollview);
+        final View decorView = getWindow().getDecorView();
+        decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect rect = new Rect();
+                decorView.getWindowVisibleDisplayFrame(rect);
+                int screenHeight = decorView.getRootView().getHeight();
+                int heightDifference = screenHeight - rect.bottom+20;//计算软键盘占有的高度  = 屏幕高度 - 视图可见高度
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) submit_order_scrollview.getLayoutParams();
+                layoutParams.setMargins(0, 0, 0, heightDifference);//设置ScrollView的marginBottom的值为软键盘占有的高度即可
+                submit_order_scrollview.requestLayout();
+            }
+        });
     }
 
     @Override
@@ -208,43 +228,27 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
 
                     View outerView = LayoutInflater.from(this).inflate(R.layout.wheel_view, null);
                     PickerView minute_pv = (PickerView) outerView.findViewById(R.id.minute_pv);
-                    PickerView second_pv = (PickerView) outerView.findViewById(R.id.second_pv);
                     List<String> data = new ArrayList<String>();
-                    List<String> seconds = new ArrayList<String>();
 
                     String str = Variables.point.getTime();
                     int a = Integer.parseInt(str.substring(0, str.indexOf(":"))) + 2;
                     int b = Integer.parseInt(str.substring(str.indexOf("-") + 1, str.lastIndexOf(":")));
 
                     time1 = a + "";
-                    time2 = "00";
 
                     for (int i = a; i < b; i++) {
                         data.add(i < 10 ? "0" + i : "" + i);
                     }
-                    for (int i = 0; i < 60; i++) {
-                        seconds.add(i < 10 ? "0" + i : "" + i);
-                    }
+
                     minute_pv.setData(data);
                     minute_pv.setOnSelectListener(new PickerView.onSelectListener() {
 
                         @Override
                         public void onSelect(String text) {
-                            Toast.makeText(SubmitOrder.this, "选择了 " + text + "时",
-                                    Toast.LENGTH_SHORT).show();
                             time1 = text;
                         }
                     });
-                    second_pv.setData(seconds);
-                    second_pv.setOnSelectListener(new PickerView.onSelectListener() {
 
-                        @Override
-                        public void onSelect(String text) {
-                            Toast.makeText(SubmitOrder.this, "选择了 " + text + " 分",
-                                    Toast.LENGTH_SHORT).show();
-                            time2 = text;
-                        }
-                    });
 
                     new AlertDialog.Builder(this)
                             .setTitle("选择配送时间")
@@ -252,7 +256,7 @@ public class SubmitOrder extends AppCompatActivity implements View.OnClickListen
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    time_all = time1 + ":" + time2;
+                                    time_all = time1 + ":00";
                                     submit_time_text.setText("期望明天" + time_all + "送达");
                                 }
                             })

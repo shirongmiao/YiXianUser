@@ -67,6 +67,7 @@ public class Set_up extends AppCompatActivity {
         set_up_clean = (TextView) findViewById(R.id.set_up_clean);
         dis_login = (TextView) findViewById(R.id.dis_login);
         //注销
+
         dis_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

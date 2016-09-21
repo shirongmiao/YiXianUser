@@ -79,7 +79,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
     List<HomePhoto> itemPhoto;
     List<FootPhoto> activityPhoto;
 
-    int totalDy;
+    int totalDy=0;
     GridLayoutManager gridLayoutManager;
 
     View view;
@@ -136,6 +136,33 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
+        //滚动监听
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                totalDy += dy;
+                Log.d("我是坐标", totalDy + "");
+                if (totalDy < 510) {
+                    activity_title.setAlpha((float) totalDy / 510);
+                } else {
+                    activity_title.setAlpha(1);
+                }
+                if (totalDy < 500) {
+                    search.setImageResource(R.mipmap.all_search_black);
+                    scan.setImageResource(R.mipmap.all_scan_black);
+                    top_title_down.setImageResource(R.mipmap.home_down);
+                    top_title.setTextColor(Color.BLACK);
+                } else {
+                    search.setImageResource(R.mipmap.all_search);
+                    scan.setImageResource(R.mipmap.all_scan);
+                    top_title_down.setImageResource(R.mipmap.home_down_white);
+                    top_title.setTextColor(Color.WHITE);
+                }
+
+            }
+        });
+
     }
 
     public void setTopTitle() {
@@ -147,7 +174,6 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             ALL_xUtils();
             TimeStamp();
             top_title.setText(Variables.point.getName());
-            totalDy = 0;
         }
     }
 
@@ -355,35 +381,6 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
         };
         homeAdaptr.notifyDataSetChanged();
         rv.setAdapter(homeAdaptr);
-
-        //滚动监听
-        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                totalDy += dy;
-                Log.d("我是坐标", totalDy + "");
-                if (totalDy < 510) {
-                    activity_title.setAlpha((float) totalDy / 510);
-                } else {
-                    activity_title.setAlpha(1);
-                }
-                if (totalDy < 500) {
-                    search.setImageResource(R.mipmap.all_search_black);
-                    scan.setImageResource(R.mipmap.all_scan_black);
-                    top_title_down.setImageResource(R.mipmap.home_down);
-                    top_title.setTextColor(Color.BLACK);
-                } else {
-                    search.setImageResource(R.mipmap.all_search);
-                    scan.setImageResource(R.mipmap.all_scan);
-                    top_title_down.setImageResource(R.mipmap.home_down_white);
-                    top_title.setTextColor(Color.WHITE);
-                }
-
-            }
-        });
-
-
     }
 
 

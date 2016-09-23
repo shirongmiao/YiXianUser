@@ -38,9 +38,10 @@ public class Set_up extends AppCompatActivity {
     private static final String PASSWORD = "password";
     TextView dis_login;
     TextView set_up_clean;
-    LinearLayout about_our;
+    LinearLayout about_our, dis_login_view;
     ImageView return_all;
     UserInfo userInfo;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,13 +66,18 @@ public class Set_up extends AppCompatActivity {
             }
         });
         set_up_clean = (TextView) findViewById(R.id.set_up_clean);
+        dis_login_view = (LinearLayout) findViewById(R.id.dis_login_view);
+
+        if (Variables.my != null) {
+            dis_login_view.setVisibility(View.VISIBLE);
+        }
         dis_login = (TextView) findViewById(R.id.dis_login);
         //注销
 
         dis_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Variables.my!=null){
+                if (Variables.my != null) {
                     Logout_xUtils();
                 }
             }
@@ -101,8 +107,10 @@ public class Set_up extends AppCompatActivity {
     }
 
 
-    /** * 清除本应用所有的数据 * * @param context * @param filepath */
-    public  void cleanApplicationData(Context context) {
+    /**
+     * 清除本应用所有的数据 * * @param context * @param filepath
+     */
+    public void cleanApplicationData(Context context) {
         cleanInternalCache(context);
         cleanExternalCache(context);
         cleanFiles(context);
@@ -110,19 +118,22 @@ public class Set_up extends AppCompatActivity {
     }
 
 
-    public  void cleanInternalCache(Context context) {
+    public void cleanInternalCache(Context context) {
         deleteFilesByDirectory(context.getCacheDir());
     }
 
-    /** * 清除/data/data/com.xxx.xxx/files下的内容 * * @param context */
-    public  void cleanFiles(Context context) {
+    /**
+     * 清除/data/data/com.xxx.xxx/files下的内容 * * @param context
+     */
+    public void cleanFiles(Context context) {
         deleteFilesByDirectory(context.getFilesDir());
     }
+
     /**
      * * 清除外部cache下的内容(/mnt/sdcard/android/data/com.xxx.xxx/cache) * * @param
      * context
      */
-    public  void cleanExternalCache(Context context) {
+    public void cleanExternalCache(Context context) {
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
             deleteFilesByDirectory(context.getExternalCacheDir());
@@ -137,6 +148,7 @@ public class Set_up extends AppCompatActivity {
             }
         }
     }
+
     //登录
     private void Logout_xUtils() {
 
@@ -189,7 +201,7 @@ public class Set_up extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         String Msg = jsonObject.getString("Msg");
-                        if (Msg.equals("注销成功")){
+                        if (Msg.equals("注销成功")) {
                             Variables.my = null;
                             userInfo.setUserInfo(PASSWORD, "");
                             Variables.count = 0;

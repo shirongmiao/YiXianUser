@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.Build;
 import android.util.Base64;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.lfy.myapplication.Bean.HomePoint;
@@ -353,6 +357,23 @@ public class Variables {
     private static String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis())
                 : type + System.currentTimeMillis();
+    }
+
+    //计算软键盘高度
+    public static void ScrollViewUtils(final ScrollView scrollView, final View decorView) {
+
+        decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect rect = new Rect();
+                decorView.getWindowVisibleDisplayFrame(rect);
+                int screenHeight = decorView.getRootView().getHeight();
+                int heightDifference = screenHeight - rect.bottom + 20;//计算软键盘占有的高度  = 屏幕高度 - 视图可见高度
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
+                layoutParams.setMargins(0, 0, 0, heightDifference);//设置ScrollView的marginBottom的值为软键盘占有的高度即可
+                scrollView.requestLayout();
+            }
+        });
     }
 
 }

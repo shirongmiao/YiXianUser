@@ -161,6 +161,7 @@ public class PingLun extends AppCompatActivity implements View.OnClickListener {
             item.setProductName(goods.get(i).getTitle());
             item.setImage(goods.get(i).getImage());
             item.setProductId(goods.get(i).getProductID());
+            item.setType3(goods.get(i).getType3());
             item.setStar(5);
             evaluateItems.add(item);
         }
@@ -284,6 +285,7 @@ public class PingLun extends AppCompatActivity implements View.OnClickListener {
                 item.put("productId", evaluateItem.getProductId());
                 item.put("Image", evaluateItem.getImage());
                 item.put("Star", evaluateItem.getStar());
+                item.put("Type3", evaluateItem.getType3());
                 if (evaluateItem.getEvaluateText().equals("")) {
                     evaluateItem.setEvaluateText("东西很不错，购买方便，好评");
                 }

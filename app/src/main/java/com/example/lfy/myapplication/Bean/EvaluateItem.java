@@ -9,6 +9,15 @@ public class EvaluateItem {
     private String productId;
     private float Star;
     private String Image;
+    private String type3;
+
+    public String getType3() {
+        return type3;
+    }
+
+    public void setType3(String type3) {
+        this.type3 = type3;
+    }
 
     public String getProductName() {
         return productName;

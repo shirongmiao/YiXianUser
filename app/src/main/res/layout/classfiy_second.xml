@@ -6,8 +6,15 @@
     android:orientation="vertical">
 
     <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/green"></FrameLayout>
+
+    <FrameLayout
         android:id="@+id/classify_fragment"
-        style="@style/FragmentTop">
+        style="@style/FragmentTop"
+        android:layout_height="44dp"
+        android:paddingTop="0dp">
 
         <TextView
             android:id="@+id/classify_title"
@@ -26,66 +33,74 @@
 
     </FrameLayout>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="37dp"
-        zhy:tabIndicatorColor="@color/green"
-        zhy:tabIndicatorHeight="3dp"
-        zhy:tabSelectedTextColor="@color/green"
-        zhy:tabTextColor="@color/huiseziti" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_grey"></View>
-
     <LinearLayout
-        android:id="@+id/classify_sort"
+        android:id="@+id/classify_tool"
         android:layout_width="match_parent"
-        android:layout_height="32dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/orderby1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/actionsheet_single_selector"
-            android:clickable="true"
-            android:gravity="center"
-            android:textSize="12sp" />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            zhy:tabIndicatorColor="@color/green"
+            zhy:tabIndicatorHeight="3dp"
+            zhy:tabSelectedTextColor="@color/green"
+            zhy:tabTextColor="@color/huiseziti" />
 
-        <TextView
-            android:id="@+id/orderby2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/actionsheet_single_selector"
-            android:gravity="center"
-            android:textSize="12sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line_grey"></View>
 
-        <TextView
-            android:id="@+id/orderby3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/actionsheet_single_selector"
-            android:gravity="center"
-            android:textSize="12sp" />
+        <LinearLayout
+            android:id="@+id/classify_sort"
+            android:layout_width="match_parent"
+            android:layout_height="32dp">
 
-        <TextView
-            android:id="@+id/orderby4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/actionsheet_single_selector"
-            android:gravity="center"
-            android:text="切换分类"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/orderby1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/actionsheet_single_selector"
+                android:clickable="true"
+                android:gravity="center"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderby2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/actionsheet_single_selector"
+                android:gravity="center"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderby3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/actionsheet_single_selector"
+                android:gravity="center"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderby4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/actionsheet_single_selector"
+                android:gravity="center"
+                android:text="切换分类"
+                android:textSize="12sp" />
+        </LinearLayout>
     </LinearLayout>
 
 
     <RelativeLayout
+        android:id="@+id/classify_viewpager_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -109,12 +124,12 @@
 
         <View
             android:id="@+id/home_car_red"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginRight="18dp"></View>
+            android:layout_marginBottom="22dp"
+            android:layout_marginRight="25dp"></View>
     </RelativeLayout>
 
 </LinearLayout>

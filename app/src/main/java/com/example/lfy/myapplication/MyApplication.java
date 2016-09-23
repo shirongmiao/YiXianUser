@@ -1,24 +1,12 @@
 package com.example.lfy.myapplication;
 
 import android.app.Application;
-import android.widget.Toast;
+import android.util.Log;
 
-import com.example.lfy.myapplication.Bean.HomePoint;
-import com.example.lfy.myapplication.Util.UserInfo;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.ex.HttpException;
-import org.xutils.http.RequestParams;
 import org.xutils.x;
-
-import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by wyouflf on 15/10/28.
@@ -32,6 +20,26 @@ public class MyApplication extends Application {
         super.onCreate();
         context = this;
         x.Ext.init(this);//Xutils初始化
+
+        umeng();
+    }
+
+    private void umeng() {
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        //注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent.register(new IUmengRegisterCallback() {
+
+            @Override
+            public void onSuccess(String deviceToken) {
+                //注册成功会返回device token
+                Log.d("我是友盟", deviceToken);
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+
+            }
+        });
     }
 
     //返回

@@ -45,6 +45,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="57a00a7e67e58e86b2002a55">
+        </meta-data>
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="b432f68f8a0f194f63fe70f564f920d1">
+        </meta-data>
+
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="LgU0k3EEymdYTDk2CUb8D80yG8hqOiuZ" />

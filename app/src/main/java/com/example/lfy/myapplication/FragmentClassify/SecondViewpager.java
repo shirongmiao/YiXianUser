@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +58,7 @@ import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 /**
  * Created by lfy on 2016/6/6.
  */
-public class SecondViewpager extends SwipeBackActivity implements View.OnClickListener, Animation.AnimationListener {
+public class SecondViewpager extends SwipeBackActivity implements View.OnClickListener {
 
     private ViewPager mViewPager;
     VpSimpleFragment fragment;
@@ -68,9 +70,9 @@ public class SecondViewpager extends SwipeBackActivity implements View.OnClickLi
     GridPhoto gridPhoto;
     List<GridPhoto> all_gridPhoto;
 
-    TextView orderby1;
-    TextView orderby2;
-    TextView orderby3;
+    RadioButton orderby1;
+    RadioButton orderby2;
+    RadioButton orderby3;
     TextView orderby4;
 
     ImageView secondViewpager;
@@ -78,8 +80,6 @@ public class SecondViewpager extends SwipeBackActivity implements View.OnClickLi
     View home_car_red;
     public static BadgeView bv;
 
-    LinearLayout classify_tool;
-    RelativeLayout classify_viewpager_container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,108 +117,6 @@ public class SecondViewpager extends SwipeBackActivity implements View.OnClickLi
         bv.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.ITALIC));
     }
 
-    private boolean mIsTitleHide = false;
-    private boolean mIsAnim = false;
-    private float lastX = 0;
-    private float lastY = 0;
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        super.dispatchTouchEvent(event);
-        if (mIsAnim) {
-            return false;
-        }
-        final int action = event.getAction();
-
-        float x = event.getX();
-        float y = event.getY();
-
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                lastY = y;
-                lastX = x;
-                return false;
-            case MotionEvent.ACTION_MOVE:
-                float dY = Math.abs(y - lastY);
-                float dX = Math.abs(x - lastX);
-                boolean down = y > lastY ? true : false;
-                lastY = y;
-                lastX = x;
-                if (dX < 8 && dY > 8 && !mIsTitleHide && !down) {
-                    Animation anim = AnimationUtils.loadAnimation(
-                            SecondViewpager.this, R.anim.push_top_in);
-//              anim.setFillAfter(true);
-                    anim.setAnimationListener(SecondViewpager.this);
-                    classify_fragment.startAnimation(anim);
-                    classify_tool.startAnimation(anim);
-//                    classify_viewpager_container.setAnimation(anim);
-                } else if (dX < 8 && dY > 8 && mIsTitleHide && down) {
-                    Animation anim = AnimationUtils.loadAnimation(
-                            SecondViewpager.this, R.anim.push_top_out);
-//              anim.setFillAfter(true);
-                    anim.setAnimationListener(SecondViewpager.this);
-                    classify_fragment.startAnimation(anim);
-                    classify_tool.startAnimation(anim);
-//                    classify_viewpager_container.setAnimation(anim);
-                } else {
-                    return false;
-                }
-                mIsTitleHide = !mIsTitleHide;
-                mIsAnim = true;
-                break;
-            default:
-                return false;
-        }
-        return false;
-    }
-
-    @Override
-    public void onAnimationEnd(Animation animation) {
-        // TODO Auto-generated method stub
-        if (mIsTitleHide) {
-            classify_fragment.setVisibility(View.GONE);
-        } else {
-
-        }
-        mIsAnim = false;
-    }
-
-    @Override
-    public void onAnimationRepeat(Animation animation) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onAnimationStart(Animation animation) {
-        // TODO Auto-generated method stub
-        classify_fragment.setVisibility(View.VISIBLE);
-        if (mIsTitleHide) {
-            //上拉隐藏标题栏
-            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) classify_viewpager_container
-                    .getLayoutParams();
-            lp.setMargins(0, 0, 0, 0);
-            classify_viewpager_container.setLayoutParams(lp);
-            RelativeLayout.LayoutParams lp_ViewPager = (RelativeLayout.LayoutParams) mViewPager
-                    .getLayoutParams();
-            lp_ViewPager.setMargins(0, 0, 0, 0);
-            mViewPager.setLayoutParams(lp_ViewPager);
-        } else {
-            //下拉显示标题栏
-            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) classify_fragment
-                    .getLayoutParams();
-            lp.setMargins(0, 0, 0, 0);
-            classify_fragment.setLayoutParams(lp);
-            LinearLayout.LayoutParams lp1 = (LinearLayout.LayoutParams) classify_viewpager_container
-                    .getLayoutParams();
-            lp1.setMargins(0,
-                    0,
-                    0, 0);
-            classify_viewpager_container.setLayoutParams(lp1);
-
-        }
-    }
-
     private void OnRefresh(GridPhoto typename) {
 
         OrderBy_xUtils();//请求排序方式
@@ -253,11 +151,12 @@ public class SecondViewpager extends SwipeBackActivity implements View.OnClickLi
         };
         mViewPager.setAdapter(mAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        if (orderby.size() < 5) {
-            tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        } else {
+
+//        if (orderby.size() < 4) {
+//            tabLayout.setTabMode(TabLayout.MODE_FIXED);
+//        } else {
             tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        }
+//        }
         tabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -271,9 +170,9 @@ public class SecondViewpager extends SwipeBackActivity implements View.OnClickLi
 
         secondViewpager = (ImageView) findViewById(R.id.secondViewpager);
         second_return = (ImageView) findViewById(R.id.second_return);
-        orderby1 = (TextView) findViewById(R.id.orderby1);
-        orderby2 = (TextView) findViewById(R.id.orderby2);
-        orderby3 = (TextView) findViewById(R.id.orderby3);
+        orderby1 = (RadioButton) findViewById(R.id.orderby1);
+        orderby2 = (RadioButton) findViewById(R.id.orderby2);
+        orderby3 = (RadioButton) findViewById(R.id.orderby3);
         orderby4 = (TextView) findViewById(R.id.orderby4);
         second_return.setOnClickListener(this);
         secondViewpager.setOnClickListener(this);
@@ -282,8 +181,6 @@ public class SecondViewpager extends SwipeBackActivity implements View.OnClickLi
         orderby2.setOnClickListener(this);
         orderby3.setOnClickListener(this);
         orderby4.setOnClickListener(this);
-        classify_tool = (LinearLayout) findViewById(R.id.classify_tool);
-        classify_viewpager_container = (RelativeLayout) findViewById(R.id.classify_viewpager_container);
     }
 
 

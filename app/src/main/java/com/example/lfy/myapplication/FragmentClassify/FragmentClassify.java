@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +105,9 @@ public class FragmentClassify extends Fragment implements SwipeRefreshLayout.OnR
 //        // 默认缓存存活时间, 单位:毫秒.(如果服务没有返回有效的max-age或Expires)
 
         RequestParams params = new RequestParams(Variables.first_type);
+        params.addBodyParameter("pointId", Variables.point.getID());
 //        params.addBodyParameter("point", Variables.point.getID());
+        Log.d("xUtils", params.toString());
         params.setCacheMaxAge(1000 * 60);
         Callback.Cancelable cancelable
                 // 使用CacheCallback, xUtils将为该请求缓存数据.
@@ -184,8 +187,8 @@ public class FragmentClassify extends Fragment implements SwipeRefreshLayout.OnR
                     GridPhoto ever = new GridPhoto();
 
                     ever.setType1(everyone.getString("Type1"));
-                    ever.setTypeName1(everyone.getString("Typename1"));
-                    String img = everyone.getString("img");
+                    ever.setTypeName1(everyone.getString("TypeName1"));
+                    String img = everyone.getString("img1");
                     ever.setImage("http://www.baifenxian.com/" + java.net.URLEncoder.encode(img, "UTF-8"));
                     ever.setShowType(everyone.getInt("ShowType"));
                     type.add(ever);

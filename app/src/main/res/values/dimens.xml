@@ -86,5 +86,7 @@
     <dimen name="size37">37dp</dimen>
     <dimen name="size38">38dp</dimen>
     <dimen name="size39">39dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
 </resources>

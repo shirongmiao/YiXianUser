@@ -4,10 +4,7 @@
     android:id="@+id/card_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="1dp"
-    android:layout_marginLeft="2dp"
-    android:layout_marginRight="2dp"
-    android:layout_marginTop="1dp"
+    android:layout_margin="3dp"
     app:cardCornerRadius="2dp"
     app:elevation="1dp">
 
@@ -30,8 +27,8 @@
             <TextView
                 android:id="@+id/second_content"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:singleLine="true"
                 android:text="我是商品名称品名称"
                 android:textSize="15sp" />
@@ -80,8 +77,8 @@
             android:layout_margin="5dp"
             android:background="@drawable/all_add_car_select"
             android:text="立即购买"
-            android:textSize="12sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <TextView

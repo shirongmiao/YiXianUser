@@ -52,7 +52,7 @@ public class Variables {
     // //2.0首页分类商品显示
     public static String foot_photo = www + "product/GetHomeProduct?" + com;
     //yi ji fen lei
-    public static String first_type = www + "product/GetType1?" + com;
+    public static String first_type = www + "product/GetType1_2?" + com;
     //er ji fen lei
     // http://api.baifenxian.com/product/SelectProductList?
     // token=9c565b08-7428-47f5-bd18-0cc2a80949db&

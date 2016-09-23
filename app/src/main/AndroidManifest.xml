@@ -335,6 +335,10 @@
         <activity
             android:name=".GoodsParticular.EvaluateList"
             android:theme="@style/AppTheme.NoActionBar.SwapBack" />
+        <activity
+            android:name=".FragmentClassify.SecondViewpager2"
+            android:label="@string/title_activity_second_viewpager2"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

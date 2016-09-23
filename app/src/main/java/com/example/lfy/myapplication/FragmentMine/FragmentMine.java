@@ -105,7 +105,7 @@ public class FragmentMine extends Fragment implements View.OnClickListener {
         super.onResume();
         if (Variables.my != null) {
             login_name.setVisibility(View.VISIBLE);
-            login_name.setText(Variables.my.getUserName());
+            login_name.setText(Variables.my.getCustomerName());
             login_text.setVisibility(View.GONE);
             my_money.setVisibility(View.VISIBLE);
             select_money();

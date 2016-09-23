@@ -184,6 +184,7 @@ public class SecondViewpager extends SwipeBackActivity implements View.OnClickLi
     private void SecondMenu_xUtils(String type) {
         RequestParams params = new RequestParams(Variables.second_type);
         params.addBodyParameter("type1", type);
+        params.addBodyParameter("pointId", Variables.point.getID());
         params.setCacheMaxAge(1000 * 60);
         x.http().get(params, new Callback.CacheCallback<String>() {
             private boolean hasError = false;
@@ -357,7 +358,6 @@ public class SecondViewpager extends SwipeBackActivity implements View.OnClickLi
                 break;
             case R.id.orderby4:
                 initPopupWindowView(all_gridPhoto, orderby4);
-                Log.d("我是分类", all_gridPhoto.toString());
                 break;
             case R.id.shop_car:
                 if (Variables.my != null) {

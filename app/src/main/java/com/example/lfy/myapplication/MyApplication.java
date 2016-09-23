@@ -25,10 +25,17 @@ import java.util.Date;
  */
 public class MyApplication extends Application {
 
+    private static MyApplication context;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        context = this;
         x.Ext.init(this);//Xutils初始化
+    }
+
+    //返回
+    public static MyApplication getContext() {
+        return context;
     }
 }

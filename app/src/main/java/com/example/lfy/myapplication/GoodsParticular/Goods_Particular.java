@@ -26,6 +26,7 @@ import com.example.lfy.myapplication.Bean.GoodsBean;
 import com.example.lfy.myapplication.FragmentCar.Shop_Car;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.BadgeView;
+import com.example.lfy.myapplication.Util.ToastUtils;
 import com.example.lfy.myapplication.Util.dialog_widget.ActionSheetDialog;
 import com.example.lfy.myapplication.Variables;
 import com.example.lfy.myapplication.user_login.Login;
@@ -214,6 +215,7 @@ public class Goods_Particular extends SwipeBackActivity implements View.OnClickL
                     intent_car.setEnabled(false);
                     intent_car.setBackgroundResource(R.color.huiseziti);
                 }
+
                 break;
             case R.id.add_car:
                 if (Variables.point.getState().equals("1")) {
@@ -522,6 +524,7 @@ public class Goods_Particular extends SwipeBackActivity implements View.OnClickL
             public void onError(Throwable ex, boolean isOnCallback) {
                 hasError = true;
                 Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                ToastUtils.showToast("网络请求失败");
                 if (ex instanceof HttpException) { // 网络错误
                     HttpException httpEx = (HttpException) ex;
                     int responseCode = httpEx.getCode();
@@ -535,7 +538,6 @@ public class Goods_Particular extends SwipeBackActivity implements View.OnClickL
 
             @Override
             public void onCancelled(CancelledException cex) {
-                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -592,7 +594,6 @@ public class Goods_Particular extends SwipeBackActivity implements View.OnClickL
 
             @Override
             public void onCancelled(CancelledException cex) {
-                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -602,13 +603,11 @@ public class Goods_Particular extends SwipeBackActivity implements View.OnClickL
                     mine_favorite.setClickable(true);
                     try {
                         JSONObject object = new JSONObject(result);
-                        Log.d("我是返回的json", result);
                         String Ret = object.getString("Ret");
                         if (Ret.equals("1")) {
                             JSONArray data = object.getJSONArray("Data");
                             for (int i = 0; i < data.length(); i++) {
                                 JSONObject everyone = data.getJSONObject(i);
-                                Log.d("收藏", everyone.toString());
                                 if (productId.equals(everyone.getString("ProductID"))) {
                                     mine_favorite.setChecked(true);
                                     break;
@@ -619,7 +618,7 @@ public class Goods_Particular extends SwipeBackActivity implements View.OnClickL
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(Goods_Particular.this, "加入失败，请重新尝试", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast("加入失败，请重新尝试");
                 }
             }
         });
@@ -651,7 +650,7 @@ public class Goods_Particular extends SwipeBackActivity implements View.OnClickL
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 hasError = true;
-//                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                ToastUtils.showToast("网络请求失败");
                 if (ex instanceof HttpException) { // 网络错误
                     HttpException httpEx = (HttpException) ex;
                     int responseCode = httpEx.getCode();
@@ -665,7 +664,6 @@ public class Goods_Particular extends SwipeBackActivity implements View.OnClickL
 
             @Override
             public void onCancelled(CancelledException cex) {
-                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -674,7 +672,7 @@ public class Goods_Particular extends SwipeBackActivity implements View.OnClickL
                     // 成功获取数据
                     JSON_EvaluateCount(result);
                 } else {
-                    Toast.makeText(Goods_Particular.this, "获取评价信息失败", Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToast("获取评价信息失败");
                 }
             }
         });

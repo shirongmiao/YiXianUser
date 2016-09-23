@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.lfy.myapplication.Bean.GridPhoto;
 import com.example.lfy.myapplication.GoodsParticular.Goods_Particular;
 import com.example.lfy.myapplication.R;
+import com.example.lfy.myapplication.Util.ToastUtils;
 import com.example.lfy.myapplication.Variables;
 import com.example.lfy.myapplication.user_login.LoginBg;
 
@@ -276,7 +277,9 @@ public class VpSimpleFragment extends Fragment {
                     // 成功获取数据
                     Variables.count = Variables.count + 1;
                     SecondViewpager.bv.setBadgeCount(Variables.count);
-                    Toast.makeText(x.app(), "加入成功", Toast.LENGTH_LONG).show();
+                    ToastUtils.showToast("加入成功", true);
+                }else {
+                    ToastUtils.showToast("加入失败", true);
                 }
             }
         });

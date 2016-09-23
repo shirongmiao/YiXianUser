@@ -34,8 +34,10 @@ import com.example.lfy.myapplication.FragmentMine.balance.Balance;
 import com.example.lfy.myapplication.GoodsParticular.Goods_Particular;
 import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
+import com.example.lfy.myapplication.Util.EmptyRecyclerView;
 import com.example.lfy.myapplication.Util.UserInfo;
 import com.example.lfy.myapplication.Variables;
+import com.example.lfy.myapplication.splash.Wifi;
 import com.example.lfy.myapplication.user_login.LoginBg;
 
 import org.json.JSONArray;
@@ -44,7 +46,6 @@ import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
-import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
 import java.io.UnsupportedEncodingException;
@@ -59,7 +60,9 @@ import java.util.List;
 public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     HomeAdapter homeAdapter;
+
     private RecyclerView rv;
+
     TextView top_title;
     FrameLayout activity_title;
     LinearLayout into_point;
@@ -297,7 +300,8 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                     String errorResult = httpEx.getResult();
                     // ...
                 } else { // 其他错误
-                    // ...
+                    homeAdapter.addFoot(null);
+                    homeAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -393,6 +397,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 hasError = true;
+                swipe_refresh.setRefreshing(false);
                 Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
                 if (ex instanceof HttpException) { // 网络错误
                     HttpException httpEx = (HttpException) ex;
@@ -416,6 +421,11 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                 if (!hasError && result != null) {
                     // 成功获取数据
                     ALL_JSON(result);
+                } else {
+                    homeAdapter.addBanner(null);
+                    homeAdapter.addGrid(null);
+                    homeAdapter.addItem(null);
+                    homeAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -486,7 +496,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
         a = a + 1;
         if (a == 2) {
             a = 0;
-            homeAdapter.lastPosition=-1;
+            homeAdapter.lastPosition = -1;
             homeAdapter.notifyDataSetChanged();
         }
     }
@@ -518,6 +528,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 hasError = true;
+                swipe_refresh.setRefreshing(false);
                 Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
                 if (ex instanceof HttpException) { // 网络错误
                     HttpException httpEx = (HttpException) ex;
@@ -540,6 +551,11 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                 if (!hasError && result != null) {
                     // 成功获取数据
                     Point_JSON(result);
+                } else {
+                    Intent intent = new Intent(getActivity(), Wifi.class);
+                    intent.putExtra("from", "second");
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
@@ -571,7 +587,6 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             point.setFreePrice(everyone.getDouble("freePrice"));
             Variables.point = point;
             setTopTitle();
-
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -721,6 +736,8 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    Variables.point.setState("0");
                 }
             }
         });

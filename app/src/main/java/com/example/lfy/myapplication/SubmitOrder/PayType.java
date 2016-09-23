@@ -16,6 +16,7 @@ import com.example.lfy.myapplication.Bean.GridPhoto;
 import com.example.lfy.myapplication.GoodsParticular.Goods_Particular;
 import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
+import com.example.lfy.myapplication.Util.ToastUtils;
 import com.example.lfy.myapplication.Variables;
 
 import org.json.JSONArray;
@@ -242,7 +243,7 @@ public class PayType extends AppCompatActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 hasError = true;
-                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(x.app(), "服务器奔溃啦！", Toast.LENGTH_LONG).show();
                 if (ex instanceof HttpException) { // 网络错误
                     HttpException httpEx = (HttpException) ex;
                     int responseCode = httpEx.getCode();
@@ -263,7 +264,7 @@ public class PayType extends AppCompatActivity {
             public void onFinished() {
                 if (!hasError && result != null) {
                     // 成功获取数据
-                    Toast.makeText(x.app(), "加入成功", Toast.LENGTH_LONG).show();
+                    ToastUtils.showToast("加入成功", true);
 //                    setUpdate();
                     Variables.count++;
                 }

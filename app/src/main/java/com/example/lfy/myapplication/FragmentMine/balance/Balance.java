@@ -441,7 +441,7 @@ public class Balance extends SwipeBackActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 hasError = true;
-                Toast.makeText(x.app(), "请检查网络", Toast.LENGTH_LONG).show();
+                Toast.makeText(x.app(), "网络奔溃了！", Toast.LENGTH_LONG).show();
             }
 
             @Override

@@ -175,6 +175,7 @@ public class Search extends AppCompatActivity {
             String Ret = object.getString("Ret");
             if (Ret.equals("0")) {
                 Log.d("我没查到商品", "------------");
+
                 Dialog dialog = new AlertDialog.Builder(Search.this)
                         .setMessage("本店没有您要的商品，我们会继续努力的")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {

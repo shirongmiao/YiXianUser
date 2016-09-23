@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.lfy.myapplication.Bean.GridPhoto;
 import com.example.lfy.myapplication.FragmentHome.search.Search;
 import com.example.lfy.myapplication.R;
+import com.example.lfy.myapplication.Util.ToastUtils;
 import com.example.lfy.myapplication.Variables;
 import com.example.lfy.myapplication.user_login.LoginBg;
 
@@ -45,7 +46,7 @@ public class Collection_Adapter extends RecyclerView.Adapter<Collection_Adapter.
 
     /**
      * 直接添加  不需要 new 构造器
-     * <p/>
+     * <p>
      * * @param datas
      */
     public void addDatas(List<GridPhoto> datas, String from) {
@@ -88,7 +89,7 @@ public class Collection_Adapter extends RecyclerView.Adapter<Collection_Adapter.
                     }
                 }
             });
-        }else {
+        } else {
             holder.add.setEnabled(true);
             holder.add.setBackgroundResource(R.drawable.round_hollow_down);
         }
@@ -189,16 +190,17 @@ public class Collection_Adapter extends RecyclerView.Adapter<Collection_Adapter.
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         int Ret = jsonObject.getInt("Ret");
-                        if (Ret == 0) {
-                            Toast.makeText(x.app(), jsonObject.getString("Msg"), Toast.LENGTH_LONG).show();
-                        } else {
+                        if (Ret == 1) {
                             Variables.count = Variables.count + 1;
+                            ToastUtils.showToast("加入成功", true);
                             if (from.equals("Collection")) {
                                 Collection.bv.setBadgeCount(Variables.count);
                             } else {
                                 Search.bv.setBadgeCount(Variables.count);
                             }
 
+                        } else {
+                            Toast.makeText(x.app(), jsonObject.getString("Msg"), Toast.LENGTH_LONG).show();
                         }
 
                     } catch (JSONException e) {

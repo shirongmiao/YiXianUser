@@ -21,6 +21,7 @@ import com.example.lfy.myapplication.FragmentCar.Shop_Car;
 import com.example.lfy.myapplication.GoodsParticular.Goods_Particular;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.BadgeView;
+import com.example.lfy.myapplication.Util.ToastUtils;
 import com.example.lfy.myapplication.Variables;
 import com.example.lfy.myapplication.user_login.LoginBg;
 
@@ -285,7 +286,7 @@ public class Campaign extends AppCompatActivity {
             public void onFinished() {
                 if (!hasError && result != null) {
                     // 成功获取数据
-                    Toast.makeText(x.app(), "加入成功", Toast.LENGTH_LONG).show();
+                    ToastUtils.showToast("加入成功", true);
                     try {
                         JSONObject jsonObject = new JSONObject(result);
                         int Ret = jsonObject.getInt("Ret");

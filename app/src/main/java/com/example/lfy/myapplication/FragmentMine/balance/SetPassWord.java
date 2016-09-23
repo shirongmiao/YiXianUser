@@ -28,6 +28,7 @@ import org.xutils.x;
 public class SetPassWord extends AppCompatActivity {
     ImageView new_return;
     PasswordInputView password2;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,10 +51,12 @@ public class SetPassWord extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     // 此处为得到焦点时的处理内容
-                    password1.setBackgroundColor(Color.GRAY);
+                    password1.setBackgroundColor(Color.WHITE);
+                    password1.setBorderColor(Color.RED);
                 } else {
                     // 此处为失去焦点时的处理内容
                     password1.setBackgroundColor(Color.WHITE);
+                    password1.setBorderColor(Color.GRAY);
                 }
             }
         });
@@ -64,10 +67,12 @@ public class SetPassWord extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     // 此处为得到焦点时的处理内容
-                    password2.setBackgroundColor(Color.GRAY);
+                    password2.setBackgroundColor(Color.WHITE);
+                    password2.setBorderColor(Color.RED);
                 } else {
                     // 此处为失去焦点时的处理内容
                     password2.setBackgroundColor(Color.WHITE);
+                    password2.setBorderColor(Color.GRAY);
                 }
             }
         });
@@ -91,6 +96,7 @@ public class SetPassWord extends AppCompatActivity {
 
     TextWatcher mTextWatcher = new TextWatcher() {
         private CharSequence temp;
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             // TODO Auto-generated method stub
@@ -98,14 +104,14 @@ public class SetPassWord extends AppCompatActivity {
         }
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             // TODO Auto-generated method stub
 //			mTextView.setText(s);//将输入的内容实时显示
         }
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (temp.length() ==6) {
+            if (temp.length() == 6) {
                 // 获取编辑框焦点
                 password2.setFocusable(true);
                 password2.setFocusableInTouchMode(true);

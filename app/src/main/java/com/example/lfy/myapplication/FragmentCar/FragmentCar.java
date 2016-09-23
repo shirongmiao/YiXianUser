@@ -26,6 +26,7 @@ import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.SubmitOrder.SubmitOrder;
 import com.example.lfy.myapplication.Util.EmptyRecyclerView;
+import com.example.lfy.myapplication.Util.ToastUtils;
 import com.example.lfy.myapplication.Variables;
 import com.example.lfy.myapplication.user_login.LoginBg;
 
@@ -421,7 +422,8 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 hasError = true;
-                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(x.app(), "服务器奔溃啦！", Toast.LENGTH_LONG).show();
+
                 if (ex instanceof HttpException) { // 网络错误
                     HttpException httpEx = (HttpException) ex;
                     int responseCode = httpEx.getCode();
@@ -586,7 +588,7 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 hasError = true;
-                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(x.app(), "服务器奔溃啦！", Toast.LENGTH_LONG).show();
                 if (ex instanceof HttpException) { // 网络错误
                     HttpException httpEx = (HttpException) ex;
                     int responseCode = httpEx.getCode();
@@ -607,7 +609,7 @@ public class FragmentCar extends Fragment implements View.OnClickListener {
             public void onFinished() {
                 if (!hasError && result != null) {
                     // 成功获取数据
-                    Toast.makeText(x.app(), "加入成功", Toast.LENGTH_LONG).show();
+                    ToastUtils.showToast("加入成功", true);
                     setUpdate();
                 }
             }

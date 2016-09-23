@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="W:\Android_yixian\YiXianGit\PushSDK\assets"/><source path="W:\Android_yixian\YiXianGit\PushSDK\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="W:\Android_yixian\YiXianGit\PushSDK\build-types\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\Documents\GitHub\YiXianUser\PushSDK\assets"/><source path="D:\Documents\GitHub\YiXianUser\PushSDK\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="D:\Documents\GitHub\YiXianUser\PushSDK\build-types\release\assets"/></dataSet></merger>

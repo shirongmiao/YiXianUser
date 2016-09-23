@@ -67,12 +67,14 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.activityPhoto = activityPhoto;
     }
 
-    public void addNull(){
+    public void addNull() {
         viewpagerPhoto = null;
         gridPhoto = null;
         itemPhoto = null;
         activityPhoto = null;
-    };
+    }
+
+    ;
 
     public OnItemClickListen Listen;
 
@@ -178,7 +180,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         c = itemPhoto == null ? 0 : itemPhoto.size();
         d = activityPhoto == null ? 0 : activityPhoto.size();
 
-        return a + b + c + d + 1;
+        return a + b + c + d + (viewpagerPhoto == null || itemPhoto == null ||
+                itemPhoto == null || activityPhoto == null ? 0 : 1);
     }
 
     //item1 的ViewHolder
@@ -322,7 +325,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void binding5(RecyclerView.ViewHolder holder) {
-        if (getItemCount()==1){
+        if (getItemCount() == 1) {
             ((Item5ViewHolder) holder).itemView.setVisibility(View.INVISIBLE);
         }
         ((Item5ViewHolder) holder).itemView.setOnClickListener(new OnClickEvent() {

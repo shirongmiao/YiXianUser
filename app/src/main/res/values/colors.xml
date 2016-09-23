@@ -35,6 +35,8 @@
     <color name="logincolor">#44000000</color>
     <!-- 透明 -->
     <color name="car_grey">#aa8e8e93</color>
+    <!-- 透明黑-->
+    <color name="alpha_black">#cc000000</color>
     <!-- 苹果橙 -->
     <!-- 扫码-->
     <color name="scan">#888e8e93</color>

@@ -81,7 +81,6 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
         FindView();
         SetView();
         setTopTitle();
-
         return view;
     }
 

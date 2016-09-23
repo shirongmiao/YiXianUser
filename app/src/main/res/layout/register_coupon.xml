@@ -37,13 +37,13 @@
 
         <TextView
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_marginTop="20dp"
-            android:textSize="18dp"
+            android:gravity="center"
             android:text="恭喜你!\n您已成为一鲜用户\n优惠卷已发至您的账户"
             android:textColor="@color/white"
-            android:layout_height="wrap_content" />
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/register_dialog_look"
@@ -51,7 +51,8 @@
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/edittext"
+            android:background="@drawable/all_add_car_select"
+            android:textColor="@color/white"
             android:text="立即查看"></Button>
     </FrameLayout>
 

@@ -103,7 +103,7 @@ public class SubmitOrder extends SwipeBackActivity implements View.OnClickListen
     String from;
 
     boolean submit_goods = false;
-
+    ScrollView submit_order_scrollview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,20 +159,9 @@ public class SubmitOrder extends SwipeBackActivity implements View.OnClickListen
         Log.d("我是截取的时间", a + "时-" + b + "时");
         submit_time_text.setText("期望明天" + time_all + "送达");
         //透明状态栏下，让输入法不遮挡edittext控件
-        final ScrollView submit_order_scrollview = (ScrollView) findViewById(R.id.submit_order_scrollview);
-        final View decorView = getWindow().getDecorView();
-        decorView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                Rect rect = new Rect();
-                decorView.getWindowVisibleDisplayFrame(rect);
-                int screenHeight = decorView.getRootView().getHeight();
-                int heightDifference = screenHeight - rect.bottom+20;//计算软键盘占有的高度  = 屏幕高度 - 视图可见高度
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) submit_order_scrollview.getLayoutParams();
-                layoutParams.setMargins(0, 0, 0, heightDifference);//设置ScrollView的marginBottom的值为软键盘占有的高度即可
-                submit_order_scrollview.requestLayout();
-            }
-        });
+        submit_order_scrollview = (ScrollView) findViewById(R.id.submit_order_scrollview);
+        View decorView = getWindow().getDecorView();
+        Variables.ScrollViewUtils(submit_order_scrollview, decorView);
     }
 
     @Override

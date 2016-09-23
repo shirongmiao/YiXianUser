@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,13 +59,14 @@ public class Register extends AppCompatActivity {
     Button register_but;
     Button register_send;
     CheckBox checkbos_sure;
-    FrameLayout register_all;
+    LinearLayout register_all;
 
     int test;
 
     String new_phone;
 
     ImageView register_return;
+    ScrollView register_scrollview;
 
     private UserInfo userInfo;
 
@@ -73,6 +76,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_register);
+        Variables.setTranslucentStatus(this);
         userInfo = new UserInfo(this);
         initView();
         time = new TimeCount(60000, 1000);//构造CountDownTimer对象
@@ -80,8 +84,12 @@ public class Register extends AppCompatActivity {
     }
 
     private void initView() {
+        register_scrollview = (ScrollView) findViewById(R.id.register_scrollview);
+        View decorView = getWindow().getDecorView();
+        Variables.ScrollViewUtils(register_scrollview, decorView);
+
         register_return = (ImageView) findViewById(R.id.register_return);
-        register_all = (FrameLayout) findViewById(R.id.register_all);
+        register_all = (LinearLayout) findViewById(R.id.register_all);
         register_send = (Button) findViewById(R.id.register_send);
 
         register_send.setBackgroundResource(R.drawable.round_hollow);

@@ -629,6 +629,7 @@ public class Goods_Particular extends SwipeBackActivity implements View.OnClickL
 
         RequestParams params = new RequestParams(Variables.EvaluateCount);
         params.addBodyParameter("productId", productId);
+        Log.d("评价列表", params.toString());
         x.http().post(params, new Callback.CacheCallback<String>() {
             private boolean hasError = false;
             private String result = null;

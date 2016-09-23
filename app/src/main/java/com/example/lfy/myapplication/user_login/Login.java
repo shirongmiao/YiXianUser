@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,13 +50,14 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     TextView login_register;
     TextView login_forget;
     ImageView login_return;
-
-    FrameLayout login_all;
+    ScrollView scro;
+    LinearLayout login_all;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Variables.setTranslucentStatus(this);
         setContentView(R.layout.login_every);
         instance = this;
         userInfo = new UserInfo(this);
@@ -89,7 +92,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         login_forget = (TextView) findViewById(R.id.login_forget);
         login_return = (ImageView) findViewById(R.id.login_return);
         login_register = (TextView) findViewById(R.id.login_register);
-        login_all = (FrameLayout) findViewById(R.id.login_all);
+        login_all = (LinearLayout) findViewById(R.id.login_all);
         login_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -103,6 +106,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         login_register.setOnClickListener(this);
         login_return.setOnClickListener(this);
         login_forget.setOnClickListener(this);
+        scro = (ScrollView) findViewById(R.id.scro);
+        View decorView = getWindow().getDecorView();
+        Variables.ScrollViewUtils(scro, decorView);
     }
 
 

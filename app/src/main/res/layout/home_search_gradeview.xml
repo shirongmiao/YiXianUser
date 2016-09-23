@@ -3,12 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        style="@style/FragmentTop">
+    <FrameLayout style="@style/FragmentTop">
 
         <TextView
             android:id="@+id/fragment_baokuan"
-          style="@style/Center"
+            style="@style/Center"
             android:text="商品信息" />
 
         <ImageView
@@ -26,8 +25,8 @@
         android:id="@+id/fab_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_margin="25dp"
         android:background="@drawable/round_car"
         android:padding="10dp"
@@ -35,12 +34,12 @@
 
     <View
         android:id="@+id/home_car_red"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="25dp"
-        android:layout_marginRight="18dp"></View>
+        android:layout_marginBottom="21dp"
+        android:layout_marginRight="25dp"></View>
 
 
 </RelativeLayout>

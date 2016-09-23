@@ -507,6 +507,7 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
         RequestParams params = new RequestParams(Variables.http_getPoint);
         params.addBodyParameter("pointid", point);
         params.setCacheMaxAge(10000 * 60);
+        Log.d("params", params.toString());
         x.http().get(params, new Callback.CacheCallback<String>() {
             private boolean hasError = false;
             private String result = null;

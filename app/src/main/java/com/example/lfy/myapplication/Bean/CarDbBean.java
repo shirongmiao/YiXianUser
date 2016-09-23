@@ -52,11 +52,22 @@ public class CarDbBean implements Serializable {
     @Column(name = "Type1")
     private String Type1;
 
+    @Column(name = "Type3")
+    private String Type3;
+
     @Column(name = "TypeName1")
     private String TypeName1;
 
     @Column(name = "point")
     private String point;
+
+    public String getType3() {
+        return Type3;
+    }
+
+    public void setType3(String type3) {
+        Type3 = type3;
+    }
 
     public double getCost() {
         return Cost;

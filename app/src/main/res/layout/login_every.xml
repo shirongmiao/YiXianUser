@@ -1,14 +1,14 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/login_all"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/header"
         style="@style/FragmentTop"
-        android:layout_height="@dimen/top_width"
-        android:background="@null"
-        android:paddingTop="0dp">
+        android:layout_height="64dp"
+        android:background="@null">
 
         <ImageView
             android:id="@+id/login_return"
@@ -25,7 +25,7 @@
     <ScrollView
         android:id="@+id/scro"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:paddingLeft="35dp"
@@ -34,7 +34,9 @@
         <LinearLayout
             android:id="@+id/loginPanel"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="40dp"
             android:orientation="vertical">
 
             <EditText
@@ -102,4 +104,4 @@
         </LinearLayout>
     </ScrollView>
 
-</FrameLayout>
+</LinearLayout>

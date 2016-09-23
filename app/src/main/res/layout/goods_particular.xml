@@ -291,8 +291,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="3dp"
-        android:layout_marginTop="26dp"></View>
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="32dp"></View>
 
 
     <LinearLayout

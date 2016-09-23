@@ -38,7 +38,7 @@ public class VpSimpleFragment extends Fragment {
     public static final String BUNDLE_TITLE = "title";
     private String mTitle = "1";
     SecondAdapter secondAdapter;
-    RecyclerView classify_recyclerView;
+    public RecyclerView classify_recyclerView;
 
     SecondViewpager secondMenu;
 

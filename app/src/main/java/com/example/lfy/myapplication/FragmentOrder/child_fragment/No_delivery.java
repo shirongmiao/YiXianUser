@@ -244,6 +244,7 @@ public class No_delivery extends Fragment implements SwipeRefreshLayout.OnRefres
                 carDbBean.setStandard(everyone.getString("Standard"));
                 carDbBean.setTitle(everyone.getString("Title"));
                 carDbBean.setType1(everyone.getString("Type1"));
+                carDbBean.setType3(everyone.getString("Type3"));
 //                carDbBean.setTypeName1(everyone.getString("TypeName1"));
                 carDbBean.setPoint(everyone.getString("point"));
                 carDbBean.setCost(everyone.getDouble("Cost"));

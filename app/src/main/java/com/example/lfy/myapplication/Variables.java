@@ -64,7 +64,7 @@ public class Variables {
     public static String second_orderby = www + "product/GetProductOrderBy?" + com;
 
     //获取二级分类
-    public static String second_type = www + "product/GetProductType2?" + com;
+    public static String second_type = www + "product/GetProductType2_2?" + com;
     //获取版本信息
     public static String http_version = www + "home/UpdateVersion?" + com;
     //提货点的详细信息

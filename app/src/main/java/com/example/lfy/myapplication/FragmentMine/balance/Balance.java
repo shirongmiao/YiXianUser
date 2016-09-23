@@ -117,8 +117,13 @@ public class Balance extends SwipeBackActivity {
         password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Balance.this, ForgetBalancePwd.class);
-                startActivity(intent);
+                if (flag) {
+                    Intent intent = new Intent(Balance.this, ForgetBalancePwd.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(Balance.this, SetPassWord.class);
+                    startActivity(intent);
+                }
             }
         });
 

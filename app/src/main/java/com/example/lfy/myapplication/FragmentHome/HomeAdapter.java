@@ -67,6 +67,13 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.activityPhoto = activityPhoto;
     }
 
+    public void addNull(){
+        viewpagerPhoto = null;
+        gridPhoto = null;
+        itemPhoto = null;
+        activityPhoto = null;
+    };
+
     public OnItemClickListen Listen;
 
     public void setOnItemClickListen(OnItemClickListen Listen) {
@@ -315,7 +322,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void binding5(RecyclerView.ViewHolder holder) {
-//        ((Item5ViewHolder) holder).Image.setImageResource(R.mipmap.login_bg);
+        if (getItemCount()==1){
+            ((Item5ViewHolder) holder).itemView.setVisibility(View.INVISIBLE);
+        }
         ((Item5ViewHolder) holder).itemView.setOnClickListener(new OnClickEvent() {
             @Override
             public void singleClick(View v) {

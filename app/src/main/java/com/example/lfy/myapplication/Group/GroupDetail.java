@@ -35,8 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDetail extends AppCompatActivity {
-    ImageView group_detail_image, group_detail_return, group_Detail_photo, group_detail_groupingimg;
-    TextView group_detail_share, group_detail_createtime, group_detail_title, group_detail_content, group_detail_price, group_detail_personnum, group_detail_phone;
+    ImageView group_detail_share, group_detail_image, group_detail_return, group_Detail_photo, group_detail_groupingimg;
+    TextView group_detail_createtime, group_detail_title, group_detail_content, group_detail_price, group_detail_personnum, group_detail_phone;
     GroupOrder groupOrder;
     RecyclerView group_detail_photorv;
     int IsSingleBuy;
@@ -106,7 +106,7 @@ public class GroupDetail extends AppCompatActivity {
         //拼团标志图片
         group_detail_groupingimg = (ImageView) findViewById(R.id.group_detail_groupingimg);
         //分享按钮
-        group_detail_share = (TextView) findViewById(R.id.group_detail_share);
+        group_detail_share = (ImageView) findViewById(R.id.group_detail_share);
     }
 
     //设置本地信息
@@ -302,8 +302,8 @@ public class GroupDetail extends AppCompatActivity {
                     //设置团长信息
                     setPhoneNumber(group_detail_phone, groupOrders.get(0).getPhoneNameber());
                     String str = groupOrders.get(0).getCreateTime();
-                    str = str.replace("T"," ");
-                    str = str.substring(0,str.lastIndexOf("."));
+                    str = str.replace("T", " ");
+                    str = str.substring(0, str.lastIndexOf("."));
                     group_detail_createtime.setText(str + "开团");
                     String liu = groupOrders.get(0).getImage();
                     if (liu.equals("none")) {

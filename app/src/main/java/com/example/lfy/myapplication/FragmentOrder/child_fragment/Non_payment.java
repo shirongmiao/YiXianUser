@@ -277,13 +277,16 @@ public class Non_payment extends Fragment implements SwipeRefreshLayout.OnRefres
                         order.setDelivery(point.getString("Delivery"));
                         order.setAddress(point.getString("Address"));
                         order.setDeliveryTime(point.getString("DeliveryTime"));
-                        
+
                         date.add(order);//全部订单
                         ProductStr.add(json(order.getProductStr()));
                     }
                 }
                 MyAdapter(date, ProductStr);
 
+            } else {
+                order_adapter.Clear();
+                order_adapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -291,7 +294,7 @@ public class Non_payment extends Fragment implements SwipeRefreshLayout.OnRefres
     }
 
     private List<CarDbBean> json(String order_str) {
-        Log.d("我是未付款", "订单页面的json" + order_str);
+        Log.d("我是未付款", "订单页面--的json" + order_str);
         List<CarDbBean> Product = new ArrayList<>();
         try {
             JSONArray jsonArr = new JSONArray(order_str);
@@ -318,7 +321,6 @@ public class Non_payment extends Fragment implements SwipeRefreshLayout.OnRefres
 //                carDbBean.setTypeName1(everyone.getString("TypeName1"));
                 carDbBean.setPoint(everyone.getString("point"));
                 carDbBean.setCost(everyone.getDouble("Cost"));
-
                 Product.add(carDbBean);
             }
 

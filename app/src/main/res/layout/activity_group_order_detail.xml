@@ -19,7 +19,8 @@
             style="@style/Center"
             android:text="团购订单详情" />
 
-        <ImageView style="@style/Right" />
+        <ImageView style="@style/Right"
+            android:src="@mipmap/share3"/>
     </FrameLayout>
 
     <ScrollView
@@ -34,23 +35,36 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="#e4e4e4"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="5dp">
 
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="match_parent"
-                    android:background="#f95300"></View>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:text="商品详情"
-                    android:textSize="16sp" />
+                    android:text="订单编号:"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/group_order_orderno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="997887322195"
+                    android:textColor="#1d1d1d"
+                    android:textSize="15sp" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/line_grey"></View>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -63,12 +77,13 @@
                     android:layout_alignParentStart="true"
                     android:layout_margin="5dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/testa" />
+                    android:src="@mipmap/all_logo" />
 
                 <TextView
                     android:id="@+id/group_order_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/group_order_image"
                     android:ellipsize="end"
@@ -82,10 +97,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/group_order_title"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_toRightOf="@id/group_order_image"
                     android:ellipsize="end"
                     android:lines="2"
-                    android:text="【直降3元】泰国椰皇4个42.9元【感受泰国舌尖上的风情】"
+                    android:text="泰国·单果越400g·椰汁浓郁醇香"
                     android:textSize="14sp" />
 
                 <TextView
@@ -94,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@id/group_order_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="5dp"
                     android:text="￥"
                     android:textColor="@color/actionsheet_red" />
 
@@ -109,40 +126,120 @@
                     android:textSize="25sp" />
             </RelativeLayout>
 
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="#e4e4e4"
-                android:orientation="horizontal">
+                android:layout_height="8dp"
+                android:background="@color/line_grey"></View>
 
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="match_parent"
-                    android:background="#f95300"></View>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:text="配送详情"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:text="商品金额:"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/group_order_goodprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="￥42.00"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="优惠券:"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/group_order_coupon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="￥- 2.00"
+                    android:textColor="@color/actionsheet_red"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="配送费:"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/group_order_sendprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="￥0.00"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="应付总额:"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/group_order_finalprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="￥40.00"
+                    android:textColor="@color/actionsheet_red"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/line_grey"></View>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="15dp"
                 android:paddingLeft="16dp"
-                android:paddingTop="15dp">
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="收货人"
+                    android:text="收货人:"
                     android:textColor="#666666"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/group_order_customernameandphone"
@@ -150,30 +247,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
                     android:textColor="#1d1d1d"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="#e4e4e4"></View>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="15dp"
                 android:paddingLeft="16dp"
-                android:paddingTop="15dp">
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="收货地址"
+                    android:text="收货地址:"
                     android:textColor="#666666"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/group_order_address"
@@ -181,30 +271,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
                     android:textColor="#1d1d1d"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="#e4e4e4"></View>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="15dp"
                 android:paddingLeft="16dp"
-                android:paddingTop="15dp">
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="服务站"
+                    android:text="服务站:"
                     android:textColor="#666666"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/group_order_point"
@@ -212,30 +295,24 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
                     android:textColor="#1d1d1d"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="#e4e4e4"></View>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="15dp"
                 android:paddingLeft="16dp"
-                android:paddingTop="15dp">
+                android:paddingRight="16dp"
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="服务站长"
+                    android:text="服务站长:"
                     android:textColor="#666666"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/group_order_point_phone"
@@ -243,83 +320,30 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
                     android:textColor="#1d1d1d"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:id="@+id/group_order_detail_phoneimg"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="25dp"
                     android:src="@mipmap/phone" />
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="#e4e4e4"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="6dp"
-                    android:layout_height="match_parent"
-                    android:background="#f95300"></View>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:text="订单信息"
-                    android:textSize="16sp" />
-            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="15dp"
                 android:paddingLeft="16dp"
-                android:paddingTop="15dp">
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="订单编号"
+                    android:text="订单时间:"
                     android:textColor="#666666"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/group_order_orderno"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="80dp"
-                    android:text="997887322195"
-                    android:textColor="#1d1d1d"
-                    android:textSize="16sp" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="#e4e4e4"></View>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="15dp"
-                android:paddingLeft="16dp"
-                android:paddingTop="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="订单时间"
-                    android:textColor="#666666"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/group_order_createtime"
@@ -328,15 +352,9 @@
                     android:layout_marginLeft="80dp"
                     android:text="2016-07-31 11:55:11"
                     android:textColor="#1d1d1d"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="#e4e4e4"></View>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -344,14 +362,14 @@
                 android:orientation="horizontal"
                 android:paddingBottom="15dp"
                 android:paddingLeft="16dp"
-                android:paddingTop="15dp">
+                android:paddingTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="支付方式"
+                    android:text="支付方式:"
                     android:textColor="#666666"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -359,7 +377,7 @@
                     android:layout_marginLeft="80dp"
                     android:text="在线支付"
                     android:textColor="#1d1d1d"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
             </RelativeLayout>
         </LinearLayout>
 

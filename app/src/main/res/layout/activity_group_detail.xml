@@ -19,15 +19,10 @@
             style="@style/Center"
             android:text="团购详情" />
 
-        <TextView
+        <ImageView
             android:id="@+id/group_detail_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center"
-            android:layout_marginRight="@dimen/left_left_margin"
-            android:padding="@dimen/left_padding"
-            android:text="分享"
-            android:textColor="@color/white" />
+            style="@style/Right"
+            android:src="@mipmap/share3" />
     </FrameLayout>
 
     <RelativeLayout
@@ -47,40 +42,46 @@
             android:id="@+id/group_detail_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/group_detail_image"
+            android:ellipsize="end"
+            android:lines="2"
             android:text="【直降3元】泰国椰皇4个42.9元【感受泰国舌尖上的风情】"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/group_detail_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/group_detail_title"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/group_detail_image"
-            android:text="【直降3元】泰国椰皇4个42.9元【感受泰国舌尖上的风情】"
+            android:text="泰国·单果越400g·椰汁浓郁醇香"
             android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/group_detail_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/group_detail_view"
-            android:layout_alignParentRight="true"
-            android:layout_margin="5dp"
-            android:text="42.00"
-            android:textColor="@color/actionsheet_red"
-            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/groupdetail_rmb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/group_detail_price"
-            android:layout_toLeftOf="@id/group_detail_price"
+            android:layout_above="@+id/group_detail_view"
+            android:layout_toRightOf="@id/group_detail_image"
             android:text="￥"
             android:textColor="@color/actionsheet_red" />
+
+        <TextView
+            android:id="@+id/group_detail_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/groupdetail_rmb"
+            android:layout_margin="5dp"
+            android:layout_toRightOf="@id/groupdetail_rmb"
+            android:text="42.00"
+            android:textColor="@color/actionsheet_red"
+            android:textSize="25sp" />
+
 
         <ImageView
             android:id="@+id/group_detail_groupingimg"
@@ -88,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@id/group_detail_price"
-            android:layout_marginRight="40dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="-65dp"
             android:src="@mipmap/grouping" />
 
@@ -105,14 +106,40 @@
             android:layout_below="@id/group_detail_view"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/group_detail_personnum"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:text="3人团"
-                android:textSize="18sp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/group_detail_personnum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="3人团"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:text="剩余时间"
+                    android:textColor="@color/green"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/groupnear_item_countdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/group_countdowntime"
+                    android:text="20:20:20"
+                    android:textColor="@color/green"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

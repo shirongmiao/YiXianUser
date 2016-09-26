@@ -242,11 +242,11 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
                     if (submit_goods) {
                         if (Delivery != null) {
                             if (IsSingleBuy == 2) {
-                                joinTuan(groupGoods.getSinglePrice(), "alipay");
+                                joinTuan(groupGoods.getSinglePrice(), "wx");
                             } else if (IsSingleBuy == 1) {
-                                sure(groupGoods.getSinglePrice(), "alipay");
+                                sure(groupGoods.getSinglePrice(), "wx");
                             } else {
-                                sure(groupGoods.getTuanPrice(), "alipay");
+                                sure(groupGoods.getTuanPrice(), "wx");
                             }
 
                             flag = false;
@@ -498,7 +498,7 @@ public class GroupSubmitOrder extends AppCompatActivity implements View.OnClickL
 
     private void charge_xUtil(String orderno, String pay, double PayPrice) {
 
-        double payprice = PayPrice *100;
+        double payprice = PayPrice /10;
 
         RequestParams params = new RequestParams(Variables.hava_change);
         params.addBodyParameter("orderno", orderno);

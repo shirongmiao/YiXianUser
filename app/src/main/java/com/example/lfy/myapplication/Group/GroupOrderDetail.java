@@ -84,7 +84,7 @@ public class GroupOrderDetail extends AppCompatActivity {
         group_order_content.setText(groupOrder.getPlace() + "-" + groupOrder.getStandard());
         group_order_orderno.setText(groupOrder.getOrderNO());
         String str = groupOrder.getCreateTime();
-        str = str.replace("T", "");
+        str = str.replace("T", " ");
         str = str.substring(0, str.lastIndexOf("."));
         group_order_createtime.setText(str);
         if (groupOrder.getIsSingleBuy() == 1) {

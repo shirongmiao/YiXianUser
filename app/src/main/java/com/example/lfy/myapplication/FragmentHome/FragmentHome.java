@@ -32,6 +32,7 @@ import com.example.lfy.myapplication.FragmentHome.search.Search;
 import com.example.lfy.myapplication.FragmentHome.search.Search_edit;
 import com.example.lfy.myapplication.FragmentMine.balance.Balance;
 import com.example.lfy.myapplication.GoodsParticular.Goods_Particular;
+import com.example.lfy.myapplication.Group.GroupMainActivity;
 import com.example.lfy.myapplication.MainActivity;
 import com.example.lfy.myapplication.R;
 import com.example.lfy.myapplication.Util.EmptyRecyclerView;
@@ -144,9 +145,9 @@ public class FragmentHome extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void SetOnGridClick(HomePhoto grid, int position) {
                 if (position == 0) {
-//                            Intent intent = new Intent(getActivity(), GroupMainActivity.class);
-//                            startActivity(intent);
-                    Toast.makeText(getActivity(), "团购正在升级中", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), GroupMainActivity.class);
+                    startActivity(intent);
+//                    Toast.makeText(getActivity(), "团购正在升级中", Toast.LENGTH_SHORT).show();
                 } else if (position == 1) {
                     if (Variables.my != null) {
                         new_user();

@@ -130,61 +130,66 @@ public class GroupNear extends Fragment implements SwipeRefreshLayout.OnRefreshL
 
     //type=1按时间，type=2按进度，刚进来默认按进度
     private void Near_xUtils(int type) {
-        RequestParams params = new RequestParams(Variables.GetTuanOrderByPoint);
-        params.addBodyParameter("point", Variables.point.getID());
-        params.addBodyParameter("type", type + "");
-        params.addBodyParameter("customerId", Variables.my.getCustomerID());
-        Log.d("获取附近的团", params.toString());
-        x.http().get(params, new Callback.CacheCallback<String>() {
-            private boolean hasError = false;
-            private String result = null;
+        if (Variables.my == null) {
+            Toast.makeText(getActivity(), "请先登录", Toast.LENGTH_SHORT).show();
+        } else {
+            RequestParams params = new RequestParams(Variables.GetTuanOrderByPoint);
+            params.addBodyParameter("point", Variables.point.getID());
+            params.addBodyParameter("type", type + "");
+            params.addBodyParameter("customerId", Variables.my.getCustomerID());
+            Log.d("获取附近的团", params.toString());
+            x.http().get(params, new Callback.CacheCallback<String>() {
+                private boolean hasError = false;
+                private String result = null;
 
-            @Override
-            public void onSuccess(String result) {
-                // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
-                if (result != null) {
-                    this.result = result;
+                @Override
+                public void onSuccess(String result) {
+                    // 注意: 如果服务返回304 或 onCache 选择了信任缓存, 这时result为null.
+                    if (result != null) {
+                        this.result = result;
+                    }
                 }
-            }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                hasError = true;
-                Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
-                if (ex instanceof HttpException) { // 网络错误
-                    HttpException httpEx = (HttpException) ex;
-                    int responseCode = httpEx.getCode();
-                    String responseMsg = httpEx.getMessage();
-                    String errorResult = httpEx.getResult();
-                    // ...
-                } else { // 其他错误
-                    // ...
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    hasError = true;
+                    Toast.makeText(x.app(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                    if (ex instanceof HttpException) { // 网络错误
+                        HttpException httpEx = (HttpException) ex;
+                        int responseCode = httpEx.getCode();
+                        String responseMsg = httpEx.getMessage();
+                        String errorResult = httpEx.getResult();
+                        // ...
+                    } else { // 其他错误
+                        // ...
 
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(CancelledException cex) {
-                Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
-            }
+                @Override
+                public void onCancelled(CancelledException cex) {
+                    Toast.makeText(x.app(), "cancelled", Toast.LENGTH_LONG).show();
+                }
 
-            @Override
-            public void onFinished() {
-                if (!hasError && result != null) {
-                    // 成功获取数据
-                    Near_JSON(result);
-                } else {
+                @Override
+                public void onFinished() {
+                    if (!hasError && result != null) {
+                        // 成功获取数据
+                        Near_JSON(result);
+                    } else {
 //                    success();
+                    }
+                    sw.setRefreshing(false);
                 }
-                sw.setRefreshing(false);
-            }
 
-            @Override
-            public boolean onCache(String result) {
-                this.result = result;
-                return false; // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
-            }
-        });
+                @Override
+                public boolean onCache(String result) {
+                    this.result = result;
+                    return false; // true: 信任缓存数据, 不在发起网络请求; false不信任缓存数据.
+                }
+            });
+        }
+
     }
 
 

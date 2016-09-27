@@ -23,7 +23,7 @@
                 android:text="拼团中" />
 
             <View
-                android:layout_width="@dimen/size1"
+                android:layout_width="@dimen/size0"
                 android:layout_height="match_parent"
                 android:background="@color/car_grey"></View>
 
@@ -33,7 +33,7 @@
                 android:text="团购成功" />
 
             <View
-                android:layout_width="@dimen/size1"
+                android:layout_width="@dimen/size0"
                 android:layout_height="match_parent"
                 android:background="@color/car_grey"></View>
 
@@ -43,7 +43,7 @@
                 android:text="团购失败" />
 
             <View
-                android:layout_width="@dimen/size1"
+                android:layout_width="@dimen/size0"
                 android:layout_height="match_parent"
                 android:background="@color/car_grey"></View>
 

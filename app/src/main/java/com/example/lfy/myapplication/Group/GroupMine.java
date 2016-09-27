@@ -285,6 +285,7 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
                         }
                     };
                     holder.cd.start();
+                    holder.groupmine_item_tv.setVisibility(View.VISIBLE);
                     break;
                 case 1:
                     holder.groupmine_item_state.setText(rb_groupsuccess.getText());
@@ -292,13 +293,15 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     holder.groupmine_item_price.setText(groupOrders.get(position).getTuanPrice() + "");
                     holder.groupmine_item_order.setVisibility(View.VISIBLE);
                     holder.groupmine_item_countdown.setVisibility(View.GONE);
+                    holder.groupmine_item_tv.setVisibility(View.GONE);
                     break;
                 case 2:
                     holder.groupmine_item_state.setText(rb_groupfalse.getText());
-                    holder.groupmine_item_state.setTextColor(getResources().getColor(R.color.text_orgin));
+                    holder.groupmine_item_state.setTextColor(getResources().getColor(R.color.line_grey));
                     holder.groupmine_item_price.setText(groupOrders.get(position).getTuanPrice() + "");
                     holder.groupmine_item_order.setVisibility(View.GONE);
                     holder.groupmine_item_countdown.setVisibility(View.GONE);
+                    holder.groupmine_item_tv.setVisibility(View.GONE);
                     break;
                 case 3:
                     holder.groupmine_item_state.setText(rb_singlebuy.getText());
@@ -306,6 +309,7 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
                     holder.groupmine_item_price.setText(groupOrders.get(position).getSinglePrice() + "");
                     holder.groupmine_item_order.setVisibility(View.VISIBLE);
                     holder.groupmine_item_countdown.setVisibility(View.GONE);
+                    holder.groupmine_item_tv.setVisibility(View.GONE);
                     break;
             }
         }
@@ -333,6 +337,7 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
         class MyViewHolder extends RecyclerView.ViewHolder {
             TextView groupmine_item_countdown, groupmine_item_order, groupmine_item_group, groupmine_item_title, groupmine_item_price, groupmine_item_state;
             ImageView groupmine_item_image;
+            TextView groupmine_item_tv;
             CountDownTimer cd = null;
 
             public MyViewHolder(View itemView) {
@@ -344,6 +349,7 @@ public class GroupMine extends Fragment implements SwipeRefreshLayout.OnRefreshL
                 groupmine_item_price = (TextView) itemView.findViewById(R.id.groupmine_item_price);
                 groupmine_item_state = (TextView) itemView.findViewById(R.id.groupmine_item_state);
                 groupmine_item_countdown = (TextView) itemView.findViewById(R.id.groupmine_item_countdown);
+                groupmine_item_tv = (TextView) itemView.findViewById(R.id.groupmine_item_tv);
             }
         }
     }

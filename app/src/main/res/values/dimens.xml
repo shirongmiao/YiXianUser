@@ -47,6 +47,7 @@
     <dimen name="car_item_marginLeft">20dp</dimen>
 
     <dimen name="zhuangtai_item_bucong">12dp</dimen>
+    <dimen name="size0">0.5dp</dimen>
     <dimen name="size1">1dp</dimen>
     <dimen name="size2">2dp</dimen>
     <dimen name="size3">3dp</dimen>
